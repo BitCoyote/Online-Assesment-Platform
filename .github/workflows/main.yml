@@ -28,5 +28,5 @@ jobs:
         username: ${{ secrets.WP_USER }}
         password: ${{ secrets.WP_PASSWORD }}
         protocol: ftps        
-        server-dir: /site/wwwroot/wp-content/themes/knowmeq-wp-theme-two
+        server-dir: /site/wwwroot/wp-content/themes/knowmeq-wp-theme-two/
         # dry-run: true
