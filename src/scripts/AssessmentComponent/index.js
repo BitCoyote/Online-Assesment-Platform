@@ -4,6 +4,7 @@ import AssessmentComponentHeader from "./Components/Header/Header";
 import AssessmentComponentQuestion from "./Components/Question/Question";
 import AssessmentFooter from "./Components/Footer";
 import AssessmentResult from "./Components/Result";
+import question from "./Components/Question/Question";
 
 function AssessmentComponent() {
     const [currAssessment, setCurrAssessment] = useState([]);
@@ -18,12 +19,26 @@ function AssessmentComponent() {
         return currAnswers.current && currAnswers.desired && currAnswers.value;
     }
 
+
+    const handlePrevQuestion = () => {
+        setCurrAnswers(allAnswers[currQuestion - 1]);
+        setCurrQuestion(currQuestion - 1);
+
+    }
     const handleNextQuestion = () => {
         if (!isAllAnswered()) {
             alert('Answer every question!');
             return;
         }
-        setAllAnswers([...allAnswers, currAnswers]);
+        if (currQuestion < allAnswers.length) {
+            setAllAnswers([
+                ...allAnswers.slice(0, currQuestion),
+                currAnswers,
+                ...allAnswers.slice(currQuestion + 1, allAnswers.length)
+            ]);
+        } else {
+            setAllAnswers([...allAnswers, currAnswers]);
+        }
         if (currQuestion === assessment_length) {
             setIsSubmitted(true);
         } else {
@@ -36,7 +51,11 @@ function AssessmentComponent() {
     }, []);
 
     useEffect(() => {
-        setCurrAnswers({current: null, desired: null, value: null});
+        if (currQuestion < allAnswers.length) {
+            setCurrAnswers(allAnswers[currQuestion]);
+        } else {
+            setCurrAnswers({current: null, desired: null, value: null});
+        }
     }, [allAnswers])
 
     console.log('allAnswers', allAnswers)
@@ -61,7 +80,9 @@ function AssessmentComponent() {
 
                         <AssessmentFooter
                             btnText={currQuestion === assessment_length ? 'Save' : 'Next'}
-                            handleBtn={handleNextQuestion}
+                            showPrev={currQuestion !== 0}
+                            handleNextQuestion={handleNextQuestion}
+                            handlePrevQuestion={handlePrevQuestion}
                         />
                     </div>
             }
