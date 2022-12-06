@@ -8,6 +8,10 @@ get_header(); ?>
   <div id="render-react-example-here"></div>
   <!-- end example react component -->
 
+  <!-- example react component -->
+  <div id="test-result"></div>
+  <!-- end example react component -->
+
   <div class="prose max-w-full">
     <?php if (have_posts()) {
       while(have_posts()) {
