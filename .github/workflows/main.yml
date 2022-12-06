@@ -9,32 +9,22 @@ on:
 
 # Define the jobs to be run in the workflow
 jobs:
-  # Set the name of the job
-  deploy:
-    # Set the type of the job to be a deployment
-    type: deploy
-    # Set the provider to be Azure
-    provider: azure
-    # Set the name of the Azure subscription
-    subscription: Azure subscription 1
-    # Set the Azure subscription key
-    key: ${{ secrets.AZURE_SUBSCRIPTION_KEY }}
-    # Set the name of the Azure resource group where the App Service is located
-    resource_group: kmq-ngen-tlp-frontend
-    # Set the name of the Azure App Service where the code will be deployed
-    app_service: kmq-ngen-tlp-wordpress
-    # Set the directory on the Azure App Service where the code will be deployed
-    directory: /site/wwwroot/wp-content/themes/test-theme
 
-    # Define the steps to be run in the job
     steps:
-      # Install Node.js
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@main
+      - name: Use Node.js 16
+        uses: actions/setup-node@v1
         with:
-          node-version: 12
-
-      # Run `npm install` to install dependencies
-      - run: npm install
-
-      # Run `npm run build` to build the code
-      - run: npm run build
+          node-version: 16
+      - name: npm install, build
+        run: |
+          # Build and test the project, then
+          # deploy to Azure Web App.
+          npm install
+          npm run build
+        working-directory: /site/wwwroot/wp-content/themes/test-theme/
+      - name: 'Deploy to Azure WebApp'
+        uses: azure/webapps-deploy@v2
+        with: 
+          app-name: kmq-ngen-tlp-wordpress
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
