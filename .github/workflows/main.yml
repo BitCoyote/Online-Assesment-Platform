@@ -1,32 +1,40 @@
+# Set the name of the workflow
+name: Deploy to Azure App Service
+
+# Set the events that will trigger the workflow
 on:
- push:
+  push:
     branches:
       - main
-name: 🚀 Deploy website on push
+
+# Define the jobs to be run in the workflow
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
-    runs-on: ubuntu-latest
+  # Set the name of the job
+  deploy:
+    # Set the type of the job to be a deployment
+    type: deploy
+    # Set the provider to be Azure
+    provider: azure
+    # Set the name of the Azure subscription
+    subscription: Azure subscription 1
+    # Set the Azure subscription key
+    key: ${{ secrets.AZURE_SUBSCRIPTION_KEY }}
+    # Set the name of the Azure resource group where the App Service is located
+    resource_group: kmq-ngen-tlp-frontend
+    # Set the name of the Azure App Service where the code will be deployed
+    app_service: kmq-ngen-tlp-wordpress
+    # Set the directory on the Azure App Service where the code will be deployed
+    directory: /site/wwwroot/wp-content/themes/test-theme
+
+    # Define the steps to be run in the job
     steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v2
+      # Install Node.js
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
 
-    - name: Use Node.js 16
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'
-      
-    - name: 🔨 Build Project
-      run: |
-        npm install
-        npm run build
+      # Run `npm install` to install dependencies
+      - run: npm install
 
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.3.0
-      with:
-        server: waws-prod-yt1-041.ftp.azurewebsites.windows.net
-        username: ${{ secrets.WP_USER }}
-        password: ${{ secrets.WP_PASSWORD }}
-        protocol: ftps        
-        server-dir: /site/wwwroot/wp-content/themes/knowmeq-wp-theme-two/
-        # dry-run: true
+      # Run `npm run build` to build the code
+      - run: npm run build
