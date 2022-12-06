@@ -26,4 +26,9 @@ jobs:
       with: 
         app-name: kmq-ngen-tlp-wordpress
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: $(System.DefaultWorkingDirectory)/**/*
+    - task: CmdLine@2
+      inputs:
+        script: |
+          echo  '$(System.DefaultWorkingDirectory)'
+          ls
+      
