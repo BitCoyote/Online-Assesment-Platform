@@ -1,3 +1,4 @@
+
 on:
  push:
     branches:
@@ -20,13 +21,10 @@ jobs:
       run: |
         npm install
         npm run build
-
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.3.0
-      with:
-        server: waws-prod-yt1-041.ftp.azurewebsites.windows.net
-        username: ${{ secrets.WP_USER }}
-        password: ${{ secrets.WP_PASSWORD }}
-        protocol: ftps        
-        server-dir: /site/wwwroot/wp-content/themes/knowmeq-wp-theme-two/
-        # dry-run: true
+    - name: 'Deploy to Azure WebApp'
+      uses: azure/webapps-deploy@v2
+      with: 
+        app-name: kmq-ngen-tlp-wordpress
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: /wp-content/themes/
+      
