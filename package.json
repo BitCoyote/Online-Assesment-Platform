@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "proxy":"https://kmq-ngen-tlp-django.azurewebsites.net",
   "scripts": {
     "preview": "npm-run-all --parallel sync wpstart tailwindwatch",
     "sync": "browser-sync start -p 'myexample.local' --files '**/*.php' 'build/*.js' 'build/*.css'",
