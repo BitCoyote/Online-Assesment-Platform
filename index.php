@@ -11,6 +11,9 @@ get_header(); ?>
   <!-- example react component -->
   <div id="test-result"></div>
   <!-- end example react component -->
+  <!-- assessment react component -->
+  <div id="render-react-assessment-component"></div>
+  <!-- end assessment react component -->
 
   <div class="prose max-w-full">
     <?php if (have_posts()) {
