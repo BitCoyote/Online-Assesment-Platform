@@ -5,11 +5,11 @@ get_header(); ?>
 <div class="max-w-4xl mx-auto px-4">
 
   <!-- example react component -->
-  <div id="render-react-example-here"></div>
+  <!-- <div id="render-react-example-here"></div> -->
   <!-- end example react component -->
 
   <!-- example react component -->
-  <div id="test-result"></div>
+  <div id="render-react-test-result-component"></div>
   <!-- end example react component -->
   <!-- assessment react component -->
   <div id="render-react-assessment-component"></div>
