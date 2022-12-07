@@ -1,41 +1,22 @@
 import React, { useState, useEffect } from "react"
-import { mockData } from "./mockdata";
+import useFetch from "../services/UseFetch";
 import Loading from "./Loading/Loading";
 import Error from "./Error/Error";
 
 function AssesmentResult({ testID, userID, companyID }) {
-  const [result, setResult] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(undefined);
-
   //TODO: generate token from props values
+  const url = 'http://15.222.168.158/sat-tool/get-results'
+  const config = {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Token 7b4c76eaa68c192da374d197b2497151c4b08bc9',
+      KMQJWT: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoyLCJ1c2VyX2lkIjoxLCJjb21wYW55X2lkIjoiOGRkMGRlZjktOTdhNC00NTE4LWFmNjItNWVhNjI5ZjRiZDMwIn0.I7515FkEeQCupXczQhVtmvGKu6m_3jf1DhD6FLw-HHU'
+    },
+  }
+  // We can reuse this fetch function.
+  const [data, loading, error] = useFetch(url, config)
 
-  useEffect(() => {
-    fetch('http://15.222.168.158/sat-tool/get-results', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        Authorization: 'Token 7b4c76eaa68c192da374d197b2497151c4b08bc9',
-        KMQJWT: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoyLCJ1c2VyX2lkIjoxLCJjb21wYW55X2lkIjoiOGRkMGRlZjktOTdhNC00NTE4LWFmNjItNWVhNjI5ZjRiZDMwIn0.I7515FkEeQCupXczQhVtmvGKu6m_3jf1DhD6FLw-HHU'
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error('Something went wrong.');
-      })
-      .then((data) => {
-        if (!Array.isArray(data.user_results)) {
-          throw new Error('Received data is not correct.');
-        }
-        setResult(data.user_results)
-      })
-      .catch((e) => {
-        setError(e.message);
-      })
-      .finally(() => setLoading(false));
-  }, [])
   return (
     <div>
       {
@@ -66,7 +47,7 @@ function AssesmentResult({ testID, userID, companyID }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {result.map((result, key) => (
+                  {data.user_results.map((result, key) => (
                     <tr key={key} className="text-right border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-800">
                       <td className="px-3 py-2 text-left">
                         <span>{result.question.question_number}</span>
