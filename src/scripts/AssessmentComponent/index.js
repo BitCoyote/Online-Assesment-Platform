@@ -1,19 +1,17 @@
 import React, {useState, useEffect} from "react"
-import {getAssessment} from "../../api/assessments";
+import {getAssessment, submitAssessment} from "../../api/assessments";
 import AssessmentComponentHeader from "./Components/Header/Header";
 import AssessmentComponentQuestion from "./Components/Question/Question";
 import AssessmentFooter from "./Components/Footer";
 import AssessmentResult from "./Components/Result";
-import question from "./Components/Question/Question";
 
 function AssessmentComponent() {
-    const [currAssessment, setCurrAssessment] = useState([]);
+    const [currAssessment, setCurrAssessment] = useState(null);
     const [currQuestion, setCurrQuestion] = useState(0);
     const [allAnswers, setAllAnswers] = useState([]);
     const [currAnswers, setCurrAnswers] = useState({current: null, desired: null, value: null})
-    const [isSubmitted, setIsSubmitted] = useState(false)
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
-    const assessment_length = 4;
 
     const isAllAnswered = () => {
         return currAnswers.current && currAnswers.desired && currAnswers.value;
@@ -39,15 +37,24 @@ function AssessmentComponent() {
         } else {
             setAllAnswers([...allAnswers, currAnswers]);
         }
-        if (currQuestion === assessment_length) {
+        if (currQuestion === currAssessment.questions.length - 1) {
             setIsSubmitted(true);
         } else {
             setCurrQuestion(currQuestion + 1);
         }
     }
 
+    const answersToJson = () => {
+        let result = {current: {}, desired: {}, value: {}}
+        allAnswers.forEach((answer, index) => {
+            let questionNumber = currAssessment.questions[index].question_number
+            Object.keys(result).forEach(key => result[key][questionNumber] = answer[key])
+        })
+        return [result];
+    }
+
     useEffect(() => {
-        setCurrAssessment(getAssessment());
+        getAssessment().then(data => setCurrAssessment(data));
     }, []);
 
     useEffect(() => {
@@ -58,7 +65,15 @@ function AssessmentComponent() {
         }
     }, [allAnswers])
 
-    console.log('allAnswers', allAnswers)
+    useEffect(() => {
+        if (isSubmitted) {
+            submitAssessment(answersToJson()).then(data => console.log('submitted data', data));
+        }
+    }, [isSubmitted])
+
+    if (!(currAssessment && currAssessment?.questions?.length > 0)) {
+        return null;
+    }
 
     return (
         <div>
@@ -69,8 +84,8 @@ function AssessmentComponent() {
                     </div>
                     : <div>
                         <AssessmentComponentHeader
-                            title={'Question Title'}
-                            question={{name: 'question name', index: currQuestion}}
+                            title={currAssessment.assessment_title}
+                            currQuestion={currAssessment.questions[currQuestion]}
                         />
 
                         <AssessmentComponentQuestion
@@ -79,7 +94,7 @@ function AssessmentComponent() {
                         />
 
                         <AssessmentFooter
-                            btnText={currQuestion === assessment_length ? 'Save' : 'Next'}
+                            btnText={currQuestion === currAssessment.questions.length - 1 ? 'Submit' : 'Next'}
                             showPrev={currQuestion !== 0}
                             handleNextQuestion={handleNextQuestion}
                             handlePrevQuestion={handlePrevQuestion}

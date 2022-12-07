@@ -5,13 +5,8 @@ import AssessmentComponent from "./scripts/AssessmentComponent";
 import AssesmentResult from "./scripts/AssessmentComponent/Components/Result";
 
 
-// if (document.querySelector("#render-react-example-here")) {
-//   //ReactDOM.render(<ExampleReactComponent />, document.querySelector("#render-react-example-here"))
-// }
-
-
-if (document.querySelector("#render-react-test-result-component")) {
-  ReactDOM.render(<AssesmentResult/>, document.querySelector("#render-react-test-result-component"))
+if (document.querySelector("#render-react-example-here")) {
+  //ReactDOM.render(<ExampleReactComponent />, document.querySelector("#render-react-example-here"))
 }
 
 if (document.querySelector("#render-react-assessment-component")) {

@@ -1,82 +1,52 @@
+import axios from 'axios';
+import {getSatQiestionsUrl, submitAssessmentResultUrl, getAssessmentResultUrl} from "../../constants/api/assessments";
+import {API_URL, authToken} from "../../constants/api/api";
+import {jsonToJwt} from "../../helper/jwt/jsonToJwt";
+
 export const getAssessment = async () => {
-    let url = 'http://15.222.168.158/sat-tool/get-sat-questions';
+    //const base_url = 'https://kmq-ngen-tlp-django.azurewebsites.net/';
+    //const base_url = 'http://15.222.168.158/';
+    //const endpoint = 'sat-tool/get-sat-questions';
+
+    const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoxLCJjb21wYW55X2lkIjoiOGRkMGRlZjktOTdhNC00NTE4LWFmNjItNWVhNjI5ZjRiZDMwIiwidXNlcl9pZCI6NjcwfQ.SOrF2dAuvfVTif6cfKSrxEqNoF7Pm_xkKwEDdS8U1Es';
 
     try {
-        const response = await fetch(url, {
-            method: 'GET',
+        const {data} = await axios.get(API_URL + getSatQiestionsUrl, {
             headers: {
-                Accept: 'application/json',
-                Authorization: 'Token 7b4c76eaa68c192da374d197b2497151c4b08bc9',
-                KMQJWT: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoxfQ.F4l8cpGQvyVy1Gc_1R-vGvJpIS_SiVsF71Fv2sncEvM'
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error(`Error! status: ${response.status}`);
-        }
-
-        const result = await response.json();
-
-        console.log('result is: ', JSON.stringify(result, null, 4));
-
-        return result;
-
-        /*const {data} = await axios.get(url, {
-            headers: {
-                Accept: 'application/json',
-                Authorization: '7b4c76eaa68c192da374d197b2497151c4b08bc9',
-                KMQJWT: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoxfQ.F4l8cpGQvyVy1Gc_1R-vGvJpIS_SiVsF71Fv2sncEvM'
+                'Accept': 'application/json',
+                'Authorization': authToken,
+                'KMQJWT': jwtToken,
             },
         });
 
         console.log('data', data)
 
-        return data;*/
+        return data;
     } catch (err) {
         return err.message;
     }
 }
 
-export const submitAssessment = () => {
-    return true;
-}
+export const submitAssessment = async (answersToSend) => {
+    //const base_url = 'http://15.222.168.158/';
 
+    let jwtToken = jsonToJwt({
+        "test_id": 1,
+        "user_id": 1,
+        "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30",
+        answers: answersToSend,
+    });
 
-
-import { useState, useEffect } from "react";
-import axios from "axios";
-
-const axiosInstance = (request) => {
-    return axios.create({
-        baseURL: 'https://kmq-ngen-tlp-django.azurewebsites.net/',
+    const {data} = await axios.post(API_URL + submitAssessmentResultUrl, {}, {
         headers: {
-            Accept: 'application/json',
-            Authorization: 'Token 7b4c76eaa68c192da374d197b2497151c4b08bc9',  // Todo: Get Token
-            ...request.headers
+            'Accept': 'application/json',
+            'Authorization': authToken,
+            'KMQJWT': jwtToken,
         }
     });
+
+    console.log('data', data)
+
+    return data;
 }
 
-export const useAxios = (request) => {
-    const [data, setData] = useState(undefined);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(undefined);
-    const instance = axiosInstance(request);
-    useEffect(() => {
-        instance.request({
-            url: request.url, 
-            method: request.method,
-        })
-        .then((response) => {
-            if( response.status === 200 ) {
-                setData(response.data)
-            }
-        })
-        .catch((err) => {
-            setError(err);
-        })
-        .finally(() => setLoading(false))
-    }, [])
-
-    return [data, loading, error]
-}

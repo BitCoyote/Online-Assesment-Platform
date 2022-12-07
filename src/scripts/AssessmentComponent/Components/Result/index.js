@@ -1,9 +1,10 @@
 import React from "react"
-import { useAxios } from "../../../../api/assessments";
+import { useAxios } from "../../../../api/utils";
 import Loading from "../Loading";
 import Error from "../Error";
 
 function AssesmentResult({ testID, userID, companyID }) {
+
   //TODO: generate token from props values
   const request = {
     url: '/sat-tool/get-results',
@@ -13,7 +14,6 @@ function AssesmentResult({ testID, userID, companyID }) {
     },
   }
   const [data, loading, error] = useAxios(request);
-  console.log(data, error, loading);
   return (
     <div>
       {
@@ -32,7 +32,6 @@ function AssesmentResult({ testID, userID, companyID }) {
             <div className="container p-2 mx-auto rounded-md sm:p-4 dark:text-gray-100 dark:bg-gray-900">
             <h2 className="mb-3 text-2xl font-semibold leading-tight">Test Result</h2>
             <div className="overflow-x-auto">
-            {console.log("----------------")}
               <table className="min-w-full text-xs">
                 <thead className="rounded-t-lg dark:bg-gray-700">
                   <tr className="text-right">
@@ -74,6 +73,10 @@ function AssesmentResult({ testID, userID, companyID }) {
                 </tbody>
               </table>
             </div>
+            <button className={'h-12 border-solid border-2 mx-2 mr-5'}
+                    onClick={() => {document.location.href="/assessment"}}>
+                Go to Assessment Page
+            </button>
           </div>
         )
       }
