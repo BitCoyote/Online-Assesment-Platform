@@ -80,15 +80,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var _constants_api_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/api/api */ "./src/constants/api/api.js");
+
 
 
 const axiosInstance = request => {
-  return axios__WEBPACK_IMPORTED_MODULE_1__["default"].create({
-    baseURL: 'https://kmq-ngen-tlp-django.azurewebsites.net/',
+  return axios__WEBPACK_IMPORTED_MODULE_2__["default"].create({
+    baseURL: _constants_api_api__WEBPACK_IMPORTED_MODULE_1__.API_URL,
     headers: {
       Accept: 'application/json',
-      Authorization: 'Token 7b4c76eaa68c192da374d197b2497151c4b08bc9',
+      Authorization: _constants_api_api__WEBPACK_IMPORTED_MODULE_1__.authToken,
       // Todo: Get Token
       ...request.headers
     }
@@ -507,13 +509,39 @@ function AssesmentResult(_ref) {
     }
   };
   const [data, loading, error] = (0,_api_utils__WEBPACK_IMPORTED_MODULE_2__.useAxios)(request);
+  const totalScore = data !== undefined && data?.user_results !== undefined ? data.user_results.reduce((a, b) => ({
+    score: a.score + b.score
+  })) : {
+    score: 0
+  };
+  const averageScore = data !== undefined && data?.user_results !== undefined ? {
+    score: (totalScore.score / data.user_results.length).toFixed(2)
+  } : {
+    score: 0
+  };
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, error && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Error__WEBPACK_IMPORTED_MODULE_4__["default"], {
     msg: error
   }), loading && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Loading__WEBPACK_IMPORTED_MODULE_3__["default"], null), !error && !loading && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "container p-2 mx-auto rounded-md sm:p-4 dark:text-gray-100 dark:bg-gray-900"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    class: "flex flex-row"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    class: "flex-none h-14"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
     className: "mb-3 text-2xl font-semibold leading-tight"
-  }, "Test Result"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, "Test Result")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    class: "grow h-14"
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    class: "flex-none  h-14"
+  }, "Total Score:\xA0"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    class: "flex-none h-14"
+  }, totalScore.score), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    class: "flex-none w-20 h-14"
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    class: "flex-none h-14"
+  }, "Average Score:\xA0"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    class: "flex-none h-14"
+  }, averageScore.score)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "overflow-x-auto"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("table", {
     className: "min-w-full text-xs"
@@ -560,7 +588,7 @@ function AssesmentResult(_ref) {
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, result.gap)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", {
     className: "px-3 py-2"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, result.score))))))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    className: 'h-12 border-solid border-2 mx-2 mr-5',
+    className: 'h-12 border-solid border-2 mx-2 mr-5 mt-2',
     onClick: () => {
       document.location.href = "/assessment";
     }
@@ -5883,8 +5911,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-dom */ "react-dom");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _scripts_AssessmentComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./scripts/AssessmentComponent */ "./src/scripts/AssessmentComponent/index.js");
-/* harmony import */ var _scripts_AssessmentComponent_Components_Result__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./scripts/AssessmentComponent/Components/Result */ "./src/scripts/AssessmentComponent/Components/Result/index.js");
-
 
 
 

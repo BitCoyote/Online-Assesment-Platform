@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { API_URL, authToken } from "../constants/api/api";
 
 const axiosInstance = (request) => {
     return axios.create({
-        baseURL: 'https://kmq-ngen-tlp-django.azurewebsites.net/',
+        baseURL: API_URL,
         headers: {
             Accept: 'application/json',
-            Authorization: 'Token 7b4c76eaa68c192da374d197b2497151c4b08bc9',  // Todo: Get Token
+            Authorization: authToken,  // Todo: Get Token
             ...request.headers
         }
     });
