@@ -51,3 +51,23 @@ export const submitAssessment = async ({answers, test_id}) => {
     return data;
 }
 
+export const getAllAssessments = async () => {
+    const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoxLCJjb21wYW55X2lkIjoiOGRkMGRlZjktOTdhNC00NTE4LWFmNjItNWVhNjI5ZjRiZDMwIiwidXNlcl9pZCI6NjcwfQ.SOrF2dAuvfVTif6cfKSrxEqNoF7Pm_xkKwEDdS8U1Es';
+
+    try {
+        const {data} = await axios.get(API_URL + getAllAssessmentsUrl, {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': authToken,
+                'KMQJWT': jwtToken,
+            },
+        });
+
+        console.log('data', data)
+
+        return data;
+    } catch (err) {
+        return err.message;
+    }
+}
+
