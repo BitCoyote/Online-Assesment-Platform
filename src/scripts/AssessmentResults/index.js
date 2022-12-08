@@ -1,4 +1,4 @@
-import {useAxios} from "../../api/utils";
+import {useAxios, useFetch} from "../../api/utils";
 import Loading from "../Helpers/Loading";
 import React from "react";
 import {jsonToJwt} from "../../helper/jwt/jsonToJwt";
@@ -7,7 +7,7 @@ import NoAnswersFound from "./Components/NoAnswersFound";
 
 const AssessmentResults = () => {
     const {test_id} = useParams();
-
+    const user = useFetch("/wp-json/wp/v2/users/me");
     //TODO: generate token from props values
     const request = {
         url: '/sat-tool/get-results',
@@ -15,7 +15,7 @@ const AssessmentResults = () => {
         headers: {
             KMQJWT: jsonToJwt({
                 "test_id": test_id,
-                "user_id": 1,
+                "user_id": user.id,
                 "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30"
             })
         },
