@@ -30,6 +30,10 @@ $testdata = kmq_testing();
   <div id="render-react-example-here"></div>
   <!-- end example react component -->
 
+  <!-- assessment react component -->
+  <div id="render-react-assessment-component"></div>
+  <!-- end assessment react component -->
+
   <div class="prose max-w-full">
     <h2>Hello <?php print_r($testdata) ?></h2>
     <?php if (have_posts()) {
