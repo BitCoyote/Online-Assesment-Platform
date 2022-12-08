@@ -2,8 +2,8 @@ import React from "react"
 import { useAxios, useFetch } from "../../api/utils";
 import { getAssessmentResultUrl } from "../../constants/api/assessments";
 import { jsonToJwt } from "../../helper/jwt/jsonToJwt";
-import Loading from "./Loading";
-import Error from "./Error";
+import Loading from "../Helpers/Loading";
+import Error from "../Helpers/Error";
 
 function AssesmentResult() {
     let jwtToken = jsonToJwt({
