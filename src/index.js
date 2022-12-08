@@ -12,3 +12,5 @@ if (document.querySelector("#render-react-assessment-component")) {
     ReactDOM.render(<AssessmentComponent/>, document.querySelector("#render-react-assessment-component"))
   }
 }
+
+

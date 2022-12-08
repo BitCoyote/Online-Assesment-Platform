@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {getSatQiestionsUrl, submitAssessmentResultUrl} from "../../constants/api/assessments";
+import {getSatQiestionsUrl, submitAssessmentResultUrl, getAssessmentResultUrl} from "../../constants/api/assessments";
 import {API_URL, authToken} from "../../constants/api/api";
 import {jsonToJwt} from "../../helper/jwt/jsonToJwt";
 
@@ -37,7 +37,6 @@ export const submitAssessment = async (answersToSend) => {
         answers: answersToSend,
     });
 
-
     const {data} = await axios.post(API_URL + submitAssessmentResultUrl, {}, {
         headers: {
             'Accept': 'application/json',
@@ -50,3 +49,4 @@ export const submitAssessment = async (answersToSend) => {
 
     return data;
 }
+
