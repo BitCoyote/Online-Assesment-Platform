@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {getSatQiestionsUrl, submitAssessmentResultUrl} from "../../constants/api/assessments";
+import {getAllAssessmentsUrl, getSatQuestionsUrl, submitAssessmentResultUrl} from "../../constants/api/assessments";
 import {API_URL, authToken} from "../../constants/api/api";
 import {jsonToJwt} from "../../helper/jwt/jsonToJwt";
 
@@ -11,7 +11,7 @@ export const getAssessment = async () => {
     const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoxLCJjb21wYW55X2lkIjoiOGRkMGRlZjktOTdhNC00NTE4LWFmNjItNWVhNjI5ZjRiZDMwIiwidXNlcl9pZCI6NjcwfQ.SOrF2dAuvfVTif6cfKSrxEqNoF7Pm_xkKwEDdS8U1Es';
 
     try {
-        const {data} = await axios.get(API_URL + getSatQiestionsUrl, {
+        const {data} = await axios.get(API_URL + getSatQuestionsUrl, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': authToken,
@@ -49,4 +49,25 @@ export const submitAssessment = async (answersToSend) => {
     console.log('data', data)
 
     return data;
+}
+
+
+export const getAllAssessments = async () => {
+    const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoxLCJjb21wYW55X2lkIjoiOGRkMGRlZjktOTdhNC00NTE4LWFmNjItNWVhNjI5ZjRiZDMwIiwidXNlcl9pZCI6NjcwfQ.SOrF2dAuvfVTif6cfKSrxEqNoF7Pm_xkKwEDdS8U1Es';
+
+    try {
+        const {data} = await axios.get(API_URL + getAllAssessmentsUrl, {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': authToken,
+                'KMQJWT': jwtToken,
+            },
+        });
+
+        console.log('data', data)
+
+        return data;
+    } catch (err) {
+        return err.message;
+    }
 }

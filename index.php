@@ -12,6 +12,10 @@ get_header(); ?>
   <div id="render-react-assessment-component"></div>
   <!-- end assessment react component -->
 
+  <!-- main react component -->
+  <div id="render-react-main-component"></div>
+  <!-- end main react component -->
+
   <div class="prose max-w-full">
     <?php if (have_posts()) {
       while(have_posts()) {
