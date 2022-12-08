@@ -8,9 +8,6 @@ get_header(); ?>
   <!-- <div id="render-react-example-here"></div> -->
   <!-- end example react component -->
 
-  <!-- example react component -->
-  <div id="render-react-test-result-component"></div>
-  <!-- end example react component -->
   <!-- assessment react component -->
   <div id="render-react-assessment-component"></div>
   <!-- end assessment react component -->
