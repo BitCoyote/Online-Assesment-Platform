@@ -1,22 +1,13 @@
-<?php
-
-get_header(); ?>
+<?php get_header();?>
 
 <div class="max-w-4xl mx-auto px-4">
 
   <!-- example react component -->
-  <div id="render-react-example-here"></div>
+  <div id="render-react-here"></div>
   <!-- end example react component -->
 
-  <!-- assessment react component -->
-  <div id="render-react-assessment-component"></div>
-  <!-- end assessment react component -->
-
-  <!-- main react component -->
-  <div id="render-react-main-component"></div>
-  <!-- end main react component -->
-
   <div class="prose max-w-full">
+    <h2> <?php print_r($testdata) ?></h2>
     <?php if (have_posts()) {
       while(have_posts()) {
         the_post(); ?>
