@@ -26,6 +26,7 @@
     "tailwindcss": "^3.1.4"
   },
   "dependencies": {
+    "@wordpress/data": "^7.6.0",
     "axios": "^1.2.1",
     "crypto-js": "^4.1.1"
   }

@@ -79,9 +79,7 @@ function AssessmentComponent() {
         <div>
             {
                 isSubmitted
-                    ? <div>
-                        <AssessmentResult allAnswers={allAnswers}/>
-                    </div>
+                    ? document.location.href = "/get_results"
                     : <div>
                         <AssessmentComponentHeader
                             title={currAssessment.assessment_title}

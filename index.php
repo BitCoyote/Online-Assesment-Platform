@@ -1,6 +1,9 @@
 <?php
-
-get_header(); ?>
+echo "<script> const wpApiNonce='" . wp_create_nonce( 'wp_rest' ) . "' </script>"
+?>
+<?php
+get_header(); 
+?>
 
 <div class="max-w-4xl mx-auto px-4">
 

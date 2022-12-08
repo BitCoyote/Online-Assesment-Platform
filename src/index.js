@@ -3,6 +3,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import AssessmentComponent from "./scripts/AssessmentComponent";
 import AssessmentResult from "./scripts/AssessmentResult";
+import Error from "./scripts/AssessmentResult/Error";
 
 if (document.querySelector("#render-react-example-here")) {
   //ReactDOM.render(<ExampleReactComponent />, document.querySelector("#render-react-example-here"))

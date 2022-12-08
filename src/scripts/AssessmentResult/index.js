@@ -1,15 +1,14 @@
 import React from "react"
-import { useAxios } from "../../api/utils";
+import { useAxios, useFetch } from "../../api/utils";
 import { getAssessmentResultUrl } from "../../constants/api/assessments";
 import { jsonToJwt } from "../../helper/jwt/jsonToJwt";
 import Loading from "./Loading";
 import Error from "./Error";
 
-function AssesmentResult({ testID, userID, companyID }) {
-
+function AssesmentResult() {
     let jwtToken = jsonToJwt({
         "test_id": 1,
-        "user_id": 1,
+        "user_id": user.id,
         "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30",
     });
 

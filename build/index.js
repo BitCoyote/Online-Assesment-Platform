@@ -76,7 +76,8 @@ const submitAssessment = async answersToSend => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "useAxios": function() { return /* binding */ useAxios; }
+/* harmony export */   "useAxios": function() { return /* binding */ useAxios; },
+/* harmony export */   "useFetch": function() { return /* binding */ useFetch; }
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
@@ -115,6 +116,25 @@ const useAxios = request => {
   }, []);
   return [data, loading, error];
 };
+function useFetch(url) {
+  const [data, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    async function loadData() {
+      const response = await fetch(url, {
+        headers: {
+          'X-WP-Nonce': wpApiNonce
+        }
+      });
+      if (!response.ok) {
+        return;
+      }
+      const posts = await response.json();
+      setData(posts);
+    }
+    loadData();
+  }, [url]);
+  return data;
+}
 
 /***/ }),
 
@@ -504,9 +524,7 @@ function AssessmentComponent() {
   if (!(currAssessment && currAssessment?.questions?.length > 0)) {
     return null;
   }
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, isSubmitted ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Components_Result__WEBPACK_IMPORTED_MODULE_6__["default"], {
-    allAnswers: allAnswers
-  })) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Components_Header_Header__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, isSubmitted ? document.location.href = "/get_results" : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Components_Header_Header__WEBPACK_IMPORTED_MODULE_3__["default"], {
     title: currAssessment.assessment_title,
     currQuestion: currAssessment.questions[currQuestion]
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Components_Question_Question__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -629,15 +647,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function AssesmentResult(_ref) {
-  let {
-    testID,
-    userID,
-    companyID
-  } = _ref;
+function AssesmentResult() {
   let jwtToken = (0,_helper_jwt_jsonToJwt__WEBPACK_IMPORTED_MODULE_4__.jsonToJwt)({
     "test_id": 1,
-    "user_id": 1,
+    "user_id": user.id,
     "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30"
   });
   const request = {
@@ -5941,6 +5954,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _scripts_AssessmentComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./scripts/AssessmentComponent */ "./src/scripts/AssessmentComponent/index.js");
 /* harmony import */ var _scripts_AssessmentResult__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./scripts/AssessmentResult */ "./src/scripts/AssessmentResult/index.js");
+/* harmony import */ var _scripts_AssessmentResult_Error__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./scripts/AssessmentResult/Error */ "./src/scripts/AssessmentResult/Error/index.js");
+
 
 
 
