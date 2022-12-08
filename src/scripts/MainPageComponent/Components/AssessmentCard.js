@@ -5,7 +5,7 @@ const AssessmentCard = ({assessment, img}) => {
             alt={'card-main'}
             className={'absolute top-0 left-0 max-h-1/2  p-4'}
         />
-        <div className={'absolute bottom-0 left-0 px-2 h-36'}>
+        <div className={'absolute bottom-0 left-0 px-2 h-36 w-full'}>
             <h2 className={'text-sm mb-2'}>{assessment.test_title}</h2>
 
             <a href={'/assessment/' + assessment.test_id}>

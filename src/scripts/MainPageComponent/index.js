@@ -18,8 +18,6 @@ const MainPageComponent = () => {
         getAllAssessments().then(data => setAllAssessments(data));
     }, [])
 
-    console.log('allAssessments', allAssessments)
-
     if (!allAssessments || !allAssessments.hasOwnProperty('SAT_Assessments')) {
         return null;
     }

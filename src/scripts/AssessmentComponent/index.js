@@ -54,8 +54,15 @@ function AssessmentComponent() {
     }
 
     useEffect(() => {
-        getAssessment().then(data => setCurrAssessment(data));
-    }, []);
+        setIsSubmitted(false);
+        setCurrQuestion(0);
+        setAllAnswers([]);
+        setCurrAnswers({current: null, desired: null, value: null});
+
+        getAssessment({
+            test_id: parseInt(window.location.pathname.split('/')[window.location.pathname.split('/').length - 1])
+        }).then(data => setCurrAssessment(data));
+    }, [window.location.pathname]);
 
     useEffect(() => {
         if (currQuestion < allAnswers.length) {
@@ -67,7 +74,10 @@ function AssessmentComponent() {
 
     useEffect(() => {
         if (isSubmitted) {
-            submitAssessment(answersToJson()).then(data => console.log('submitted data', data));
+            submitAssessment({
+                answers: answersToJson(),
+                test_id: parseInt(window.location.pathname.split('/')[window.location.pathname.split('/').length - 1]),
+            }).then(data => console.log('submitted data', data));
         }
     }, [isSubmitted])
 
