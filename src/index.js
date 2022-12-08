@@ -15,8 +15,3 @@ if (document.querySelector("#render-react-assessment-component")) {
 }
 
 
-if (document.querySelector("#render-react-assessment-component")) {
-  if (window.location.pathname.includes('/main-page')) {
-    ReactDOM.render(<MainPageComponent/>, document.querySelector("#render-react-main-component"))
-  }
-}
