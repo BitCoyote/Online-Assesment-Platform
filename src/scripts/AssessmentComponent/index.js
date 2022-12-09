@@ -1,16 +1,17 @@
-import React, {useState, useEffect} from "react"
-import {getAssessment, submitAssessment} from "../../api/assessments";
+import React, { useState, useEffect } from "react"
+import { getAssessment, submitAssessment } from "../../api/assessments";
 import AssessmentComponentHeader from "./Components/Header/Header";
 import AssessmentComponentQuestion from "./Components/Question/Question";
 import AssessmentFooter from "./Components/Footer";
-import AssessmentResult from "./Components/Result";
+import { useParams } from "react-router-dom";
 
 function AssessmentComponent() {
     const [currAssessment, setCurrAssessment] = useState(null);
     const [currQuestion, setCurrQuestion] = useState(0);
     const [allAnswers, setAllAnswers] = useState([]);
-    const [currAnswers, setCurrAnswers] = useState({current: null, desired: null, value: null})
+    const [currAnswers, setCurrAnswers] = useState({ current: null, desired: null, value: null })
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const { test_id } = useParams();
 
 
     const isAllAnswered = () => {
@@ -45,7 +46,7 @@ function AssessmentComponent() {
     }
 
     const answersToJson = () => {
-        let result = {current: {}, desired: {}, value: {}}
+        let result = { current: {}, desired: {}, value: {} }
         allAnswers.forEach((answer, index) => {
             let questionNumber = currAssessment.questions[index].question_number
             Object.keys(result).forEach(key => result[key][questionNumber] = answer[key])
@@ -54,20 +55,31 @@ function AssessmentComponent() {
     }
 
     useEffect(() => {
-        getAssessment().then(data => setCurrAssessment(data));
-    }, []);
+        setIsSubmitted(false);
+        setCurrQuestion(0);
+        setAllAnswers([]);
+        setCurrAnswers({ current: null, desired: null, value: null });
+
+        getAssessment({
+            test_id: test_id
+        }).then(data => setCurrAssessment(data));
+    }, [test_id]);
 
     useEffect(() => {
         if (currQuestion < allAnswers.length) {
             setCurrAnswers(allAnswers[currQuestion]);
         } else {
-            setCurrAnswers({current: null, desired: null, value: null});
+            setCurrAnswers({ current: null, desired: null, value: null });
         }
     }, [allAnswers])
 
     useEffect(() => {
         if (isSubmitted) {
-            submitAssessment(answersToJson()).then(data => console.log('submitted data', data));
+            submitAssessment({
+                answers: answersToJson(),
+                test_id: test_id,
+            }).then(data => console.log('submitted data', data))
+                .then(() => window.location.href = '/get-results/' + test_id);
         }
     }, [isSubmitted])
 
@@ -77,30 +89,24 @@ function AssessmentComponent() {
 
     return (
         <div>
-            {
-                isSubmitted
-                    ? <div>
-                        <AssessmentResult allAnswers={allAnswers}/>
-                    </div>
-                    : <div>
-                        <AssessmentComponentHeader
-                            title={currAssessment.assessment_title}
-                            currQuestion={currAssessment.questions[currQuestion]}
-                        />
+            <div>
+                <AssessmentComponentHeader
+                    title={currAssessment.assessment_title}
+                    currQuestion={currAssessment.questions[currQuestion]}
+                />
 
-                        <AssessmentComponentQuestion
-                            setCurrAnswers={setCurrAnswers}
-                            currAnswers={currAnswers}
-                        />
+                <AssessmentComponentQuestion
+                    setCurrAnswers={setCurrAnswers}
+                    currAnswers={currAnswers}
+                />
 
-                        <AssessmentFooter
-                            btnText={currQuestion === currAssessment.questions.length - 1 ? 'Submit' : 'Next'}
-                            showPrev={currQuestion !== 0}
-                            handleNextQuestion={handleNextQuestion}
-                            handlePrevQuestion={handlePrevQuestion}
-                        />
-                    </div>
-            }
+                <AssessmentFooter
+                    btnText={currQuestion === currAssessment.questions.length - 1 ? 'Submit' : 'Next'}
+                    showPrev={currQuestion !== 0}
+                    handleNextQuestion={handleNextQuestion}
+                    handlePrevQuestion={handlePrevQuestion}
+                />
+            </div>
         </div>
     )
 }
