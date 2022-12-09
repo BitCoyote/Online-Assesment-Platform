@@ -7,9 +7,9 @@ import NoAnswersFound from "./Components/NoAnswersFound";
 
 const AssessmentResults = ({user_id}) => {
     const {test_id} = useParams();
-    const curUser = useFetch("/wp-json/wp/v2/users/me");
+    // NGEN Admin will pass the user_id as the props
+    const curUser = useFetch(`/wp-json/wp/v2/users/${user_id ? user_id : 'me'}`);
     const navigate = useNavigate();
-
     const request = {
         url: '/sat-tool/get-results',
         method: 'GET',
@@ -48,7 +48,7 @@ const AssessmentResults = ({user_id}) => {
 
                     <div className="container p-2 mx-auto rounded-md sm:p-4 dark:text-gray-100 dark:bg-gray-900">
                         <div class="flex flex-row">
-                            <div class="flex-none h-14"><h2 className="mb-3 text-2xl font-semibold leading-tight">Test
+                            <div class="flex-none h-14"><h2 className="mb-3 text-2xl font-semibold leading-tight">{curUser.name}'s Test
                                 Result</h2></div>
                             <div class="grow h-14"></div>
                             <div class="flex-none  h-14">Total Score:&nbsp;</div>
