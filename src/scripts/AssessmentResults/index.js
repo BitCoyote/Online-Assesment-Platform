@@ -7,7 +7,6 @@ import NoAnswersFound from "./Components/NoAnswersFound";
 
 const AssessmentResults = () => {
     const {test_id} = useParams();
-    const user = useFetch("/wp-json/wp/v2/users/me");
     //TODO: generate token from props values
     const request = {
         url: '/sat-tool/get-results',
@@ -15,7 +14,7 @@ const AssessmentResults = () => {
         headers: {
             KMQJWT: jsonToJwt({
                 "test_id": test_id,
-                "user_id": user.id,
+                "user_id": 1,
                 "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30"
             })
         },

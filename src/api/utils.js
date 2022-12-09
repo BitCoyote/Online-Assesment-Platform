@@ -37,7 +37,7 @@ export const useAxios = (request) => {
     return [data, loading, error]
 }
 
-export function useFetch(url) {
+export const useFetch = (url) => {
     const [data, setData] = useState(null);
     useEffect(() => {
         async function loadData() {

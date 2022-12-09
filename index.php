@@ -12,7 +12,6 @@ echo "<script> const wpApiNonce='" . wp_create_nonce( 'wp_rest' ) . "' </script>
   <!-- end example react component -->
 
   <div class="prose max-w-full">
-    <h2> <?php print_r($testdata) ?></h2>
     <?php if (have_posts()) {
       while(have_posts()) {
         the_post(); ?>
