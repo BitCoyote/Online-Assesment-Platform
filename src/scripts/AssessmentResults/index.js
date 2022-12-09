@@ -2,24 +2,27 @@ import {useAxios, useFetch} from "../../api/utils";
 import Loading from "../Helpers/Loading";
 import React from "react";
 import {jsonToJwt} from "../../helper/jwt/jsonToJwt";
-import {useParams} from "react-router-dom";
+import {useParams, useNavigate} from "react-router-dom";
 import NoAnswersFound from "./Components/NoAnswersFound";
 
-const AssessmentResults = () => {
+const AssessmentResults = ({user_id}) => {
     const {test_id} = useParams();
-    //TODO: generate token from props values
+    const curUser = useFetch("/wp-json/wp/v2/users/me");
+    const navigate = useNavigate();
+
     const request = {
         url: '/sat-tool/get-results',
         method: 'GET',
         headers: {
             KMQJWT: jsonToJwt({
                 "test_id": test_id,
-                "user_id": 1,
+                "user_id": curUser ? curUser.id : 0,
                 "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30"
             })
         },
     }
-    const [data, loading, error] = useAxios(request);
+    
+    const [data, loading, error] = useAxios(request, curUser);
     const totalScore = (data !== undefined && data?.user_results !== undefined)
         ? data.user_results.reduce((a, b) => ({score: a.score + b.score}))
         : {score: 0}
@@ -32,7 +35,7 @@ const AssessmentResults = () => {
         <div>
             {
                 error && (
-                    <NoAnswersFound/>
+                    <NoAnswersFound test_id={test_id}/>
                 )
             }
             {
@@ -99,7 +102,7 @@ const AssessmentResults = () => {
                         </div>
                         <button className={'h-12 border-solid border-2 mx-2 mr-5 mt-2 px-4'}
                                 onClick={() => {
-                                    document.location.href = "/assessment/" + test_id
+                                    navigate(`/assessment/${test_id}`)
                                 }}>
                             Go to Assessment Page
                         </button>

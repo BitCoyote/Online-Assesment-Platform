@@ -1,6 +1,6 @@
 import React from "react";
 
-const NoAnswersFound = () => {
+const NoAnswersFound = ({test_id}) => {
     return <div>
         <div>
             <h1 className={'text-2xl mb-8'}>No results found</h1>
