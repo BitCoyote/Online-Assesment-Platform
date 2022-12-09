@@ -1,9 +1,9 @@
 import React from 'react';
-import { useFetch } from '../../api/utils';
+import { useFetchUser } from '../../api/utils';
 import { Outlet } from 'react-router-dom';
 
 const Auth = () => {
-    const user = useFetch("/wp-json/wp/v2/users/me");
+    const user = useFetchUser("/wp-json/wp/v2/users/me");
     if (user)
         return (
             <Outlet />

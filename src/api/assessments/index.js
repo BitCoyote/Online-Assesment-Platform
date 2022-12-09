@@ -5,12 +5,12 @@ import {
 import {API_URL, authToken} from "../../constants/api/api";
 import {jsonToJwt} from "../../helper/jwt/jsonToJwt";
 
-export const getAssessment = async ({test_id}) => {
+export const getAssessment = async ({test_id, user_id}) => {
     //const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoxLCJjb21wYW55X2lkIjoiOGRkMGRlZjktOTdhNC00NTE4LWFmNjItNWVhNjI5ZjRiZDMwIiwidXNlcl9pZCI6NjcwfQ.SOrF2dAuvfVTif6cfKSrxEqNoF7Pm_xkKwEDdS8U1Es';
     const jwtToken = jsonToJwt({
         "test_id": test_id,
         "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30",
-        "user_id": 1
+        "user_id": user_id
     });
 
     try {
@@ -30,12 +30,11 @@ export const getAssessment = async ({test_id}) => {
     }
 }
 
-export const submitAssessment = async ({answers, test_id}) => {
+export const submitAssessment = async ({answers, test_id, user_id}) => {
     //const base_url = 'http://15.222.168.158/';
-
     let jwtToken = jsonToJwt({
         "test_id": test_id,
-        "user_id": 1,
+        "user_id": user_id,
         "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30",
         answers: answers,
     });
@@ -53,9 +52,13 @@ export const submitAssessment = async ({answers, test_id}) => {
     return data;
 }
 
-export const getAllAssessments = async () => {
-    const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoxLCJjb21wYW55X2lkIjoiOGRkMGRlZjktOTdhNC00NTE4LWFmNjItNWVhNjI5ZjRiZDMwIiwidXNlcl9pZCI6NjcwfQ.SOrF2dAuvfVTif6cfKSrxEqNoF7Pm_xkKwEDdS8U1Es';
-
+export const getAllAssessments = async ({user_id}) => {
+    //const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoxLCJjb21wYW55X2lkIjoiOGRkMGRlZjktOTdhNC00NTE4LWFmNjItNWVhNjI5ZjRiZDMwIiwidXNlcl9pZCI6NjcwfQ.SOrF2dAuvfVTif6cfKSrxEqNoF7Pm_xkKwEDdS8U1Es';
+    let jwtToken = jsonToJwt({
+        "test_id": 1,
+        "user_id": user_id,
+        "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30",
+    });
     try {
         const {data} = await axios.get(API_URL + getAllAssessmentsUrl, {
             headers: {

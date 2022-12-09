@@ -4,6 +4,7 @@ import AssessmentComponentHeader from "./Components/Header/Header";
 import AssessmentComponentQuestion from "./Components/Question/Question";
 import AssessmentFooter from "./Components/Footer";
 import { useParams } from "react-router-dom";
+import { useFetchUser } from "../../api/utils";
 
 function AssessmentComponent() {
     const [currAssessment, setCurrAssessment] = useState(null);
@@ -12,7 +13,7 @@ function AssessmentComponent() {
     const [currAnswers, setCurrAnswers] = useState({ current: null, desired: null, value: null })
     const [isSubmitted, setIsSubmitted] = useState(false);
     const { test_id } = useParams();
-
+    const curUser = useFetchUser('/wp-json/wp/v2/users/me');
 
     const isAllAnswered = () => {
         return currAnswers.current && currAnswers.desired && currAnswers.value;
@@ -59,11 +60,12 @@ function AssessmentComponent() {
         setCurrQuestion(0);
         setAllAnswers([]);
         setCurrAnswers({ current: null, desired: null, value: null });
-
-        getAssessment({
-            test_id: test_id
-        }).then(data => setCurrAssessment(data));
-    }, [test_id]);
+        if (curUser)
+            getAssessment({
+                test_id: test_id,
+                user_id: curUser.id
+            }).then(data => setCurrAssessment(data));
+    }, [test_id, curUser]);
 
     useEffect(() => {
         if (currQuestion < allAnswers.length) {
@@ -74,14 +76,15 @@ function AssessmentComponent() {
     }, [allAnswers])
 
     useEffect(() => {
-        if (isSubmitted) {
+        if (isSubmitted && curUser) {
             submitAssessment({
                 answers: answersToJson(),
                 test_id: test_id,
+                user_id: curUser.id,
             }).then(data => console.log('submitted data', data))
                 .then(() => window.location.href = '/get-results/' + test_id);
         }
-    }, [isSubmitted])
+    }, [isSubmitted, curUser])
 
     if (!(currAssessment && currAssessment?.questions?.length > 0)) {
         return null;

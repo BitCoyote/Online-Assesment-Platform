@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react"
 import {getAllAssessments} from "../../api/assessments";
 import AssessmentCard from "./Components/AssessmentCard";
+import { useFetchUser } from "../../api/utils";
 import FrontPage1 from '../../assets/assessments/assessment_frontpage_1.png';
 import FrontPage2 from '../../assets/assessments/assessment_frontpage_2.png';
 import FrontPage3 from '../../assets/assessments/assessment_frontpage_3.png';
@@ -12,11 +13,12 @@ import FrontPage7 from '../../assets/assessments/assessment_frontpage_7.png';
 const MainPageComponent = () => {
     const [allAssessments, setAllAssessments] = useState([]);
     const cardImages = [FrontPage1, FrontPage2, FrontPage3, FrontPage4, FrontPage5, FrontPage6, FrontPage7];
-
+    const curUser = useFetchUser('/wp-json/wp/v2/users/me');
 
     useEffect(() => {
-        getAllAssessments().then(data => setAllAssessments(data));
-    }, [])
+        if (curUser)
+            getAllAssessments({user_id: curUser.id}).then(data => setAllAssessments(data));
+    }, [curUser])
 
     if (!allAssessments || !allAssessments.hasOwnProperty('SAT_Assessments')) {
         return null;

@@ -39,7 +39,7 @@ export const useAxios = (request, allow) => {
     return [data, loading, error]
 }
 
-export const useFetch = (url) => {
+export const useFetchUser = (url) => {
     const [data, setData] = useState(null);
     useEffect(() => {
         async function loadData() {

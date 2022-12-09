@@ -1,14 +1,13 @@
-import {useAxios, useFetch} from "../../api/utils";
+import {useAxios, useFetchUser} from "../../api/utils";
 import Loading from "../Helpers/Loading";
 import React from "react";
 import {jsonToJwt} from "../../helper/jwt/jsonToJwt";
 import {useParams, useNavigate} from "react-router-dom";
 import NoAnswersFound from "./Components/NoAnswersFound";
 
-const AssessmentResults = ({user_id}) => {
+const AssessmentResults = () => {
     const {test_id} = useParams();
-    // NGEN Admin will pass the user_id as the props
-    const curUser = useFetch(`/wp-json/wp/v2/users/${user_id ? user_id : 'me'}`);
+    const curUser = useFetchUser(`/wp-json/wp/v2/users/me`);
     const navigate = useNavigate();
     const request = {
         url: '/sat-tool/get-results',
