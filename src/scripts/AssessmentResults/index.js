@@ -6,6 +6,9 @@ import {useParams, useNavigate} from "react-router-dom";
 import NoAnswersFound from "./Components/NoAnswersFound";
 
 const AssessmentResults = () => {
+    
+    const assessments_list = ["Customer Centric Strategic Assessment Tool (CCSAT)","New Product & Process Design and Implementation Strategic Assessment Tool (NPPDISAT)","Reality Check Strategic Assessment Tool (RealitySAT)","Values-Based Strategic Assessment Tool (VSAT)","Project Management Strategic Assessment Tool (PMSAT)","People-Centric Leadership Strategic Assessment Tool (PCLSAT)","Values Strategic Assessment Tool - Blocks 4 - 7 Transformation (ValuesSAT--2)","Values Strategic Assessment Tool - Blocks 1 - 3 Foundations (ValuesSAT-1)","Strategy Strategic Assessment Tool (S-SAT)","Supply Network Strategic Assessment Tool - Supplier View (SNSAT Supplier)","Supply Network Strategic Assessment Tool - Customer View (SNSAT Customer)","Industry 4.0 Strategic Assessment Tool  - Traditional View (ISAT -1)","Innovation Strategic Assessment Tool (InnSAT)","Execution Strategic Assessment Tool (ESAT)","Culture SAT (CultureSAT)","Competence Strategic Assessment Tool - Block 1 - STEM Skills (CompSAT-1)","Competence Strategic Assessment Tool - Blocks 2,3 & 4 - Essential Skills (CompSAT-2)","Leadership Strategic Assessment Tool (LSAT)","Industry 4.0 Strategic Assessment Tool  - SIRI View (ISAT -2)"];
+
     const {test_id} = useParams();
     const curUser = useFetchUser(`/wp-json/wp/v2/users/me`);
     const navigate = useNavigate();
@@ -46,9 +49,9 @@ const AssessmentResults = () => {
                 !error && !loading && (
 
                     <div className="container p-2 mx-auto rounded-md sm:p-4 dark:text-gray-100 dark:bg-gray-900">
+                        <div class="flex-none h-14"><h2 className="mb-8 text-2xl font-semibold leading-tight">{data && assessments_list[parseInt(test_id) - 1]}</h2></div>
                         <div class="flex flex-row">
-                            <div class="flex-none h-14"><h2 className="mb-3 text-2xl font-semibold leading-tight">{curUser.name}'s Test
-                                Result</h2></div>
+                            <div class="flex-none h-14"><h2 className="mb-3 text-2xl font-semibold leading-tight">{curUser.name}'s Test Result</h2></div>
                             <div class="grow h-14"></div>
                             <div class="flex-none  h-14">Total Score:&nbsp;</div>
                             <div class="flex-none h-14">{totalScore.score}</div>
