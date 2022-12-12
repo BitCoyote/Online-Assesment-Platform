@@ -14,7 +14,7 @@ function kmq_add_support() {
 
 add_action('after_setup_theme', 'kmq_add_support');
 
-function pages_creator() {
+function kmq_pages_creator() {
   $pages = array(
         "Welcome" => "/",
         "Main page" => "main-page",
@@ -55,4 +55,4 @@ function pages_creator() {
 
 }
 
-pages_creator();
+kmq_pages_creator();
