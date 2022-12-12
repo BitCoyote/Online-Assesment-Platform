@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from "react"
-import { getAssessment, submitAssessment } from "../../api/assessments";
+import { useGetAssessmentByTestId, submitAssessment, useSubmitAssessment } from "../../api/assessments";
+import { useAccount } from "../../api/auth";
 import AssessmentComponentHeader from "./Components/Header/Header";
 import AssessmentComponentQuestion from "./Components/Question/Question";
 import AssessmentFooter from "./Components/Footer";
 import { useParams } from "react-router-dom";
-import { useFetchUser } from "../../api/utils";
-
+import Loading from "../Helpers/Loading";
+import Error from "../Helpers/Error";
 function AssessmentComponent() {
-    const [currAssessment, setCurrAssessment] = useState(null);
+    //const [currAssessment, setCurrAssessment] = useState(null);
     const [currQuestion, setCurrQuestion] = useState(0);
     const [allAnswers, setAllAnswers] = useState([]);
     const [currAnswers, setCurrAnswers] = useState({ current: null, desired: null, value: null })
     const [isSubmitted, setIsSubmitted] = useState(false);
     const { test_id } = useParams();
-    const curUser = useFetchUser('/wp-json/wp/v2/users/me');
-
+    const [curUser, userLoading, userError] = useAccount('me');
+    const [currAssessment, loading, error] = useGetAssessmentByTestId({test_id, user_id: curUser?.id})
+    
     const isAllAnswered = () => {
         return currAnswers.current && currAnswers.desired && currAnswers.value;
     }
-
 
     const handlePrevQuestion = () => {
         setCurrAnswers(allAnswers[currQuestion - 1]);
@@ -56,18 +57,6 @@ function AssessmentComponent() {
     }
 
     useEffect(() => {
-        setIsSubmitted(false);
-        setCurrQuestion(0);
-        setAllAnswers([]);
-        setCurrAnswers({ current: null, desired: null, value: null });
-        if (curUser)
-            getAssessment({
-                test_id: test_id,
-                user_id: curUser.id
-            }).then(data => setCurrAssessment(data));
-    }, [test_id, curUser]);
-
-    useEffect(() => {
         if (currQuestion < allAnswers.length) {
             setCurrAnswers(allAnswers[currQuestion]);
         } else {
@@ -86,30 +75,32 @@ function AssessmentComponent() {
         }
     }, [isSubmitted, curUser])
 
-    if (!(currAssessment && currAssessment?.questions?.length > 0)) {
-        return null;
-    }
-
     return (
         <div>
-            <div>
-                <AssessmentComponentHeader
-                    title={currAssessment.assessment_title}
-                    currQuestion={currAssessment.questions[currQuestion]}
-                />
-
-                <AssessmentComponentQuestion
-                    setCurrAnswers={setCurrAnswers}
-                    currAnswers={currAnswers}
-                />
-
-                <AssessmentFooter
-                    btnText={currQuestion === currAssessment.questions.length - 1 ? 'Submit' : 'Next'}
-                    showPrev={currQuestion !== 0}
-                    handleNextQuestion={handleNextQuestion}
-                    handlePrevQuestion={handlePrevQuestion}
-                />
-            </div>
+            {(userLoading || loading) && (<Loading />)}
+            {(userError || error) && (<Error />)}
+            {
+                currAssessment && (
+                    <div>
+                        <AssessmentComponentHeader
+                            title={currAssessment.assessment_title}
+                            currQuestion={currAssessment.questions[currQuestion]}
+                        />
+        
+                        <AssessmentComponentQuestion
+                            setCurrAnswers={setCurrAnswers}
+                            currAnswers={currAnswers}
+                        />
+        
+                        <AssessmentFooter
+                            btnText={currQuestion === currAssessment.questions.length - 1 ? 'Submit' : 'Next'}
+                            showPrev={currQuestion !== 0}
+                            handleNextQuestion={handleNextQuestion}
+                            handlePrevQuestion={handlePrevQuestion}
+                        />
+                    </div>
+                )
+            }
         </div>
     )
 }

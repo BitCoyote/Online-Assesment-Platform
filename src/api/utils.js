@@ -4,10 +4,11 @@ import { API_URL, authToken } from "../constants/api/api";
 
 const axiosInstance = (request) => {
     return axios.create({
-        baseURL: API_URL,
         headers: {
             Accept: 'application/json',
-            Authorization: authToken,  // Todo: Get Token
+            Authorization: request.headers.hasOwnProperty('X-WP-Nonce')
+                ? null
+                : authToken,
             ...request.headers
         }
     });
@@ -21,7 +22,9 @@ export const useAxios = (request, allow) => {
     useEffect(() => {
         if (allow) {
             instance.request({
-                url: request.url,
+                url: request.headers.hasOwnProperty('X-WP-Nonce')
+                    ? request.url
+                    : API_URL + request.url,
                 method: request.method,
             })
                 .then((response) => {

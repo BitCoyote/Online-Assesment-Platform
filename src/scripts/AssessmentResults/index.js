@@ -1,49 +1,39 @@
-import {useAxios, useFetchUser} from "../../api/utils";
-import Loading from "../Helpers/Loading";
+
 import React from "react";
-import {jsonToJwt} from "../../helper/jwt/jsonToJwt";
-import {useParams, useNavigate} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import NoAnswersFound from "./Components/NoAnswersFound";
+import { useNavigate } from "react-router-dom";
+import { useAccount } from "../../api/auth";
+import { useGetResult } from "../../api/assessments";
+import Loading from "../Helpers/Loading";
 
 const AssessmentResults = () => {
     const {test_id} = useParams();
-    const curUser = useFetchUser(`/wp-json/wp/v2/users/me`);
     const navigate = useNavigate();
-    const request = {
-        url: '/sat-tool/get-results',
-        method: 'GET',
-        headers: {
-            KMQJWT: jsonToJwt({
-                "test_id": test_id,
-                "user_id": curUser ? curUser.id : 0,
-                "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30"
-            })
-        },
-    }
-    
-    const [data, loading, error] = useAxios(request, curUser);
-    const totalScore = (data !== undefined && data?.user_results !== undefined)
+    const [curUser, userLoading, userError] = useAccount('me');
+    const [data, loading, error] = useGetResult({test_id, user_id: curUser?.id});
+   
+    const totalScore = (data && data?.user_results)
         ? data.user_results.reduce((a, b) => ({score: a.score + b.score}))
         : {score: 0}
-    const averageScore = (data !== undefined && data?.user_results !== undefined)
+    const averageScore = (data && data?.user_results)
         ? {score: (totalScore.score / data.user_results.length).toFixed(2)}
         : {score: 0}
-
 
     return (
         <div>
             {
-                error && (
+                (error || userError) && (
                     <NoAnswersFound test_id={test_id}/>
                 )
             }
             {
-                loading && (
+                (loading || userLoading) && (
                     <Loading/>
                 )
             }
             {
-                !error && !loading && (
+                data && (
 
                     <div className="container p-2 mx-auto rounded-md sm:p-4 dark:text-gray-100 dark:bg-gray-900">
                         <div class="flex flex-row">

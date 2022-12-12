@@ -3,7 +3,7 @@ import MainPageComponent from "./scripts/MainPageComponent";
 import AssessmentComponent from "./scripts/AssessmentComponent";
 import AssessmentResults from "./scripts/AssessmentResults";
 import NotFound from "./scripts/Helpers/NotFound/NotFound";
-import Auth from "./scripts/Auth/Auth";
+import Auth from "./scripts/Auth";
 
 export const router = createBrowserRouter([
     {
