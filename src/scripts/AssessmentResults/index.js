@@ -17,7 +17,7 @@ const AssessmentResults = () => {
         method: 'GET',
         headers: {
             KMQJWT: jsonToJwt({
-                "test_id": test_id,
+                "test_id": test_id.split('-')[1],
                 "user_id": curUser ? curUser.id : 0,
                 "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30"
             })
@@ -37,7 +37,7 @@ const AssessmentResults = () => {
         <div>
             {
                 error && (
-                    <NoAnswersFound test_id={test_id}/>
+                    <NoAnswersFound test_id={test_id.split('-')[1]}/>
                 )
             }
             {
@@ -49,7 +49,7 @@ const AssessmentResults = () => {
                 !error && !loading && (
 
                     <div className="container p-2 mx-auto rounded-md sm:p-4 dark:text-gray-100 dark:bg-gray-900">
-                        <div class="flex-none h-14"><h2 className="mb-8 text-2xl font-semibold leading-tight">{data && assessments_list[parseInt(test_id) - 1]}</h2></div>
+                        <div class="flex-none h-14"><h2 className="mb-8 text-2xl font-semibold leading-tight">{data && assessments_list[parseInt(test_id.split('-')[1]) - 1]}</h2></div>
                         <div class="flex flex-row">
                             <div class="flex-none h-14"><h2 className="mb-3 text-2xl font-semibold leading-tight">{curUser.name}'s Test Result</h2></div>
                             <div class="grow h-14"></div>

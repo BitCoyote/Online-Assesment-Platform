@@ -13,3 +13,46 @@ function kmq_add_support() {
 }
 
 add_action('after_setup_theme', 'kmq_add_support');
+
+function pages_creator() {
+  $pages = array(
+        "Welcome" => "/",
+        "Main page" => "main-page",
+        "Assessment" => "assessment",
+        "Results" => "get-results"
+  );
+
+  $pages_with_children = array(
+        'Assessment',
+        'Results'
+  );
+
+  $children_count = 20;
+
+  foreach($pages as $name => $url) {
+      if (get_page_by_title($name) == NULL) {
+          $page_config = array(
+               'post_title'         => $name,
+               'post_status'        => 'publish',
+               'post_type'          => 'page',
+               'post_name'          => $url
+          );
+          $inserted_page_id = wp_insert_post($page_config);
+          if (in_array($name, $pages_with_children)) {
+              for ($i = 1; $i <= $children_count; $i++) {
+                  $page_config_child = array(
+                       'post_title'         => "",
+                       'post_name'          => "id-{$i}",
+                       'post_status'        => 'publish',
+                       'post_type'          => 'page',
+                       'post_parent'        => $inserted_page_id
+                  );
+                  $child_id = wp_insert_post($page_config_child);
+              }
+          }
+      }
+  }
+
+}
+
+pages_creator();

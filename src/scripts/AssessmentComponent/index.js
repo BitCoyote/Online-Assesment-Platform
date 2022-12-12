@@ -62,7 +62,7 @@ function AssessmentComponent() {
         setCurrAnswers({ current: null, desired: null, value: null });
         if (curUser)
             getAssessment({
-                test_id: test_id,
+                test_id: test_id.split('-')[1],
                 user_id: curUser.id
             }).then(data => setCurrAssessment(data));
     }, [test_id, curUser]);
@@ -79,7 +79,7 @@ function AssessmentComponent() {
         if (isSubmitted && curUser) {
             submitAssessment({
                 answers: answersToJson(),
-                test_id: test_id,
+                test_id: test_id.split('-')[1],
                 user_id: curUser.id,
             }).then(data => console.log('submitted data', data))
                 .then(() => window.location.href = '/get-results/' + test_id);
