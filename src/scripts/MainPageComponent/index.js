@@ -9,6 +9,7 @@ import FrontPage4 from '../../assets/assessments/assessment_frontpage_4.png';
 import FrontPage5 from '../../assets/assessments/assessment_frontpage_5.png';
 import FrontPage6 from '../../assets/assessments/assessment_frontpage_6.png';
 import FrontPage7 from '../../assets/assessments/assessment_frontpage_7.png';
+import {ButtonKMQ} from "../Components/ButtonKMQ";
 
 const MainPageComponent = () => {
     const [allAssessments, setAllAssessments] = useState([]);
@@ -24,7 +25,7 @@ const MainPageComponent = () => {
         return null;
     }
 
-    return <div className={' '}>
+    return <div className={'py-24'}>
         {
             allAssessments.SAT_Assessments.map((item, index) =>
                 <AssessmentCard assessment={item} img={cardImages[index % cardImages.length]}/>

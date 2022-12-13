@@ -5,6 +5,7 @@ import AssessmentComponentQuestion from "./Components/Question/Question";
 import AssessmentFooter from "./Components/Footer";
 import { useParams } from "react-router-dom";
 import { useFetchUser } from "../../api/utils";
+import HeaderKMQ from "../Components/HeaderKMQ";
 
 function AssessmentComponent() {
     const [currAssessment, setCurrAssessment] = useState(null);
@@ -91,7 +92,7 @@ function AssessmentComponent() {
     }
 
     return (
-        <div>
+        <div className={'py-24'}>
             <div>
                 <AssessmentComponentHeader
                     title={currAssessment.assessment_title}

@@ -1,8 +1,8 @@
 import AnswerContainer from "./AnswerContainer";
 
 const AnswerRaw = ({currAnswer, label, handleChooseAnswer}) => {
-    return <div>
-        <h1 className={'my-2'}>
+    return <div className={'mb-8'}>
+        <h1 className={'mb-4'}>
             {label.charAt(0).toUpperCase() + label.slice(1)}:
         </h1>
         <AnswerContainer
