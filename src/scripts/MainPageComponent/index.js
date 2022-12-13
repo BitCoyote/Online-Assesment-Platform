@@ -38,7 +38,8 @@ const MainPageComponent = () => {
             {(error || authError) && (<Error msg={error.message} />)}
             {data && data.SAT_Assessments && data.SAT_Assessments.map((item, index) => 
                 <AssessmentCard 
-                    assessment={item} 
+                    assessment={item}
+                    user_id={user?.id} 
                     img={cardImages[index % cardImages.length]} 
                     savedItem={assessmentStatus.find(e => {
                         return (parseInt(e.quiz_id) === parseInt(item.test_id));

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useAxios } from '../utils';
 import {
-    submitAssessmentResultUrl, getAllAssessmentsUrl, getSatQuestionsUrl, getAssessmentResultUrl, submitToDraftUrl, getFromDraft as getFromDraftUrl, getAssessmentStatus as getAssessmentStatusUrl
+    submitAssessmentResultUrl, getAllAssessmentsUrl, getSatQuestionsUrl, getAssessmentResultUrl, submitToDraftUrl, getFromDraftUrl, getAssessmentStatusUrl, retakeTestUrl
 } from "../../constants/api/assessments";
 import { API_URL, authToken } from "../../constants/api/api";
 import { jsonToJwt } from "../../helper/jwt/jsonToJwt";
@@ -122,11 +122,11 @@ export const useGetResult = ({ test_id, user_id }) => {
     return useAxios(request, !!user_id);
 }
 
-export const submitAnswersToDraft = async ({ answers, test_id, user_id, completed }) => {
+export const submitAnswersToDraft = async ({ answers, test_id, user_id, test_title, completed }) => {
     const params = {
         user_id: user_id,
         quiz_id: test_id,
-        quiz_title: "Sample test",
+        quiz_title: test_title,
         answer_ids: JSON.stringify(answers),
         completed: completed ? "1" : "0"
     };
@@ -153,5 +153,15 @@ export const getAssessmentStatus = async ({ user_id }) => {
         }
     }
     );
+    return data;
+}
+
+export const submitRetakeAssessment = async ({user_id, test_id, test_title}) => {
+    const params = {
+        user_id: user_id,
+        quiz_id: test_id,
+        quiz_title: test_title,
+    };
+    const { data } = await axios.post(retakeTestUrl, params);
     return data;
 }

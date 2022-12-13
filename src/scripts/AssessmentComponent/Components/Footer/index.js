@@ -8,8 +8,9 @@ const AssessmentFooter = ({handleNextQuestion, handlePrevQuestion, handleFinishL
         />
         <ButtonKMQ
                    onClick={handleFinishLater}
-                   dark={false}
+                   dark
                    text='Finish Later'
+                   className={"float-right"}
         />
     </div>
 }

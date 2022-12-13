@@ -8,6 +8,8 @@ export const getAssessmentResultUrl = 'sat-tool/get-results';
 
 export const submitToDraftUrl = '/wp-json/knowmeq/wp-api/finish-later';
 
-export const getFromDraft = '/wp-json/knowmeq/wp-api/get-draft';
+export const retakeTestUrl = '/wp-json/knowmeq/wp-api/retake-assessment';
 
-export const getAssessmentStatus = '/wp-json/knowmeq/wp-api/get-assessments-status';
+export const getFromDraftUrl = '/wp-json/knowmeq/wp-api/get-draft';
+
+export const getAssessmentStatusUrl = '/wp-json/knowmeq/wp-api/get-assessments-status';

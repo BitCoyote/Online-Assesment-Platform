@@ -28,6 +28,10 @@ function my_rest_api_init() {
         'methods'             => 'GET',
         'callback'            => 'kmq_function_get_status'
     ) );
+    register_rest_route( 'knowmeq/wp-api', '/retake-assessment', array(
+      'methods'             => 'POST',
+      'callback'            => 'kmq_function_retake_assessment'
+    ) );
 }
 
 add_action( 'rest_api_init', 'my_rest_api_init', 10, 1 );

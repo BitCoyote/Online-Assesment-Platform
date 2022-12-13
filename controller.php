@@ -52,4 +52,33 @@
         $results = $wpdb->get_results($sql_one);
         return json_encode($results);
       }
+
+      function kmq_function_retake_assessment ($request) {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'kmq_finish_later';
+        $user_id = $request["user_id"];
+        $quiz_id = $request["quiz_id"];
+        $quiz_title = $request["quiz_title"];
+        $int_user_id = intval($user_id);
+        $int_quiz_id = intval($quiz_id);
+        $data = array(
+            'user_id'=>$user_id,
+            'quiz_id'=>$quiz_id,
+            'quiz_title'=>$quiz_title,
+            'answers_obj'=>'',
+            'quiz_finished'=>'0'
+          );
+        $fields = '`' . implode('`,`', array_keys($data)) . '`';
+        $format = "'" . implode("', '", $data) . "'";
+        $sql_one = "SELECT * from `$table_name` WHERE user_id = $int_user_id AND quiz_id = $int_quiz_id";
+        $check = $wpdb->query($sql_one);
+        if($check == 1) {
+          $wpdb->query( $wpdb->prepare("UPDATE $table_name 
+                      SET answers_obj = NULL, quiz_finished = NULL 
+                  WHERE user_id = %s AND quiz_id = %s", $user_id, $quiz_id));
+        }
+        if($check == 0) {
+          $wpdb->query("INSERT INTO `$table_name`($fields) VALUES ($format)");
+        }
+      }
 ?>
