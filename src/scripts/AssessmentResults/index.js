@@ -33,6 +33,7 @@ const AssessmentResults = () => {
 
                 (data) && (
                     <div className="container p-2 mx-auto rounded-md sm:p-4 dark:text-gray-100 dark:bg-gray-900">
+                        <div class="flex-none h-14"><h2 className="mb-8 text-2xl font-semibold leading-tight">{data && assessments_list[parseInt(test_id.split('-')[1]) - 1]}</h2></div>
                         <div class="flex flex-row">
                             <div class="flex-none h-14"><h2 className="mb-3 text-2xl font-semibold leading-tight">{user.name}'s Test
                                 Result</h2></div>

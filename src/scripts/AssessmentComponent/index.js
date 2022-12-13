@@ -95,17 +95,17 @@ function AssessmentComponent() {
         if (isSubmitted && user) {
             submitAssessment({
                 answers: answersToJson(),
-                test_id: test_id,
+                test_id: test_id.split('-')[1],
                 user_id: user.id,
             }).then(data => {
                 submitAnswersToDraft({
                     answers: allAnswers,
-                    test_id: test_id,
+                    test_id: test_id.split('-')[1],
                     user_id: user.id,
                     completed: true,
                 })
             })
-                .then(() => window.location.href = '/get-results/' + test_id);
+            .then(() => window.location.href = '/get-results/' + test_id);
         }
     }, [isSubmitted, user])
 
