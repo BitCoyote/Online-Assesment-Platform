@@ -6,6 +6,8 @@ import AssessmentFooter from "./Components/Footer";
 import { useParams } from "react-router-dom";
 import { useAccount } from "../../api/utils";
 import Loading from "../Helpers/Loading";
+import HeaderKMQ from "../Components/HeaderKMQ";
+
 
 function AssessmentComponent() {
     //const [currAssessment, setCurrAssessment] = useState(null);
@@ -16,8 +18,9 @@ function AssessmentComponent() {
     const { test_id } = useParams();
     const [user, accountLoading, authError] = useAccount('me');
     const [currAssessment, loading, error] = useGetAssessmentByTestId({
-         test_id: test_id.split('-')[1], 
-         user_id: user?.id }, user?.id);
+        test_id: test_id.split('-')[1],
+        user_id: user?.id
+    }, user?.id);
     const isAllAnswered = () => {
         return currAnswers.current && currAnswers.desired && currAnswers.value;
     }
@@ -108,12 +111,12 @@ function AssessmentComponent() {
                     completed: true,
                 })
             })
-            .then(() => window.location.href = '/get-results/' + test_id);
+                .then(() => window.location.href = '/get-results/' + test_id);
         }
     }, [isSubmitted, user])
 
     return (
-        <div>
+        <div className={'py-24'}>
             {(accountLoading || loading) && (<Loading />)}
             {(authError) && (<Error msg={"Please sign in"} />)}
             {(error) && (<Error msg={error.message} />)}
@@ -124,10 +127,12 @@ function AssessmentComponent() {
                             title={currAssessment.assessment_title}
                             currQuestion={currAssessment.questions[currQuestion]}
                         />
+
                         <AssessmentComponentQuestion
                             setCurrAnswers={setCurrAnswers}
                             currAnswers={currAnswers}
                         />
+
                         <AssessmentFooter
                             btnText={currQuestion === currAssessment.questions.length - 1 ? 'Submit' : 'Next'}
                             showPrev={currQuestion !== 0}

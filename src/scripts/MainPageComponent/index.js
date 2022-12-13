@@ -11,6 +11,7 @@ import FrontPage7 from '../../assets/assessments/assessment_frontpage_7.png';
 import { useAccount } from "../../api/utils";
 import Loading from "../Helpers/Loading";
 import Error from "../Helpers/Error";
+import {ButtonKMQ} from "../Components/ButtonKMQ";
 
 const MainPageComponent = () => {
     const cardImages = [FrontPage1, FrontPage2, FrontPage3, FrontPage4, FrontPage5, FrontPage6, FrontPage7];

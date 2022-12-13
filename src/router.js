@@ -4,6 +4,7 @@ import AssessmentComponent from "./scripts/AssessmentComponent";
 import AssessmentResults from "./scripts/AssessmentResults";
 import NotFound from "./scripts/Helpers/NotFound/NotFound";
 import Auth from "./scripts/Auth";
+import WelcomeComponent from "./scripts/WelcomeComponent";
 
 export const router = createBrowserRouter([
     {
@@ -12,6 +13,10 @@ export const router = createBrowserRouter([
             {
                 path: '*',
                 element: <NotFound />,
+            },
+            {
+                path: '',
+                element: <WelcomeComponent/>,
             },
             {
                 path: 'main-page',
