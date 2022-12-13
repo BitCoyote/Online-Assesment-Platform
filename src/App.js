@@ -7,7 +7,7 @@ import Footer from "./scripts/Components/Footer";
 const App = () => {
     return (<div className={''}>
         <HeaderKMQ/>
-        <div className={'max-w-4xl mx-auto px-4'}>
+        <div className={'max-w-4xl mx-auto px-4 min-h-[100vh]'}>
             <RouterProvider router={router}/>
         </div>
         <Footer/>
