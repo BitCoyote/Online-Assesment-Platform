@@ -2,16 +2,10 @@ import WelcomeMain from '../../assets/welcome/main_page.png';
 import {ButtonKMQ} from "../Components/ButtonKMQ";
 
 const WelcomeComponent = () => {
-    return <div>
+    return <div className={'h-full'}>
         <div className={'h-full w-full absolute left-0 overflow-hidden z-10 bg-[#ed4e1d]/[.50]'}>
             <div className={'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-white'}>
-                <h1 className={'text-2xl my-8 font-semibold'}>Welcome to the SWSP Project</h1>
-                <h2 className={'text-lg my-4 font-semibold'}>NGen is Canada’s Advanced Manufacturing Supercluster.</h2>
-                <h2 className={'text-lg my-4 font-semibold'}>
-                    We are working with your company to provide opportunities for workers to
-                    complete impactful assessments and training experiences that will increase skill level and Canada’s
-                    global technical advantage.
-                </h2>
+                <h1 className={'text-2xl my-8 font-semibold'}>Welcome to the Future Ready Project</h1>
                 <a href={'/main-page'} className={'text-lg my-16 font-semibold'}>
                     <ButtonKMQ text={'Got to all assessments'} dark/>
                 </a>
