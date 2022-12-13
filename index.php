@@ -1,7 +1,4 @@
-<?php
-  get_header();
-?>
-
+<?php get_header();?>
 <div class="max-w-4xl mx-auto px-4">
   <!-- example react component -->
   <div id="render-react-here"></div>

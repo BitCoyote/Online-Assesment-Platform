@@ -1,16 +1,16 @@
 import React from 'react';
-import { useAccount } from '../../api/auth';
+import { useAccount } from '../../api/utils';
 import { Outlet } from 'react-router-dom';
 import Loading from '../Helpers/Loading';
 import Error from '../Helpers/Error';
 
 const Auth = () => {
-    const [data, loading, error] = useAccount('me');
+    const [user, accountLoading, authError] = useAccount('me');
     return (
         <React.Fragment>
-            {loading && <Loading />}
-            {error && <Error msg="Please Sign in."/>}
-            {data && <Outlet />}
+            {accountLoading && <Loading />}
+            {authError && <Error msg="Please Sign in."/>}
+            {user && <Outlet />}
         </React.Fragment>
     )
 }

@@ -4,11 +4,9 @@
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php 
-      wp_head(); 
-      // WordPress Token for getting user in React.
-      echo "<script> const wpApiNonce='" . wp_create_nonce( 'wp_rest' ) . "' </script>"
+    wp_head(); 
+    echo "<script> const wpApiNonce='" . wp_create_nonce( 'wp_rest' ) . "' </script>"
     ?>
-    
   </head>
   <body <?php body_class(); ?>>
     <div class="bg-gray-300">

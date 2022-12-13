@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react"
-import { useGetAssessmentByTestId, submitAssessment, useSubmitAssessment } from "../../api/assessments";
-import { useAccount } from "../../api/auth";
+import { submitAssessment, useGetAssessmentByTestId, submitAnswersToDraft, getDraftAnswers } from "../../api/assessments";
 import AssessmentComponentHeader from "./Components/Header/Header";
 import AssessmentComponentQuestion from "./Components/Question/Question";
 import AssessmentFooter from "./Components/Footer";
 import { useParams } from "react-router-dom";
+import { useAccount } from "../../api/utils";
 import Loading from "../Helpers/Loading";
-import Error from "../Helpers/Error";
+
 function AssessmentComponent() {
     //const [currAssessment, setCurrAssessment] = useState(null);
     const [currQuestion, setCurrQuestion] = useState(0);
@@ -14,9 +14,8 @@ function AssessmentComponent() {
     const [currAnswers, setCurrAnswers] = useState({ current: null, desired: null, value: null })
     const [isSubmitted, setIsSubmitted] = useState(false);
     const { test_id } = useParams();
-    const [curUser, userLoading, userError] = useAccount('me');
-    const [currAssessment, loading, error] = useGetAssessmentByTestId({test_id, user_id: curUser?.id})
-    
+    const [user, accountLoading, authError] = useAccount('me');
+    const [currAssessment, loading, error] = useGetAssessmentByTestId({ test_id, user_id: user?.id }, user?.id);
     const isAllAnswered = () => {
         return currAnswers.current && currAnswers.desired && currAnswers.value;
     }
@@ -47,6 +46,17 @@ function AssessmentComponent() {
         }
     }
 
+    const handleFinishLater = () => {
+        submitAnswersToDraft({
+            answers: allAnswers,
+            test_id: test_id,
+            user_id: user.id,
+            completed: false,
+        }).then((res) => {
+            window.location.href = '/main-page/'
+        })
+    }
+
     const answersToJson = () => {
         let result = { current: {}, desired: {}, value: {} }
         allAnswers.forEach((answer, index) => {
@@ -57,28 +67,53 @@ function AssessmentComponent() {
     }
 
     useEffect(() => {
+        if (user?.id)
+            getDraftAnswers({ test_id, user_id: user?.id })
+                .then(data => {
+                    if (data) {
+                        try {
+                            const answers = JSON.parse(data[0].answers_obj?.toString());
+                            setAllAnswers(answers);
+                            setCurrQuestion(answers.length - 1)
+                        }
+                        catch (e) {
+                            return;
+                        }
+                    }
+                });
+    }, [user]);
+
+    useEffect(() => {
         if (currQuestion < allAnswers.length) {
             setCurrAnswers(allAnswers[currQuestion]);
         } else {
             setCurrAnswers({ current: null, desired: null, value: null });
         }
-    }, [allAnswers])
+    }, [allAnswers, currQuestion])
 
     useEffect(() => {
-        if (isSubmitted && curUser) {
+        if (isSubmitted && user) {
             submitAssessment({
                 answers: answersToJson(),
                 test_id: test_id,
-                user_id: curUser.id,
-            }).then(data => console.log('submitted data', data))
+                user_id: user.id,
+            }).then(data => {
+                submitAnswersToDraft({
+                    answers: allAnswers,
+                    test_id: test_id,
+                    user_id: user.id,
+                    completed: true,
+                })
+            })
                 .then(() => window.location.href = '/get-results/' + test_id);
         }
-    }, [isSubmitted, curUser])
+    }, [isSubmitted, user])
 
     return (
         <div>
-            {(userLoading || loading) && (<Loading />)}
-            {(userError || error) && (<Error />)}
+            {(accountLoading || loading) && (<Loading />)}
+            {(authError) && (<Error msg={"Please sign in"} />)}
+            {(error) && (<Error msg={error.message} />)}
             {
                 currAssessment && (
                     <div>
@@ -86,17 +121,16 @@ function AssessmentComponent() {
                             title={currAssessment.assessment_title}
                             currQuestion={currAssessment.questions[currQuestion]}
                         />
-        
                         <AssessmentComponentQuestion
                             setCurrAnswers={setCurrAnswers}
                             currAnswers={currAnswers}
                         />
-        
                         <AssessmentFooter
                             btnText={currQuestion === currAssessment.questions.length - 1 ? 'Submit' : 'Next'}
                             showPrev={currQuestion !== 0}
                             handleNextQuestion={handleNextQuestion}
                             handlePrevQuestion={handlePrevQuestion}
+                            handleFinishLater={handleFinishLater}
                         />
                     </div>
                 )
