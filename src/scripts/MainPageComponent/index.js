@@ -40,7 +40,7 @@ const MainPageComponent = () => {
                 <AssessmentCard 
                     assessment={item} 
                     img={cardImages[index % cardImages.length]} 
-                    saved={assessmentStatus.find(e => {
+                    savedItem={assessmentStatus.find(e => {
                         return (parseInt(e.quiz_id) === parseInt(item.test_id));
                     }
                     )}

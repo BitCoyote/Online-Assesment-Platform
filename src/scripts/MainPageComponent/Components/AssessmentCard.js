@@ -1,6 +1,6 @@
 import {ButtonKMQ} from "../../Components/ButtonKMQ";
 
-const AssessmentCard = ({assessment, img}) => {
+const AssessmentCard = ({assessment, img, savedItem}) => {
     return <div className={'inline-block w-1/4 m-8 p-3 border border-slate-200 rounded h-96 relative'}>
         <div className={'absolute top-0 left-0 max-h-1/2 p-2'}>
             <img
@@ -12,7 +12,7 @@ const AssessmentCard = ({assessment, img}) => {
         </div>
         <div className={'absolute bottom-0 left-0 w-full text-center px-1'}>
         {
-            saved ? saved.quiz_finished === "1" ? (
+            savedItem ? savedItem.quiz_finished === "1" ? (
                 <a href={'/get-results/id-' + assessment.test_id}>
                     <ButtonKMQ text={'Show Results'} dark className={'w-full my-2'}/>
                 </a>
