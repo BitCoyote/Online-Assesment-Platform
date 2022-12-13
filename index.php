@@ -1,7 +1,3 @@
-<?php
-echo "<script> const wpApiNonce='" . wp_create_nonce( 'wp_rest' ) . "' </script>"
-?>
-
 <?php get_header();?>
 
 

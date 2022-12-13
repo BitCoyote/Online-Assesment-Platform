@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { useAxios } from '../utils';
 import {
-    submitAssessmentResultUrl, getAllAssessmentsUrl, getSatQuestionsUrl
+    submitAssessmentResultUrl, getAllAssessmentsUrl, getSatQuestionsUrl, getAssessmentResultUrl, submitToDraftUrl, getFromDraft as getFromDraftUrl, getAssessmentStatus as getAssessmentStatusUrl
 } from "../../constants/api/assessments";
 import {API_URL, authToken} from "../../constants/api/api";
 import {jsonToJwt} from "../../helper/jwt/jsonToJwt";
@@ -76,3 +77,83 @@ export const getAllAssessments = async ({user_id}) => {
     }
 }
 
+
+export const useGetAssessmentByTestId = ({test_id, user_id}) => {
+    const request = {
+        url: getSatQuestionsUrl,
+        method: 'GET',
+        headers: {
+            KMQJWT: jsonToJwt({
+                "test_id": test_id,
+                "user_id": user_id ? user_id : 0,
+                "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30"
+            })
+        },
+    }
+    return useAxios(request, !!user_id);
+}
+
+export const useGetAllAssessments = ({user_id}) => {
+    const request = {
+        url: getAllAssessmentsUrl,
+        method: 'GET',
+        headers: {
+            KMQJWT: jsonToJwt({
+                "test_id": 1,
+                "user_id": user_id ? user_id : 0,
+                "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30"
+            })
+        },
+    }
+    console.log(user_id)
+    return useAxios(request, !!user_id)
+}
+
+export const useGetResult = ({test_id, user_id}) => {
+    const request = {
+        url: getAssessmentResultUrl,
+        method: 'GET',
+        headers: {
+            KMQJWT: jsonToJwt({
+                "test_id": test_id,
+                "user_id": user_id,
+                "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30"
+            })
+        },
+    }    
+    return useAxios(request, !!user_id);
+}
+
+export const submitAnswersToDraft = async ({answers, test_id, user_id, completed}) => {
+    const params = {
+        user_id: user_id,
+        quiz_id: test_id,
+        quiz_title: "Sample test",
+        answer_ids: JSON.stringify(answers),
+        completed: completed ? "1" : "0"
+    };
+    const {data} = await axios.post(submitToDraftUrl, params);
+
+    return data;
+} 
+
+export const getDraftAnswers = async ({test_id, user_id}) => {
+    const params = {
+        user_id: user_id,
+        quiz_id: test_id,
+    };
+    const {data} = await axios.get(getFromDraftUrl, {
+        params
+    });
+    return data;
+}
+
+export const getAssessmentStatus = async ({user_id}) => {
+    const {data} = await axios.get(getAssessmentStatusUrl, {
+        params: {
+            user_id: user_id.toString(),
+        }
+    }
+    );
+    return data;
+}

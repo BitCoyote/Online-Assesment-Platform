@@ -1,27 +1,14 @@
-import {useAxios, useFetchUser} from "../../api/utils";
-import Loading from "../Helpers/Loading";
 import React from "react";
-import {jsonToJwt} from "../../helper/jwt/jsonToJwt";
-import {useParams, useNavigate} from "react-router-dom";
+import { useAccount } from "../../api/utils";
+import { useGetResult } from "../../api/assessments";
+import { useParams } from "react-router-dom";
 import NoAnswersFound from "./Components/NoAnswersFound";
+import Loading from "../Helpers/Loading";
 
 const AssessmentResults = () => {
     const {test_id} = useParams();
-    const curUser = useFetchUser(`/wp-json/wp/v2/users/me`);
-    const navigate = useNavigate();
-    const request = {
-        url: '/sat-tool/get-results',
-        method: 'GET',
-        headers: {
-            KMQJWT: jsonToJwt({
-                "test_id": test_id,
-                "user_id": curUser ? curUser.id : 0,
-                "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30"
-            })
-        },
-    }
-    
-    const [data, loading, error] = useAxios(request, curUser);
+    const [user, accountLoading, authError] = useAccount('me');
+    const [data, loading, error] = useGetResult({test_id, user_id: user?.id}, user?.id);
     const totalScore = (data !== undefined && data?.user_results !== undefined)
         ? data.user_results.reduce((a, b) => ({score: a.score + b.score}))
         : {score: 0}
@@ -33,21 +20,21 @@ const AssessmentResults = () => {
     return (
         <div>
             {
-                error && (
+                (authError || error) && (
                     <NoAnswersFound test_id={test_id}/>
                 )
             }
             {
-                loading && (
+                (accountLoading || loading) && (
                     <Loading/>
                 )
             }
             {
-                !error && !loading && (
+                (data) && (
 
                     <div className="container p-2 mx-auto rounded-md sm:p-4 dark:text-gray-100 dark:bg-gray-900">
                         <div class="flex flex-row">
-                            <div class="flex-none h-14"><h2 className="mb-3 text-2xl font-semibold leading-tight">{curUser.name}'s Test
+                            <div class="flex-none h-14"><h2 className="mb-3 text-2xl font-semibold leading-tight">{user.name}'s Test
                                 Result</h2></div>
                             <div class="grow h-14"></div>
                             <div class="flex-none  h-14">Total Score:&nbsp;</div>
@@ -101,7 +88,7 @@ const AssessmentResults = () => {
                         </div>
                         <button className={'h-12 border-solid border-2 mx-2 mr-5 mt-2 px-4'}
                                 onClick={() => {
-                                    navigate(`/assessment/${test_id}`)
+                                    document.location.href = `/assessment/${test_id}`;
                                 }}>
                             Go to Assessment Page
                         </button>

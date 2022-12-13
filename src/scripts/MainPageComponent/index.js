@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from "react"
-import {getAllAssessments} from "../../api/assessments";
+import React, { useEffect, useState } from "react"
+import { useGetAllAssessments, getAssessmentStatus } from "../../api/assessments";
 import AssessmentCard from "./Components/AssessmentCard";
-import { useFetchUser } from "../../api/utils";
 import FrontPage1 from '../../assets/assessments/assessment_frontpage_1.png';
 import FrontPage2 from '../../assets/assessments/assessment_frontpage_2.png';
 import FrontPage3 from '../../assets/assessments/assessment_frontpage_3.png';
@@ -10,27 +9,43 @@ import FrontPage5 from '../../assets/assessments/assessment_frontpage_5.png';
 import FrontPage6 from '../../assets/assessments/assessment_frontpage_6.png';
 import FrontPage7 from '../../assets/assessments/assessment_frontpage_7.png';
 
+import { useAccount } from "../../api/utils";
+import Loading from "../Helpers/Loading";
+import Error from "../Helpers/Error";
+
 const MainPageComponent = () => {
-    const [allAssessments, setAllAssessments] = useState([]);
     const cardImages = [FrontPage1, FrontPage2, FrontPage3, FrontPage4, FrontPage5, FrontPage6, FrontPage7];
-    const curUser = useFetchUser('/wp-json/wp/v2/users/me');
+    const [user, accountLoading, authError] = useAccount('me');
+    const [data, loading, error] = useGetAllAssessments({user_id: user?.id});
+    const [assessmentStatus, setAssessmentStatus] = useState([]);
 
     useEffect(() => {
-        if (curUser)
-            getAllAssessments({user_id: curUser.id}).then(data => setAllAssessments(data));
-    }, [curUser])
-
-    if (!allAssessments || !allAssessments.hasOwnProperty('SAT_Assessments')) {
-        return null;
-    }
-
-    return <div className={' '}>
-        {
-            allAssessments.SAT_Assessments.map((item, index) =>
-                <AssessmentCard assessment={item} img={cardImages[index % cardImages.length]}/>
-            )
+        if(user) {
+            getAssessmentStatus({user_id: user?.id})
+            .then((status) => {
+                try {
+                    setAssessmentStatus(JSON.parse(status));
+                } catch (e) {
+                    return;
+                }
+            })
         }
-    </div>
-}
+    }, [user])
 
+    return (
+        <div className={' '}>
+            {(loading || accountLoading) && (<Loading />)}
+            {(error || authError) && (<Error msg={error.message} />)}
+            {data && data.SAT_Assessments && data.SAT_Assessments.map((item, index) => 
+                <AssessmentCard 
+                    assessment={item} 
+                    img={cardImages[index % cardImages.length]} 
+                    saved={assessmentStatus.find(e => {
+                        return (parseInt(e.quiz_id) === parseInt(item.test_id));
+                    }
+                    )}
+                />)}
+        </div>
+    )
+}
 export default MainPageComponent;

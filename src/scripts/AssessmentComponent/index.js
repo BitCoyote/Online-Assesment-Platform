@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from "react"
-import { getAssessment, submitAssessment } from "../../api/assessments";
+import { submitAssessment, useGetAssessmentByTestId, submitAnswersToDraft, getDraftAnswers } from "../../api/assessments";
 import AssessmentComponentHeader from "./Components/Header/Header";
 import AssessmentComponentQuestion from "./Components/Question/Question";
 import AssessmentFooter from "./Components/Footer";
 import { useParams } from "react-router-dom";
-import { useFetchUser } from "../../api/utils";
+import { useAccount } from "../../api/utils";
+import Loading from "../Helpers/Loading";
 
 function AssessmentComponent() {
-    const [currAssessment, setCurrAssessment] = useState(null);
+    //const [currAssessment, setCurrAssessment] = useState(null);
     const [currQuestion, setCurrQuestion] = useState(0);
     const [allAnswers, setAllAnswers] = useState([]);
     const [currAnswers, setCurrAnswers] = useState({ current: null, desired: null, value: null })
     const [isSubmitted, setIsSubmitted] = useState(false);
     const { test_id } = useParams();
-    const curUser = useFetchUser('/wp-json/wp/v2/users/me');
-
+    const [user, accountLoading, authError] = useAccount('me');
+    const [currAssessment, loading, error] = useGetAssessmentByTestId({test_id, user_id: user?.id}, user?.id);
     const isAllAnswered = () => {
         return currAnswers.current && currAnswers.desired && currAnswers.value;
     }
-
 
     const handlePrevQuestion = () => {
         setCurrAnswers(allAnswers[currQuestion - 1]);
@@ -46,6 +46,17 @@ function AssessmentComponent() {
         }
     }
 
+    const handleFinishLater = () => {
+        submitAnswersToDraft({
+            answers: allAnswers,
+            test_id: test_id,
+            user_id: user.id,
+            completed: false,
+        }).then((res) => {
+            window.location.href = '/main-page/'
+        })
+    }
+
     const answersToJson = () => {
         let result = { current: {}, desired: {}, value: {} }
         allAnswers.forEach((answer, index) => {
@@ -56,16 +67,21 @@ function AssessmentComponent() {
     }
 
     useEffect(() => {
-        setIsSubmitted(false);
-        setCurrQuestion(0);
-        setAllAnswers([]);
-        setCurrAnswers({ current: null, desired: null, value: null });
-        if (curUser)
-            getAssessment({
-                test_id: test_id,
-                user_id: curUser.id
-            }).then(data => setCurrAssessment(data));
-    }, [test_id, curUser]);
+        if(user?.id)
+            getDraftAnswers({test_id, user_id: user?.id})
+            .then(data => {
+                if(data){
+                    const answers = JSON.parse(data[0].answers_obj.toString());
+                    try{
+                        setAllAnswers(answers);
+                        setCurrQuestion(answers.length - 1)
+                    }
+                    catch (e) {
+                        return;
+                    }
+                }
+            });
+    }, [user]);
 
     useEffect(() => {
         if (currQuestion < allAnswers.length) {
@@ -73,43 +89,58 @@ function AssessmentComponent() {
         } else {
             setCurrAnswers({ current: null, desired: null, value: null });
         }
-    }, [allAnswers])
+    }, [allAnswers, currQuestion])
 
     useEffect(() => {
-        if (isSubmitted && curUser) {
+        if (isSubmitted && user) {
             submitAssessment({
                 answers: answersToJson(),
                 test_id: test_id,
-                user_id: curUser.id,
-            }).then(data => console.log('submitted data', data))
-                .then(() => window.location.href = '/get-results/' + test_id);
+                user_id: user.id,
+            }).then(data => {
+                submitAnswersToDraft({
+                    answers: allAnswers,
+                    test_id: test_id,
+                    user_id: user.id,
+                    completed: true,
+                })
+            })
+            .then(() => window.location.href = '/get-results/' + test_id);
         }
-    }, [isSubmitted, curUser])
+    }, [isSubmitted, user])
 
-    if (!(currAssessment && currAssessment?.questions?.length > 0)) {
-        return null;
-    }
+    // if (!(currAssessment && currAssessment?.questions?.length > 0)) {
+    //     return null;
+    // }
 
     return (
         <div>
-            <div>
-                <AssessmentComponentHeader
-                    title={currAssessment.assessment_title}
-                    currQuestion={currAssessment.questions[currQuestion]}
-                />
+            {(accountLoading || loading) && (<Loading />)}
+            {(authError) && (<Error msg={"Please sign in"}/>)}
+            {(error) && (<Error msg={error.message}/>)}
+            {
+                currAssessment && (
+                    <div>
+                        <AssessmentComponentHeader
+                            title={currAssessment.assessment_title}
+                            currQuestion={currAssessment.questions[currQuestion]}
+                        />
 
-                <AssessmentComponentQuestion
-                    setCurrAnswers={setCurrAnswers}
-                    currAnswers={currAnswers}
-                />
+                        <AssessmentComponentQuestion
+                            setCurrAnswers={setCurrAnswers}
+                            currAnswers={currAnswers}
+                        />
 
-                <AssessmentFooter
-                    btnText={currQuestion === currAssessment.questions.length - 1 ? 'Submit' : 'Next'}
-                    showPrev={currQuestion !== 0}
-                    handleNextQuestion={handleNextQuestion}
-                    handlePrevQuestion={handlePrevQuestion}
-                />
-            </div>
+                        <AssessmentFooter
+                            btnText={currQuestion === currAssessment.questions.length - 1 ? 'Submit' : 'Next'}
+                            showPrev={currQuestion !== 0}
+                            handleNextQuestion={handleNextQuestion}
+                            handlePrevQuestion={handlePrevQuestion}
+                            handleFinishLater={handleFinishLater}
+                        />
+                    </div>
+                )
+            }
         </div>
     )
 }
