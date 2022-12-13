@@ -33,7 +33,7 @@ const MainPageComponent = () => {
     }, [user])
 
     return (
-        <div className={' '}>
+        <div className={'py-24'}>
             {(loading || accountLoading) && (<Loading />)}
             {(error || authError) && (<Error msg={error.message} />)}
             {data && data.SAT_Assessments && data.SAT_Assessments.map((item, index) => 
