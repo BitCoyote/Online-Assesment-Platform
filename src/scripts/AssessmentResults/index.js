@@ -6,6 +6,7 @@ import NoAnswersFound from "./Components/NoAnswersFound";
 import Loading from "../Helpers/Loading";
 
 const AssessmentResults = () => {
+    const assessments_list = ["Customer Centric Strategic Assessment Tool (CCSAT)","New Product & Process Design and Implementation Strategic Assessment Tool (NPPDISAT)","Reality Check Strategic Assessment Tool (RealitySAT)","Values-Based Strategic Assessment Tool (VSAT)","Project Management Strategic Assessment Tool (PMSAT)","People-Centric Leadership Strategic Assessment Tool (PCLSAT)","Values Strategic Assessment Tool - Blocks 4 - 7 Transformation (ValuesSAT--2)","Values Strategic Assessment Tool - Blocks 1 - 3 Foundations (ValuesSAT-1)","Strategy Strategic Assessment Tool (S-SAT)","Supply Network Strategic Assessment Tool - Supplier View (SNSAT Supplier)","Supply Network Strategic Assessment Tool - Customer View (SNSAT Customer)","Industry 4.0 Strategic Assessment Tool  - Traditional View (ISAT -1)","Innovation Strategic Assessment Tool (InnSAT)","Execution Strategic Assessment Tool (ESAT)","Culture SAT (CultureSAT)","Competence Strategic Assessment Tool - Block 1 - STEM Skills (CompSAT-1)","Competence Strategic Assessment Tool - Blocks 2,3 & 4 - Essential Skills (CompSAT-2)","Leadership Strategic Assessment Tool (LSAT)","Industry 4.0 Strategic Assessment Tool  - SIRI View (ISAT -2)"];
     const { test_id } = useParams();
     const [user, accountLoading, authError] = useAccount('me');
     const [data, loading, error] = useGetResult({ test_id: test_id.split('-')[1], user_id: user?.id }, user?.id);
@@ -87,12 +88,6 @@ const AssessmentResults = () => {
                                 </tbody>
                             </table>
                         </div>
-                        <button className={'h-12 border-solid border-2 mx-2 mr-5 mt-2 px-4'}
-                            onClick={() => {
-                                document.location.href = `/assessment/${test_id}`;
-                            }}>
-                            Go to Assessment Page
-                        </button>
                         <button className={'h-12 border-solid border-2 mx-2 mr-5 mt-2 px-4'}
                             onClick={() => {
                                 document.location.href = "/main-page"

@@ -76,7 +76,8 @@ function AssessmentComponent() {
                         try {
                             const answers = JSON.parse(data[0].answers_obj?.toString());
                             setAllAnswers(answers);
-                            setCurrQuestion(answers.length - 1)
+                            const len = answers.length > 0 ? answers.length - 1 : 0;
+                            setCurrQuestion(len)
                         }
                         catch (e) {
                             return;
