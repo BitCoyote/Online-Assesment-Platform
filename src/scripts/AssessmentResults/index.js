@@ -8,7 +8,7 @@ import Loading from "../Helpers/Loading";
 const AssessmentResults = () => {
     const { test_id } = useParams();
     const [user, accountLoading, authError] = useAccount('me');
-    const [data, loading, error] = useGetResult({ test_id, user_id: user?.id }, user?.id);
+    const [data, loading, error] = useGetResult({ test_id: test_id.split('-')[1], user_id: user?.id }, user?.id);
     const totalScore = (data !== undefined && data?.user_results !== undefined)
         ? data.user_results.reduce((a, b) => ({ score: a.score + b.score }))
         : { score: 0 }

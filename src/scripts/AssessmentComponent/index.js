@@ -15,7 +15,9 @@ function AssessmentComponent() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const { test_id } = useParams();
     const [user, accountLoading, authError] = useAccount('me');
-    const [currAssessment, loading, error] = useGetAssessmentByTestId({ test_id, user_id: user?.id }, user?.id);
+    const [currAssessment, loading, error] = useGetAssessmentByTestId({
+         test_id: test_id.split('-')[1], 
+         user_id: user?.id }, user?.id);
     const isAllAnswered = () => {
         return currAnswers.current && currAnswers.desired && currAnswers.value;
     }
@@ -49,7 +51,7 @@ function AssessmentComponent() {
     const handleFinishLater = () => {
         submitAnswersToDraft({
             answers: allAnswers,
-            test_id: test_id,
+            test_id: test_id.split('-')[1],
             user_id: user.id,
             completed: false,
         }).then((res) => {
@@ -68,7 +70,7 @@ function AssessmentComponent() {
 
     useEffect(() => {
         if (user?.id)
-            getDraftAnswers({ test_id, user_id: user?.id })
+            getDraftAnswers({ test_id: test_id.split('-')[1], user_id: user?.id })
                 .then(data => {
                     if (data) {
                         try {

@@ -10,19 +10,19 @@ const AssessmentCard = ({assessment, img, saved}) => {
             <h2 className={'text-sm mb-2'}>{assessment.test_title}</h2>
             {
                 saved ? saved.quiz_finished === "1" ? (
-                    <a href={'/get-results/' + assessment.test_id}>
+                    <a href={'/get-results/id-' + assessment.test_id}>
                         <button className={'w-24 h-12 border-solid border-2 mx-2 mb-2 absolute bottom-0 right-0 bg-green-500'}>
                             See Results
                         </button>
                     </a>
                 ) : (
-                    <a href={'/assessment/' + assessment.test_id}>
+                    <a href={'/assessment/id-' + assessment.test_id}>
                         <button className={'w-24 h-12 border-solid border-2 mx-2 mb-2 absolute bottom-0 left-0 bg-sky-500'}>
                             Resume Test
                         </button>
                     </a>
                 ) : (
-                    <a href={'/assessment/' + assessment.test_id}>
+                    <a href={'/assessment/id-' + assessment.test_id}>
                         <button className={'w-24 h-12 border-solid border-2 mx-2 mb-2 absolute bottom-0 left-0 bg-sky-500'}>
                             Take Test
                         </button>
