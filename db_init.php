@@ -10,6 +10,8 @@ function kmq_init_table(){
   
   $charset_collate = $wpdb->get_charset_collate();
 
+  $check_table = "SHOW TABLES LIKE '$table_name';";
+
   $sql = "CREATE TABLE $table_name (
     id mediumint(9) NOT NULL AUTO_INCREMENT,
     user_id TEXT NOT NULL ,
@@ -20,19 +22,10 @@ function kmq_init_table(){
     PRIMARY KEY (id)
   ) $charset_collate;";
 
-  $sql_two = "CREATE TABLE $table_name_two (
-    id mediumint(9) NOT NULL AUTO_INCREMENT,
-    user_id TEXT NOT NULL ,
-    company_id TEXT NOT NULL ,
-    job_title TEXT NOT NULL ,
-    experience INT NOT NULL default 0,
-    PRIMARY KEY (id)
-  ) $charset_collate;";
-
   require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-  dbDelta( $sql );
-  dbDelta( $sql_two );
-
+  $check = $wpdb->query($check_table);
+  if($check == 0)
+    dbDelta( $sql );
   add_option( 'jal_db_version', $jal_db_version );
 }
 ?>
