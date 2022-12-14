@@ -72,22 +72,23 @@ function AssessmentComponent() {
     }
 
     useEffect(() => {
-        if (user?.id)
+        if (user?.id && !loading)
             getDraftAnswers({ test_id: test_id.split('-')[1], user_id: user?.id })
                 .then(data => {
                     if (data) {
                         try {
                             const answers = JSON.parse(data[0].answers_obj?.toString());
-                            setAllAnswers(answers || []);
-                            const len = answers.length > 0 ? answers.length - 1 : 0;
-                            setCurrQuestion(len)
+                            if (answers.length !== currAssessment.questions.length && answers.length > 0) {
+                                setAllAnswers(answers || []);
+                                setCurrQuestion(answers.length - 1)
+                            }
                         }
                         catch (e) {
                             return;
                         }
                     }
                 });
-    }, [user]);
+    }, [user, loading]);
 
     useEffect(() => {
         if (currQuestion < allAnswers.length) {
