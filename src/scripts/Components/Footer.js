@@ -1,7 +1,7 @@
 import Logo from '../../assets/header/logo.png';
 
 const Footer = () => {
-    return <div className={'relative bg-[#f0f0f0] w-screen text-center p-6 mt-8'}>
+    return <div className={'relative bg-[#f0f0f0] w-screen text-center p-6'}>
         <div>
             <div className={'mb-12'}>
                 <img src={Logo} alt={'logo'} className={'inline-block'}/>
