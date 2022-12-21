@@ -38,7 +38,7 @@ const MainPageComponent = () => {
     }, [user])
 
     return (
-        <div className={'pb-24 table'}>
+        <div className={'pb-24 table w-full'}>
             {(loading || accountLoading) && (<Loading/>)}
             {(error || authError) && (<Error msg={error.message}/>)}
             <div className={'w-1/5 table-cell border-r-2 border-solid border-slate-200 align-top'}>
@@ -49,11 +49,15 @@ const MainPageComponent = () => {
                 />
             </div>
             <div className={'w-4/5 table-cell'}>
-                <SATList
-                    data={data}
-                    user={user}
-                    assessmentStatus={assessmentStatus}
-                />
+                {
+                    currTab === 'SAT'
+                        ? <SATList
+                            data={data}
+                            user={user}
+                            assessmentStatus={assessmentStatus}
+                        />
+                        : <div className={'text-3xl p-12'}>Results Dashboard</div>
+                }
             </div>
         </div>
     )
