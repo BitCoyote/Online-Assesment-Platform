@@ -81,4 +81,8 @@
           $wpdb->query("INSERT INTO `$table_name`($fields) VALUES ($format)");
         }
       }
+      // Get user meta data callback...
+      function user_meta_callback( $user, $field_name, $request) {
+        return get_user_meta( $user[ 'id' ], 'company', true );
+      }
 ?>

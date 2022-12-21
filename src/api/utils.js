@@ -48,6 +48,6 @@ export const useAccount = (user_id) => useAxios({
     method: "GET",
     target: "WP",
     headers: {
-        'X-WP-Nonce': wpApiNonce
-    }
+        'X-WP-Nonce': wpApiNonce,
+    },
 }, true);

@@ -7,10 +7,15 @@ import Loading from "../Helpers/Loading";
 import TableCellWithToolTip from "./Components/TableCellWithToolTip";
 
 const AssessmentResults = () => {
-    const assessments_list = ["Customer Centric Strategic Assessment Tool (CCSAT)","New Product & Process Design and Implementation Strategic Assessment Tool (NPPDISAT)","Reality Check Strategic Assessment Tool (RealitySAT)","Values-Based Strategic Assessment Tool (VSAT)","Project Management Strategic Assessment Tool (PMSAT)","People-Centric Leadership Strategic Assessment Tool (PCLSAT)","Values Strategic Assessment Tool - Blocks 4 - 7 Transformation (ValuesSAT--2)","Values Strategic Assessment Tool - Blocks 1 - 3 Foundations (ValuesSAT-1)","Strategy Strategic Assessment Tool (S-SATList)","Supply Network Strategic Assessment Tool - Supplier View (SNSAT Supplier)","Supply Network Strategic Assessment Tool - Customer View (SNSAT Customer)","Industry 4.0 Strategic Assessment Tool  - Traditional View (ISAT -1)","Innovation Strategic Assessment Tool (InnSAT)","Execution Strategic Assessment Tool (ESAT)","Culture SATList (CultureSAT)","Competence Strategic Assessment Tool - Block 1 - STEM Skills (CompSAT-1)","Competence Strategic Assessment Tool - Blocks 2,3 & 4 - Essential Skills (CompSAT-2)","Leadership Strategic Assessment Tool (LSAT)","Industry 4.0 Strategic Assessment Tool  - SIRI View (ISAT -2)"];
+    const assessments_list = ["Customer Centric Strategic Assessment Tool (CCSAT)", "New Product & Process Design and Implementation Strategic Assessment Tool (NPPDISAT)", "Reality Check Strategic Assessment Tool (RealitySAT)", "Values-Based Strategic Assessment Tool (VSAT)", "Project Management Strategic Assessment Tool (PMSAT)", "People-Centric Leadership Strategic Assessment Tool (PCLSAT)", "Values Strategic Assessment Tool - Blocks 4 - 7 Transformation (ValuesSAT--2)", "Values Strategic Assessment Tool - Blocks 1 - 3 Foundations (ValuesSAT-1)", "Strategy Strategic Assessment Tool (S-SATList)", "Supply Network Strategic Assessment Tool - Supplier View (SNSAT Supplier)", "Supply Network Strategic Assessment Tool - Customer View (SNSAT Customer)", "Industry 4.0 Strategic Assessment Tool  - Traditional View (ISAT -1)", "Innovation Strategic Assessment Tool (InnSAT)", "Execution Strategic Assessment Tool (ESAT)", "Culture SATList (CultureSAT)", "Competence Strategic Assessment Tool - Block 1 - STEM Skills (CompSAT-1)", "Competence Strategic Assessment Tool - Blocks 2,3 & 4 - Essential Skills (CompSAT-2)", "Leadership Strategic Assessment Tool (LSAT)", "Industry 4.0 Strategic Assessment Tool  - SIRI View (ISAT -2)"];
     const { test_id } = useParams();
     const [user, accountLoading, authError] = useAccount('me');
-    const [data, loading, error] = useGetResult({ test_id: test_id.split('-')[1], user_id: user?.id }, user?.id);
+    const [data, loading, error] = useGetResult(
+        {
+            test_id: test_id.split('-')[1],
+            user_id: user?.id,
+            company_id: user?.company_id
+        }, user?.id);
     return (
         <div className={'py-24'}>
             {
@@ -36,16 +41,16 @@ const AssessmentResults = () => {
                         <div className="overflow-x-auto">
                             <table className="table-fixed min-w-full text-xs text-sm">
                                 <thead className="rounded-t-lg dark:bg-gray-700">
-                                <tr className="text-right">
-                                    <th title="Number" className="text-sm p-3 text-left">Question Number</th>
-                                    <th title="Question" className="text-sm p-3 text-left">Question</th>
-                                    <th title="Category" className="text-sm p-3 text-left">Category</th>
-                                    <th title="Answer(Current)" className="text-sm p-3">Answer (Current)</th>
-                                    <th title="Answer(Desired)" className="text-sm p-3">Answer (Desired)</th>
-                                    <th title="Answer(Value)" className="text-sm p-3">Answer (Value)</th>
-                                    <th title="Gap" className="text-sm p-3">Gap</th>
-                                    <th title="Score" className="text-sm p-3">Score</th>
-                                </tr>
+                                    <tr className="text-right">
+                                        <th title="Number" className="text-sm p-3 text-left">Question Number</th>
+                                        <th title="Question" className="text-sm p-3 text-left">Question</th>
+                                        <th title="Category" className="text-sm p-3 text-left">Category</th>
+                                        <th title="Answer(Current)" className="text-sm p-3">Answer (Current)</th>
+                                        <th title="Answer(Desired)" className="text-sm p-3">Answer (Desired)</th>
+                                        <th title="Answer(Value)" className="text-sm p-3">Answer (Value)</th>
+                                        <th title="Gap" className="text-sm p-3">Gap</th>
+                                        <th title="Score" className="text-sm p-3">Score</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     {data && data.user_results.length > 0 && data?.user_results?.map((result, key) => (
@@ -55,8 +60,8 @@ const AssessmentResults = () => {
                                                 <span>{result.question.question_number}</span>
                                             </td>
                                             <td className="px-3 py-2 text-left">
-                                                <TableCellWithToolTip 
-                                                    content={result.question.question_title} 
+                                                <TableCellWithToolTip
+                                                    content={result.question.question_title}
                                                 />
                                             </td>
                                             <td className="px-3 py-2 text-left">

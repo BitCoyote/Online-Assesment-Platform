@@ -107,7 +107,7 @@ export const useGetAllAssessments = ({ user_id }) => {
     return useAxios(request, !!user_id)
 }
 
-export const useGetResult = ({ test_id, user_id }) => {
+export const useGetResult = ({ test_id, user_id, company_id }) => {
     const request = {
         url: getAssessmentResultUrl,
         method: 'GET',
@@ -115,7 +115,7 @@ export const useGetResult = ({ test_id, user_id }) => {
             KMQJWT: jsonToJwt({
                 "test_id": test_id,
                 "user_id": user_id,
-                "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30"
+                "company_id": company_id
             })
         },
     }
@@ -156,7 +156,7 @@ export const getAssessmentStatus = async ({ user_id }) => {
     return data;
 }
 
-export const submitRetakeAssessment = async ({user_id, test_id, test_title}) => {
+export const submitRetakeAssessment = async ({ user_id, test_id, test_title }) => {
     const params = {
         user_id: user_id,
         quiz_id: test_id,

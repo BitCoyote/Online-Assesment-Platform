@@ -1,5 +1,5 @@
 <?php
-include "db_init.php";
+include "init.php";
 include "controller.php";
 function kmq_load_assets() {
   wp_enqueue_script('ourmainjs', get_theme_file_uri('/build/index.js'), array('wp-element'), '1.0', true);
@@ -31,6 +31,12 @@ function my_rest_api_init() {
     register_rest_route( 'knowmeq/wp-api', '/retake-assessment', array(
       'methods'             => 'POST',
       'callback'            => 'kmq_function_retake_assessment'
+    ) );
+      // add meta data (ex: company id for user/ endpoint)
+    register_rest_field( 'user', 'company_id', array(
+      'get_callback'        => 'user_meta_callback',
+      'update_callback'     => null,
+      'schema'              => null,
     ) );
 }
 
