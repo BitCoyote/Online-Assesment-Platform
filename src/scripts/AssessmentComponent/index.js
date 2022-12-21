@@ -119,7 +119,7 @@ function AssessmentComponent() {
     }, [isSubmitted, user])
 
     return (
-        <div className={'py-24'}>
+        <div className={'py-24 px-48'}>
             {(accountLoading || loading) && (<Loading />)}
             {(authError) && (<Error msg={"Please sign in"} />)}
             {(error) && (<Error msg={error.message} />)}
