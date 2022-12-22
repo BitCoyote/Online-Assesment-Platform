@@ -85,4 +85,15 @@
       function user_meta_callback( $user, $field_name, $request) {
         return get_user_meta( $user[ 'id' ], 'company', true );
       }
+
+      // Get company list from the db...
+      function get_company_list () {
+              
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'kmq_companies';
+        $sql = "SELECT * FROM `$table_name`;";
+        $results = $wpdb->get_results($sql);
+        
+        return $results;
+      }
 ?>
