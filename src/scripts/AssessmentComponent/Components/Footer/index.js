@@ -1,17 +1,17 @@
-const AssessmentFooter = ({handleNextQuestion, handlePrevQuestion, btnText, showPrev}) => {
+import { ButtonKMQ } from "../../../Components/ButtonKMQ";
+
+const AssessmentFooter = ({handleNextQuestion, handlePrevQuestion, handleFinishLater, btnText, showPrev}) => {
     return <div>
-        {
-            showPrev ?
-                <button className={'w-24 h-12 border-solid border-2 mx-2 mr-5'}
-                        onClick={handlePrevQuestion}>
-                    Previous
-                </button>
-                : null
-        }
-        <button className={'w-24 h-12 border-solid border-2 mx-2 mr-5'}
-                onClick={handleNextQuestion}>
-            {btnText}
-        </button>
+        <ButtonKMQ //className={'w-24 h-12 border-solid border-2 mx-2 mr-5'}
+                   onClick={handleNextQuestion}
+                   text={btnText}
+        />
+        <ButtonKMQ
+                   onClick={handleFinishLater}
+                   dark
+                   text='Finish Later'
+                   className={"float-right"}
+        />
     </div>
 }
 

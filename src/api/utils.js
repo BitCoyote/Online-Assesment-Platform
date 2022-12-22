@@ -4,10 +4,12 @@ import { API_URL, authToken } from "../constants/api/api";
 
 const axiosInstance = (request) => {
     return axios.create({
-        baseURL: API_URL,
+        baseURL: request.target === "WP" ? "" : API_URL,
         headers: {
             Accept: 'application/json',
-            Authorization: authToken,  // Todo: Get Token
+            Authorization: request.headers.hasOwnProperty('X-WP-Nonce')
+                ? null
+                : authToken,
             ...request.headers
         }
     });
@@ -21,7 +23,9 @@ export const useAxios = (request, allow) => {
     useEffect(() => {
         if (allow) {
             instance.request({
-                url: request.url,
+                url: request.headers.hasOwnProperty('X-WP-Nonce')
+                    ? request.url
+                    : API_URL + request.url,
                 method: request.method,
             })
                 .then((response) => {
@@ -39,22 +43,11 @@ export const useAxios = (request, allow) => {
     return [data, loading, error]
 }
 
-export const useFetch = (url) => {
-    const [data, setData] = useState(null);
-    useEffect(() => {
-        async function loadData() {
-            const response = await fetch(url, {
-                headers: {
-                    'X-WP-Nonce': wpApiNonce
-                }
-            });
-            if (!response.ok) {
-                return;
-            }
-            const posts = await response.json();
-            setData(posts);
-        }
-        loadData();
-    }, [url]);
-    return data;
-}
+export const useAccount = (user_id) => useAxios({
+    url: `/wp-json/wp/v2/users/${user_id}`,
+    method: "GET",
+    target: "WP",
+    headers: {
+        'X-WP-Nonce': wpApiNonce,
+    },
+}, true);
