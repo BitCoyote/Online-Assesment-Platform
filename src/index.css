@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'Avenir LT';
+    src: url('fonts/AvenirNextLTPro-Regular.ttf');
+    font-display: swap;
+}
+
+@layer base {
+  html {
+    font-family: "Avenir LT", sans-serif;
+  }
+}

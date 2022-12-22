@@ -7,7 +7,7 @@ import Error from '../Helpers/Error';
 const Auth = () => {
     const [user, accountLoading, authError] = useAccount('me');
     return (
-        <div className={'min-h-[70vh]'}>
+        <div className={''}>
             {accountLoading && <Loading />}
             {authError && <Error msg="Please sign in to view this page"/>}
             {user && <Outlet />}

@@ -118,8 +118,10 @@ function AssessmentComponent() {
         }
     }, [isSubmitted, user])
 
+    console.log('currAssessment', currAssessment)
+
     return (
-        <div className={'py-24 px-48'}>
+        <div className={'pb-24 mx-auto px-4 min-w-[800px] w-2/3'}>
             {(accountLoading || loading) && (<Loading />)}
             {(authError) && (<Error msg={"Please sign in"} />)}
             {(error) && (<Error msg={error.message} />)}
@@ -127,8 +129,9 @@ function AssessmentComponent() {
                 currAssessment && (
                     <div>
                         <AssessmentComponentHeader
-                            title={currAssessment.assessment_title}
                             currQuestion={currAssessment.questions[currQuestion]}
+                            currQuestionNumber={currQuestion}
+                            questionsLength={currAssessment.questions.length}
                         />
 
                         <AssessmentComponentQuestion
