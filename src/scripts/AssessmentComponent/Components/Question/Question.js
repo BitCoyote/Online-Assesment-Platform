@@ -18,7 +18,7 @@ const AssessmentComponentQuestion = ({currAnswers, setCurrAnswers}) => {
             canChoose={() => true}
             afterChoose={(item) => (item + 1 > currAnswers.desired && currAnswers.desired)
                 ? setCurrAnswers({...currAnswers, desired: null, current: item + 1})
-                : null}
+                : () => {}}
         />
         <AnswerRaw
             handleChooseAnswer={handleChooseAnswer}
