@@ -1,20 +1,21 @@
 <?php
 include "init.php";
 include "controller.php";
+/* Import React components into WordPress */
 function kmq_load_assets() {
   wp_enqueue_script('ourmainjs', get_theme_file_uri('/build/index.js'), array('wp-element'), '1.0', true);
   wp_enqueue_style('ourmaincss', get_theme_file_uri('/build/index.css'));
 }
-
 add_action('wp_enqueue_scripts', 'kmq_load_assets');
 
+/*  */
 function kmq_add_support() {
   add_theme_support('title-tag');
   add_theme_support('post-thumbnails');
 }
-
 add_action('after_setup_theme', 'kmq_add_support');
 
+/* Rest API initialization. */
 function my_rest_api_init() {
     register_rest_route( 'knowmeq/wp-api', '/finish-later', array(
         'methods'             => 'POST',
@@ -32,9 +33,19 @@ function my_rest_api_init() {
       'methods'             => 'POST',
       'callback'            => 'kmq_function_retake_assessment'
     ) );
+
+    register_rest_route( 'knowmeq/wp-api', '/get-company-list', array(
+      'methods'             => 'GET',
+      'callback'            => 'kmq_function_get_company_list'
+    ) );
       // add meta data (ex: company id for user/ endpoint)
     register_rest_field( 'user', 'company_id', array(
       'get_callback'        => 'user_meta_callback',
+      'update_callback'     => null,
+      'schema'              => null,
+    ) );
+    register_rest_field( 'user', 'role', array(
+      'get_callback'        => 'user_role_callback',
       'update_callback'     => null,
       'schema'              => null,
     ) );
@@ -42,6 +53,7 @@ function my_rest_api_init() {
 
 add_action( 'rest_api_init', 'my_rest_api_init', 10, 1 );
 
+/* Dynamically create WP page for React. */
 function kmq_pages_creator() {
   $pages = array(
         "Welcome" => "/",

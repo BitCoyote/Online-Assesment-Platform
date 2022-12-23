@@ -129,10 +129,10 @@ function custom_user_profile_fields($user){
       $my_company = '';
   ?>
   <table class="form-table">
-      <tr>
-          <th><label for="company">Company Name</label></th>
+      <tr class="form-required">
+          <th><label for="company"><?php _e("Company Name",'KnowMeQ'); ?> <span class="description"><?php _e('(required)'); ?></span></label></th>
           <td>
-          <select id="company" name="company">
+          <select id="company" name="company" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required fill_inited wpcf7-not-valid" aria-required="true" aria-invalid="true" aria-describedby="wpcf7-f676-p73-o1-ve-text-anruf">
             <option value="">Choose a Company</option>
             <?php 
               foreach($temporary_data as $company) {
@@ -142,6 +142,7 @@ function custom_user_profile_fields($user){
               }
             ?>
           </select>
+          <span class="wpcf7-not-valid-tip" aria-hidden="true">Dies ist ein Pflichtfeld./span>
           </td>
       </tr>
   </table>

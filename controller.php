@@ -86,6 +86,21 @@
         return get_user_meta( $user[ 'id' ], 'company', true );
       }
 
+      function user_role_callback( $user, $field_name, $request) {
+        if( is_user_logged_in() ) {
+ 
+          $user = wp_get_current_user();
+       
+          $roles = ( array ) $user->roles;
+       
+          return $roles[0];
+       
+        } else {
+       
+          return "";
+       
+        }
+      }
       // Get company list from the db...
       function get_company_list () {
               
@@ -95,5 +110,9 @@
         $results = $wpdb->get_results($sql);
         
         return $results;
+      }
+       
+      function kmq_function_get_company_list () {
+        return json_encode(get_company_list());
       }
 ?>

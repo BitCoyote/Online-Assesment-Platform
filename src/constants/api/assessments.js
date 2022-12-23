@@ -13,3 +13,5 @@ export const retakeTestUrl = '/wp-json/knowmeq/wp-api/retake-assessment';
 export const getFromDraftUrl = '/wp-json/knowmeq/wp-api/get-draft';
 
 export const getAssessmentStatusUrl = '/wp-json/knowmeq/wp-api/get-assessments-status';
+
+export const getCompanyList = '/wp-json/knowmeq/wp-api/get-company-list';

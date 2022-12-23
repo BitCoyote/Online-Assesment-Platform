@@ -1,7 +1,15 @@
 import axios from 'axios';
 import { useAxios } from '../utils';
 import {
-    submitAssessmentResultUrl, getAllAssessmentsUrl, getSatQuestionsUrl, getAssessmentResultUrl, submitToDraftUrl, getFromDraftUrl, getAssessmentStatusUrl, retakeTestUrl
+    submitAssessmentResultUrl, 
+    getAllAssessmentsUrl, 
+    getSatQuestionsUrl, 
+    getAssessmentResultUrl, 
+    submitToDraftUrl, 
+    getFromDraftUrl, 
+    getAssessmentStatusUrl, 
+    retakeTestUrl, 
+    getCompanyList
 } from "../../constants/api/assessments";
 import { API_URL, authToken } from "../../constants/api/api";
 import { jsonToJwt } from "../../helper/jwt/jsonToJwt";
@@ -164,4 +172,15 @@ export const submitRetakeAssessment = async ({ user_id, test_id, test_title }) =
     };
     const { data } = await axios.post(retakeTestUrl, params);
     return data;
+}
+
+export const useGetCompanyList = () => {
+    return useAxios({
+        url: getCompanyList,
+        method: "GET",
+        target: "WP",
+        headers: {
+            'X-WP-Nonce': wpApiNonce,
+        },
+    }, true);
 }
