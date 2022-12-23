@@ -25,12 +25,14 @@ const AssessmentComponentQuestion = ({currAnswers, setCurrAnswers}) => {
             label={'desired'}
             currAnswer={currAnswers.desired}
             canChoose={(item) => item + 1 >= currAnswers.current}
+            afterChoose={() => {}}
         />
         <AnswerRaw
             handleChooseAnswer={handleChooseAnswer}
             label={'value'}
             currAnswer={currAnswers.value}
             canChoose={() => true}
+            afterChoose={() => {}}
         />
     </div>
 }

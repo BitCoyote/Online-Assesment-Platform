@@ -1,9 +1,9 @@
 import {RouterProvider} from 'react-router-dom';
 import React from "react";
 import {router} from "./router";
-import HeaderKMQ from "./scripts/Components/HeaderKMQ";
-import Footer from "./scripts/Components/Footer";
-import TabsMenu from "./scripts/MainPageComponent/Components/Tabs/TabsMenu";
+import HeaderKMQ from "./scripts/Header/HeaderKMQ";
+import Footer from "./scripts/Footer/Footer";
+import TabsMenu from "./scripts/Tabs/TabsMenu";
 import {useTabs} from "./hooks/useTabs";
 
 const App = () => {

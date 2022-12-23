@@ -1,5 +1,5 @@
 import React from 'react';
-import {ButtonKMQ} from "../../Components/ButtonKMQ";
+import {ButtonKMQ} from "../../KMQComponents/ButtonKMQ";
 
 function Error({msg}) {
     return (

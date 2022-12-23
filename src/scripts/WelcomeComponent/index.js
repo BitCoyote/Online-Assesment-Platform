@@ -1,5 +1,5 @@
 import WelcomeMain from '../../assets/welcome/main_page.png';
-import {ButtonKMQ} from "../Components/ButtonKMQ";
+import {ButtonKMQ} from "../KMQComponents/ButtonKMQ";
 
 const WelcomeComponent = () => {
     return <div className={'h-full w-full'}>

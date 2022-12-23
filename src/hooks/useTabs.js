@@ -2,7 +2,8 @@ import {useMemo} from "react";
 
 const TabsUrl = {
     'SAT': '/main-page',
-    'Results': '/get-results/id-1'
+    'Results': '/get-results/id-1',
+    'My Results': '/get-results/id-2',
 }
 
 export const useTabs = () => {
@@ -21,8 +22,6 @@ export const useTabs = () => {
     const handleClickTab = (clickedTab) => {
         window.location.href = TabsUrl[clickedTab];
     }
-
-    console.log('currTab', currTab)
 
     return [currTab, handleClickTab, Object.keys(TabsUrl)];
 }
