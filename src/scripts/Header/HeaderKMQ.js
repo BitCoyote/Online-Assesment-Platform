@@ -12,7 +12,7 @@ const HeaderKMQ = () => {
             </a>
         </div>
         <div className={'inline-block text-right float-right'}>
-            <a href={'/login'}>
+            <a href={'/kmq-login'}>
                 <ButtonKMQ text={user ? 'Logout' : 'Login'} className={'mx-8'}/>
             </a>
         </div>

@@ -84,3 +84,28 @@ function kmq_pages_creator() {
 }
 
 kmq_pages_creator();
+
+add_action( 'rest_api_init', 'kmq_register_api_hooks' );
+
+function kmq_register_api_hooks() {
+  register_rest_route(
+    'kmq-user', '/login/',
+    array(
+      'methods'  => 'POST',
+      'callback' => 'kmq_login_callback',
+    )
+  );
+}
+
+function kmq_login_callback($request){
+    $creds = array();
+    $creds['user_login'] = $request["username"];
+    $creds['user_password'] =  $request["password"];
+    $creds['remember'] = true;
+    $user = wp_signon( $creds, false );
+
+    if ( is_wp_error($user) )
+      echo $user->get_error_message();
+
+    return $user;
+}

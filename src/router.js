@@ -5,6 +5,7 @@ import AssessmentResults from "./scripts/AssessmentResults";
 import NotFound from "./scripts/Helpers/NotFound/NotFound";
 import Auth from "./scripts/Auth";
 import WelcomeComponent from "./scripts/WelcomeComponent";
+import LogInPage from "./scripts/LogInPage";
 
 export const router = createBrowserRouter([
     {
@@ -17,6 +18,10 @@ export const router = createBrowserRouter([
             {
                 path: '',
                 element: <WelcomeComponent/>,
+            },
+            {
+                path: '/kmq-login',
+                element: <LogInPage/>,
             },
             {
                 path: 'main-page',
