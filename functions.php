@@ -46,7 +46,7 @@ function kmq_pages_creator() {
   $pages = array(
         "Welcome" => "/",
         "Main page" => "main-page",
-        "Login" => "login",
+        "Login" => "user-login",
         "Assessment" => "assessment",
         "Results" => "get-results"
   );
