@@ -95,6 +95,14 @@ function kmq_register_api_hooks() {
       'callback' => 'kmq_login_callback',
     )
   );
+
+  register_rest_route(
+    'kmq-user', '/logout/',
+    array(
+      'methods'  => 'GET',
+      'callback' => 'kmq_logout_callback',
+    )
+  );
 }
 
 function kmq_login_callback($request){
@@ -108,4 +116,8 @@ function kmq_login_callback($request){
       echo $user->get_error_message();
 
     return $user;
+}
+
+function kmq_logout_callback(){
+    return wp_logout_url('/kmq-login');
 }

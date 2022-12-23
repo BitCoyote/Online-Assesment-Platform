@@ -6,6 +6,7 @@ import NotFound from "./scripts/Helpers/NotFound/NotFound";
 import Auth from "./scripts/Auth";
 import WelcomeComponent from "./scripts/WelcomeComponent";
 import LogInPage from "./scripts/LogInPage";
+import withTabs from "./hoc/withTabs";
 
 export const router = createBrowserRouter([
     {
@@ -25,15 +26,15 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'main-page',
-                element: <MainPageComponent />,
+                element: withTabs(MainPageComponent),
             },
             {
                 path: "assessment/:test_id",
-                element: <AssessmentComponent />,
+                element: withTabs(AssessmentComponent),
             },
             {
                 path: "get-results/:test_id",
-                element: <AssessmentResults />,
+                element: withTabs(AssessmentResults),
             }
         ]
     }

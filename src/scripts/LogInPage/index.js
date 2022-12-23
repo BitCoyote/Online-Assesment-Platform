@@ -1,8 +1,8 @@
-import {loginUser} from "../../api/assessments";
 import {ButtonKMQ} from "../KMQComponents/ButtonKMQ";
 import MainImg from '../../assets/login/login_main.png';
 import InputKMQ from "../KMQComponents/InputKMQ";
 import {useState} from "react";
+import {loginUser} from "../../api/user";
 
 const LogInPage = () => {
     const [username, setUsername] = useState('')

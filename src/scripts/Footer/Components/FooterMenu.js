@@ -1,6 +1,7 @@
 import {ButtonKMQ} from "../../KMQComponents/ButtonKMQ";
 import {useAccount} from "../../../api/utils";
 import {useTabs} from "../../../hooks/useTabs";
+import {logoutUser} from "../../../api/user";
 
 const FooterMenu = () => {
     const [user, accountLoading, authError] = useAccount('me');
@@ -36,7 +37,9 @@ const FooterMenu = () => {
         </div>
         <div className={'inline-block text-right float-right'}>
             <a href={'/kmq-login'}>
-                <ButtonKMQ text={user ? 'Logout' : 'Login'} className={'mx-8'}/>
+                <ButtonKMQ text={user ? 'Logout' : 'Login'} className={'mx-8'}
+                           onClick={user ? () => logoutUser().then(url => window.location.href = url) : () => {}}
+                />
             </a>
         </div>
     </div>

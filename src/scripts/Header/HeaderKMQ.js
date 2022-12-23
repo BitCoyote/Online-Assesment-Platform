@@ -1,6 +1,7 @@
 import Logo from '../../assets/header/logo.png';
 import {ButtonKMQ} from "../KMQComponents/ButtonKMQ";
 import {useAccount} from "../../api/utils";
+import {logoutUser} from "../../api/user";
 
 const HeaderKMQ = () => {
     const [user, accountLoading, authError] = useAccount('me');
@@ -12,8 +13,10 @@ const HeaderKMQ = () => {
             </a>
         </div>
         <div className={'inline-block text-right float-right'}>
-            <a href={'/kmq-login'}>
-                <ButtonKMQ text={user ? 'Logout' : 'Login'} className={'mx-8'}/>
+            <a href={user ? '' : '/kmq-login'}>
+                <ButtonKMQ text={user ? 'Logout' : 'Login'} className={'mx-8'}
+                           onClick={user ? () => logoutUser().then(url => window.location.href = url) : () => {}}
+                               />
             </a>
         </div>
     </div>

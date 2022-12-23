@@ -60,24 +60,6 @@ export const submitAssessment = async ({answers, test_id, user_id}) => {
     return data;
 }
 
-export const loginUser = async ({username, password}) => {
-    try {
-        const {data} = await axios.post('/wp-json/kmq-user/login', {
-            username: username,
-            password: password,
-        }, {
-            headers: {
-                'Accept': 'application/json',
-                'X-WP-Nonce': wpApiNonce,
-            }
-        });
-
-        return data;
-    } catch {
-        alert('Wrong credentials!')
-    }
-}
-
 export const getAllAssessments = async ({user_id}) => {
     //const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoxLCJjb21wYW55X2lkIjoiOGRkMGRlZjktOTdhNC00NTE4LWFmNjItNWVhNjI5ZjRiZDMwIiwidXNlcl9pZCI6NjcwfQ.SOrF2dAuvfVTif6cfKSrxEqNoF7Pm_xkKwEDdS8U1Es';
     let jwtToken = jsonToJwt({
