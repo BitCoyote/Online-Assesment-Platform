@@ -1,5 +1,5 @@
-import WhiteArrow from '../../../../assets/main/tabs/white_arrow.png';
-import BlackArrow from '../../../../assets/main/tabs/black_arrow.png';
+import WhiteArrow from '../../assets/main/tabs/white_arrow.png';
+import BlackArrow from '../../assets/main/tabs/black_arrow.png';
 
 const Tab = ({title, active, onClick}) => {
     return <div className={'h-[70px] py-[10px] px-[30px] cursor-pointer ' + (active

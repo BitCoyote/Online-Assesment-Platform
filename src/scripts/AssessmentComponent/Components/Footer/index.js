@@ -1,4 +1,4 @@
-import { ButtonKMQ } from "../../../Components/ButtonKMQ";
+import { ButtonKMQ } from "../../../KMQComponents/ButtonKMQ";
 
 const AssessmentFooter = ({handleNextQuestion, handlePrevQuestion, handleFinishLater, btnText, showPrev}) => {
     return <div>

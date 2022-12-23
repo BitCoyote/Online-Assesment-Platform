@@ -6,6 +6,8 @@ import NotFound from "./scripts/Helpers/NotFound/NotFound";
 import Auth from "./scripts/Auth";
 import WelcomeComponent from "./scripts/WelcomeComponent";
 import CompanyList from './scripts/CompanyList';
+import LogInPage from "./scripts/LogInPage";
+import withTabs from "./hoc/withTabs";
 
 export const router = createBrowserRouter([
     {
@@ -20,16 +22,20 @@ export const router = createBrowserRouter([
                 element: <WelcomeComponent/>,
             },
             {
+                path: '/kmq-login',
+                element: <LogInPage/>,
+            },
+            {
                 path: 'main-page',
-                element: <MainPageComponent />,
+                element: withTabs(MainPageComponent),
             },
             {
                 path: "assessment/:test_id",
-                element: <AssessmentComponent />,
+                element: withTabs(AssessmentComponent),
             },
             {
                 path: "get-results/:test_id",
-                element: <AssessmentResults />,
+                element: withTabs(AssessmentResults),
             },
             {
                 path: "company-list",

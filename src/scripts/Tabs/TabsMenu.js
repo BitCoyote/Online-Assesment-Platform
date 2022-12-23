@@ -1,6 +1,8 @@
 import Tab from "./Tab";
+import {useTabs} from "../../hooks/useTabs";
 
-const TabsMenu = ({currTab, setCurrTab, allTabs}) => {
+const TabsMenu = () => {
+    const [currTab, setCurrTab, allTabs] = useTabs();
     return <div className={''}>
         {
             allTabs.map(item =>

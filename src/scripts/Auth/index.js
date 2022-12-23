@@ -9,8 +9,8 @@ const Auth = () => {
     return (
         <div className={''}>
             {accountLoading && <Loading />}
-            {authError && <Error msg="Please sign in to view this page"/>}
-            {user && <Outlet />}
+            {(authError && !window.location.href.includes('kmq-login')) && <Error msg="Please sign in to view this page"/>}
+            {(user || window.location.href.includes('kmq-login')) && <Outlet />}
         </div>
     )
 }
