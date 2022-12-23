@@ -15,3 +15,7 @@ export const getFromDraftUrl = '/wp-json/knowmeq/wp-api/get-draft';
 export const getAssessmentStatusUrl = '/wp-json/knowmeq/wp-api/get-assessments-status';
 
 export const getCompanyList = '/wp-json/knowmeq/wp-api/get-company-list';
+
+export const getCompanyResult = 'sat-tool/sat-company-result';
+
+export const getTopScore = 'sat-tool/get-top-four-results-company';

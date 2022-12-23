@@ -1,9 +1,9 @@
 import React from 'react';
 import CompanyCard from './Components/CompanyCard';
-import { useAccount } from '../../api/utils';
-import { useGetCompanyList } from '../../api/assessments';
-import Loading from '../Helpers/Loading';
-import Error from '../Helpers/Error';
+import { useAccount } from '../../../api/utils';
+import { useGetCompanyList } from '../../../api/assessments';
+import Loading from '../../Helpers/Loading';
+import Error from '../../Helpers/Error';
 
 const CompanyList = () => {
     const [data, loading, error] = useGetCompanyList(); 

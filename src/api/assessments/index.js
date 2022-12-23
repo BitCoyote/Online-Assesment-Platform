@@ -9,7 +9,9 @@ import {
     getFromDraftUrl, 
     getAssessmentStatusUrl, 
     retakeTestUrl, 
-    getCompanyList
+    getCompanyList,
+    getCompanyResult,
+    getTopScore,
 } from "../../constants/api/assessments";
 import {API_URL, authToken} from "../../constants/api/api";
 import {jsonToJwt} from "../../helper/jwt/jsonToJwt";
@@ -64,7 +66,6 @@ export const submitAssessment = async ({answers, test_id, user_id}) => {
 export const getAllAssessments = async ({user_id}) => {
     //const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoxLCJjb21wYW55X2lkIjoiOGRkMGRlZjktOTdhNC00NTE4LWFmNjItNWVhNjI5ZjRiZDMwIiwidXNlcl9pZCI6NjcwfQ.SOrF2dAuvfVTif6cfKSrxEqNoF7Pm_xkKwEDdS8U1Es';
     let jwtToken = jsonToJwt({
-        "test_id": 1,
         "user_id": user_id,
         "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30",
     });
@@ -106,7 +107,6 @@ export const useGetAllAssessments = ({user_id}) => {
         method: 'GET',
         headers: {
             KMQJWT: jsonToJwt({
-                "test_id": 1,
                 "user_id": user_id ? user_id : 0,
                 "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30"
             })
@@ -174,6 +174,7 @@ export const submitRetakeAssessment = async ({user_id, test_id, test_title}) => 
     return data;
 }
 
+// Get Company List for NGen Admin
 export const useGetCompanyList = () => {
     return useAxios({
         url: getCompanyList,
@@ -183,4 +184,33 @@ export const useGetCompanyList = () => {
             'X-WP-Nonce': wpApiNonce,
         },
     }, true);
+}
+
+// Get Company result for company admin
+export const useGetCompanyResult = ({test_id, company_id}) => {
+    const request = {
+        url: getCompanyResult,
+        method: 'GET',
+        headers: {
+            KMQJWT: jsonToJwt({
+                "test_id": test_id,
+                "company_id": company_id
+            })
+        },
+    }
+    return useAxios(request, !!company_id);
+}
+
+// Get Top Scores for Company admin
+export const useGetCompanyTopScore = ({company_id}) => {
+    const request = {
+        url: getTopScore,
+        method: 'GET',
+        headers: {
+            KMQJWT: jsonToJwt({
+                "company_id": company_id
+            })
+        },
+    }
+    return useAxios(request, !!company_id); 
 }

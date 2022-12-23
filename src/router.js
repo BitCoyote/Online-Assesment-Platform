@@ -5,9 +5,11 @@ import AssessmentResults from "./scripts/AssessmentResults";
 import NotFound from "./scripts/Helpers/NotFound/NotFound";
 import Auth from "./scripts/Auth";
 import WelcomeComponent from "./scripts/WelcomeComponent";
-import CompanyList from './scripts/CompanyList';
+import CompanyList from './scripts/Admin/CompanyList';
 import LogInPage from "./scripts/LogInPage";
 import withTabs from "./hoc/withTabs";
+import SATResult from "./scripts/Admin/CompanyAdmin/SatResult";
+import DashboardContainer from "./scripts/Admin/DashboardContainer";
 
 export const router = createBrowserRouter([
     {
@@ -38,9 +40,18 @@ export const router = createBrowserRouter([
                 element: withTabs(AssessmentResults),
             },
             {
+                path: "/get-company-results/:test_id",
+                element: <SATResult />,
+            },
+            {
                 path: "company-list",
                 element: <CompanyList />,
+            },
+            {
+                path: "admin-dashboard",
+                element: <DashboardContainer />
             }
+
         ]
     }
 ])
