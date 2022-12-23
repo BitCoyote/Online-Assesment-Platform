@@ -1,7 +1,11 @@
 import axios from "axios";
+import error from "../scripts/Helpers/Error";
 
 export const loginUser = async ({username, password}) => {
     try {
+        if (!username.includes('@')) {
+            throw error;
+        }
         const {data} = await axios.post('/wp-json/kmq-user/login', {
             username: username,
             password: password,

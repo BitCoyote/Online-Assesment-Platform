@@ -36,7 +36,7 @@ const FooterMenu = () => {
             }
         </div>
         <div className={'inline-block text-right float-right'}>
-            <a href={'/kmq-login'}>
+            <a href={user ? '' : '/login'}>
                 <ButtonKMQ text={user ? 'Logout' : 'Login'} className={'mx-8'}
                            onClick={user ? () => logoutUser().then(url => window.location.href = url) : () => {}}
                 />

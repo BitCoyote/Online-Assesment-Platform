@@ -58,6 +58,7 @@ function kmq_pages_creator() {
   $pages = array(
         "Welcome" => "/",
         "Main page" => "main-page",
+        "Login" => "user-login",
         "Assessment" => "assessment",
         "Results" => "get-results"
   );
@@ -131,5 +132,17 @@ function kmq_login_callback($request){
 }
 
 function kmq_logout_callback(){
-    return wp_logout_url('/kmq-login');
+    return wp_logout_url('/user-login');
 }
+
+function kmq_disable_login_page() {
+    $new_login_page_url = home_url( '/user-login/' ); // new login page
+    global $pagenow;
+    //echo "<script> console.log('" . $_SERVER['REQUEST_URI'] . "') </script>";
+    if( $pagenow == "wp-login.php" && $_SERVER['REQUEST_METHOD'] == 'GET' && !str_contains($_SERVER['REQUEST_URI'], 'action=logout')) {
+        wp_redirect($new_login_page_url);
+        exit;
+    }
+}
+
+add_action('init','kmq_disable_login_page');

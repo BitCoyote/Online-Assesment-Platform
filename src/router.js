@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
                 element: <WelcomeComponent/>,
             },
             {
-                path: '/kmq-login',
+                path: '/user-login',
                 element: <LogInPage/>,
             },
             {
