@@ -12,6 +12,7 @@ const CompanyAdminDashBoard = () => {
     if(user) {
         console.log(user.role);
     }
+    console.log(data);
     return (
         <div className={'p-12'}>
             <div className={'font-bold text-4xl mb-8'}>Company Admin DashBoard</div>
