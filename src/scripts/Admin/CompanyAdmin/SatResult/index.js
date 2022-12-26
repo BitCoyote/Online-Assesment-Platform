@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { useGetCompanyResult } from '../../../../api/assessments';
 import { useAccount } from '../../../../api/utils';
 import CompanyResultChart from './Components/CompanyResult';
-import { BarChart, Bar, YAxis, XAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import Loading from '../../../Helpers/Loading';
 import TopScore from './Components/TopScore';
 
