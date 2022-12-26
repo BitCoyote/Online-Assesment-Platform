@@ -4,6 +4,8 @@ import Loading from '../Helpers/Loading';
 import Error from '../Helpers/Error';
 import CompanyAdminDashBoard from './CompanyAdmin/DashBoard';
 import CompanyList from './CompanyList';
+import withTabs from '../../hoc/withTabs';
+import MainPageComponent from '../MainPageComponent';
 
 const DashboardContainer = () => {
     const [user, userLoading, userError] = useAccount('me');
@@ -11,6 +13,9 @@ const DashboardContainer = () => {
         <div>
             {userLoading && (<Loading />)}
             {userError && (<Error msg={userError.message} />)}
+            {
+                (user?.role === "Participant") && (withTabs(MainPageComponent))
+            }
             {
                 (user?.role === "Company_Admin" ) && (<CompanyAdminDashBoard />)
             }

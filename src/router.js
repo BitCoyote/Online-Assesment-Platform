@@ -40,18 +40,14 @@ export const router = createBrowserRouter([
                 element: withTabs(AssessmentResults),
             },
             {
-                path: "/get-company-results/:test_id",
-                element: <SATResult />,
-            },
-            {
-                path: "company-list",
-                element: <CompanyList />,
-            },
-            {
-                path: "admin-dashboard",
-                element: <DashboardContainer />
+                path: "/admin",
+                element: [
+                    {
+                        path: "",
+                        element: <DashboardContainer />
+                    }
+                ]
             }
-
         ]
     }
 ])
