@@ -142,7 +142,7 @@ function custom_user_profile_fields($user){
               }
             ?>
           </select>
-          <span class="wpcf7-not-valid-tip" aria-hidden="true">Dies ist ein Pflichtfeld./span>
+          <span class="wpcf7-not-valid-tip" aria-hidden="true"></span>
           </td>
       </tr>
   </table>
