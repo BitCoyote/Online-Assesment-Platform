@@ -20,8 +20,38 @@ ChartJS.register(
   );
 
 const CompanyResultChart = ({data}) => {
+
+    const styles = {
+        chartCard: {
+            // width: '100vw',
+            height: '900px',
+            backgroundColor: '#f1f1f1',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+        },
+        chartBox: {
+            width: '800px',
+            padding: '20px',
+            borderRadius: '20px',
+            backgroundColor: 'white'
+        },
+        chartContainer: {
+          width: '800px',
+          maxWidth: '800px',
+          paddingLeft:'20px',
+          overflowX: 'scroll'
+        },
+        chartContainerBody: {
+            height: '1000px',
+            marginLeft: '20px'
+
+        },
+      };
     const options = {
         responsive: true,
+        // cornerRadius: 8,
+        maintainAspectRatio: false,
         plugins: {
           legend: {
             position: 'top',
@@ -31,6 +61,12 @@ const CompanyResultChart = ({data}) => {
             text: 'Average Result Chart',
           },
         },
+        scales: {
+            y: {
+                suggestedMin: 0,
+                suggestedMax: 20
+            }
+        }
       };
 
     const questions = [];
@@ -49,6 +85,16 @@ const CompanyResultChart = ({data}) => {
             }
           ]
     }
-    return <Bar options={options} data={chartData} />;
+    return (
+        <div className='chartCard' style={styles.chartCard}>
+            <div className='chartBox' style={styles.chartBox}>
+                <div className='chartContainer' style={styles.chartContainer}>
+                    <div className='chartContainerBody>' style={styles.chartContainerBody}>
+                        <Bar options={options} data={chartData}/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }
 export default CompanyResultChart;
