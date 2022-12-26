@@ -1,19 +1,24 @@
 import {useMemo} from "react";
-import Tab from "../scripts/Tabs/Tab";
+// import Tab from "../scripts/Tabs/Tab";
 
 const Tabs = {
-    'SAT': '/main-page',
-    'Results': '/get-results/id-1',
-    'My Results': '/get-results/id-2',
+    'Participant': {
+        'SAT': '/main-page',
+        'Results': '/get-results/id-1',
+        'My Results': '/get-results/id-2',
+    },
+    'Company_Admin': {
+        'SAT' : '/admin-page/companies',
+        'Results': '/admin-page/company-results',
+    },
+    'NGen_Admin': {
+        'SAT' : '/admin-page/ngen',
+        'Results': '/admin-page/results',
+    }
 }
 
-const AdminTabs = {
-    'SAT' : '/main-page',
-    'Results': '/get-admin-results/id-1',
-}
-
-export const useTabs = (role) => {
-    const TabsUrl = !!role ? {...Tabs} : {...AdminTabs};
+export const useTabs = (role = 'Participant') => {
+    const TabsUrl = Tabs[role] || Tabs['Participant'];
     const urlToTab = () => {
         let tab = '';
         Object.keys(TabsUrl).forEach(item => {

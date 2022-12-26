@@ -147,17 +147,6 @@ function kmq_disable_login_page() {
 
 add_action('init','kmq_disable_login_page');
 
-function kmq_disable_admin_page() {
-  $new_admin_page_url = home_url('/admin/');
-  global $pagenow;
-  if( $pagenow == "wp-admin.php" && $_SERVER['REQUEST_METHOD'] == 'GET' && !str_contains($_SERVER['REQUEST_URI'], 'action=logout')) {
-    wp_redirect($new_admin_page_url);
-    exit;
-  }
-}
-
-add_action('init','kmq_disable_admin_page');
-
 function kmq_remove_admin_bar() {
   if (!current_user_can('administrator') && !is_admin()) {
     show_admin_bar(false);

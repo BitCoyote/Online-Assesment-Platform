@@ -10,7 +10,6 @@ const MainPageComponent = () => {
     const [data, loading, error] = useGetAllAssessments({user_id: user?.id});
     const [assessmentStatus, setAssessmentStatus] = useState([]);
 
-
     useEffect(() => {
         if (user) {
             getAssessmentStatus({user_id: user?.id})
@@ -27,7 +26,8 @@ const MainPageComponent = () => {
     return (
         <div className={'pb-24 table w-full'}>
             {(loading || accountLoading) && (<Loading/>)}
-            {(error || authError) && (<Error msg={error.message}/>)}
+            {(authError) && (window.location.href="/user-login")}
+            {(error) && (<Error msg={error.message}/>)}
             <SATList
                 data={data}
                 user={user}

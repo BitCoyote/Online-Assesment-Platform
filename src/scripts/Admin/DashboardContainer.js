@@ -1,27 +1,22 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 import { useAccount } from '../../api/utils';
 import Loading from '../Helpers/Loading';
-import Error from '../Helpers/Error';
-import CompanyAdminDashBoard from './CompanyAdmin/DashBoard';
-import CompanyList from './CompanyList';
-import withTabs from '../../hoc/withTabs';
-import MainPageComponent from '../MainPageComponent';
+import TabsMenu from '../Tabs/TabsMenu';
 
 const DashboardContainer = () => {
-    const [user, userLoading, userError] = useAccount('me');
+    const [user, loading, error] = useAccount('me');
+   
     return (
         <div>
-            {userLoading && (<Loading />)}
-            {userError && (<Error msg={userError.message} />)}
-            {
-                (user?.role === "Participant") && (withTabs(MainPageComponent))
-            }
-            {
-                (user?.role === "Company_Admin" ) && (<CompanyAdminDashBoard />)
-            }
-            {
-                (user?.company_id === "NGen_Admin") && (<CompanyList />)
-            }
+        {loading && <Loading />}
+        {error && ( window.location.href = "/user-login" )}
+        <div className={'w-[20vw] table-cell border-r-2 border-solid border-slate-200 align-top'}>
+            <TabsMenu role={user?.role || 'Participant'} />
+        </div>
+        <div className={'w-[80vw] table-cell relative'}>
+            <Outlet />
+        </div>
         </div>
     );
 }
