@@ -5,6 +5,7 @@ import { useAccount } from '../../../../api/utils';
 import CompanyResultChart from './Components/CompanyResult';
 import Loading from '../../../Helpers/Loading';
 import TopScore from './Components/TopScore';
+import ParticipantList from './Components/ParticipantsList';
 
 const SATResult = () => {
     const { test_id } = useParams();
@@ -22,6 +23,8 @@ const SATResult = () => {
                 </div>
                 <CompanyResultChart data={data?.company_results} />
                 <TopScore company_id={user?.company_id} test_id={test_id}/>
+                <ParticipantList company_id={user?.company_id} test_id={test_id}/>
+                
             </div>
         )}
         </div>

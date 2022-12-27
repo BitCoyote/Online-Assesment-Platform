@@ -75,20 +75,9 @@ const CompanyResultChart = ({data}) => {
             }
           ]
     }
-    const styles = {
-        conta: {
-            overflowX : "scroll",
-            width:"800px"
-        },
-        main: {
-            position: "relative",
-            width:"1500px",
-            height:"500px",
-        }
-    }
     return (
-    <div style={styles.conta}>
-        <div style={styles.main}>
+    <div className='w-2/3 overflow-x-scroll'>
+        <div className='relative w-[1500px] h-[500px]'>
             <Bar options={options} data={chartData} height={500} width={1500}/>
         </div>
     </div>

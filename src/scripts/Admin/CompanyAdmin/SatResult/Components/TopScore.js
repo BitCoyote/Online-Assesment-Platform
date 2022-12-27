@@ -5,9 +5,9 @@ import TableCellWithToolTip from "../../../../AssessmentResults/Components/Table
 const TopScore = ({ company_id, test_id }) => {
     const [data] = useGetCompanyTopScore({ company_id });
     return (
-        <div className="p-24">
+        <div className="p-8 dark:border-gray-100 dark:bg-gray-100 mt-10">
             <div className={'text-lg mb-12'}>
-                Tope 4 Scores
+                Top 4 Scores
             </div>
             <table class="table-auto">
                 <thead>
@@ -26,7 +26,7 @@ const TopScore = ({ company_id, test_id }) => {
                                 e.test_id.toString() === test_id.toString()
                             )[0].company_results.map((row, key) => (
                                 <tr key={key}
-                                    className="text-right border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-800 cursor-pointer">
+                                    className="text-right border-b border-opacity-20 cursor-pointer">
                                     <td className="px-3 py-2 text-left">
                                         <span>{row.question_number}</span>
                                     </td>
