@@ -31,17 +31,11 @@ const CompanyResultChart = ({data}) => {
                   }
             },
             x: {
-                barThickness: 20,
                 ticks: {
                     callback: function(tick) {
                         return (questions[tick].substring(0, 40)+"...");
                     }
                  }
-            }
-        },
-        layout: {
-            padding: {
-                left: 50
             }
         },
         plugins: {
@@ -68,15 +62,11 @@ const CompanyResultChart = ({data}) => {
                 label: "Score",
                 data: averageScore,
                 backgroundColor: "#ed4e1d",
-                barPercentage: 0.8,
-                barThickness: 30,
-                maxBarThickness: 30,
-                minBarLength: 2,
             }
           ]
     }
     return (
-    <div className='w-2/3 overflow-x-scroll'>
+    <div className='w-[1230px] overflow-x-scroll dark:border-gray-100 dark:bg-gray-100'>
         <div className='relative w-[1500px] h-[500px]'>
             <Bar options={options} data={chartData} height={500} width={1500}/>
         </div>

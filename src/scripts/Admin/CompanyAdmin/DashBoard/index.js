@@ -10,7 +10,7 @@ const CompanyAdminDashBoard = () => {
     const [data, loading, error] = useGetAllAssessments({user_id: user?.id});
 
     if(user) {
-        console.log(user.role);
+        console.log(user);
     }
     console.log(data);
     return (

@@ -26,6 +26,24 @@ function kmq_allow_admin_area_to_admins_only() {
       }
 
  }
+//below code disables all users except admins to access rest api -- including auth rest route. this needs to be changed to allow specific routes to specific users
+//  add_filter( 'rest_authentication_errors', function ( $errors ) {
+//   if ( ! is_wp_error( $errors ) ) { // do nothing if there's already an error
+//       if ( $can_access = is_user_logged_in() ) {
+//           $roles      = (array) wp_get_current_user()->roles;
+//           $can_access = in_array( 'administrator', $roles ); // allows only the Administrator role
+//       }
+
+//       if ( ! $can_access ) {
+//           return new WP_Error( 'user_not_allowed',
+//               'Sorry, you are not allowed to access the REST API.',
+//               array( 'status' => rest_authorization_required_code() )
+//           );
+//       }
+//   }
+
+//   return $errors;
+// } );
 
 function kmq_add_support() {
   add_theme_support('title-tag');
