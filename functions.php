@@ -8,10 +8,32 @@ function kmq_load_assets() {
 }
 add_action('wp_enqueue_scripts', 'kmq_load_assets');
 
-/*  */
+//disable wpadmin page for non admin users
+add_action( 'admin_init', 'kmq_allow_admin_area_to_admins_only');
+function kmq_allow_admin_area_to_admins_only() {
+
+      if( defined('DOING_AJAX') && DOING_AJAX ) {
+            //Allow ajax calls
+            return;
+      }
+
+      $user = wp_get_current_user();
+
+      if( empty( $user ) || !in_array( "administrator", (array) $user->roles ) ) {
+           //Redirect to main page if no user or if the user has no "administrator" role assigned
+           wp_redirect( get_site_url( ) );
+           exit();
+      }
+
+ }
+
 function kmq_add_support() {
   add_theme_support('title-tag');
   add_theme_support('post-thumbnails');
+  //will remove the top wp admin bar
+  if (!current_user_can('administrator') && !is_admin()) {
+    show_admin_bar(false);
+  }
 }
 add_action('after_setup_theme', 'kmq_add_support');
 
