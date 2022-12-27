@@ -31,6 +31,7 @@ const CompanyResultChart = ({data}) => {
                   }
             },
             x: {
+                barThickness: 20,
                 ticks: {
                     callback: function(tick) {
                         return (questions[tick].substring(0, 40)+"...");
@@ -64,26 +65,31 @@ const CompanyResultChart = ({data}) => {
         labels: questions,
         datasets: [
             {
-              label: "Score",
-              data: averageScore,
-              backgroundColor: "#ed4e1d"
+                label: "Score",
+                data: averageScore,
+                backgroundColor: "#ed4e1d",
+                barPercentage: 0.8,
+                barThickness: 30,
+                maxBarThickness: 30,
+                minBarLength: 2,
             }
           ]
     }
     const styles = {
         conta: {
-            overflowX : "scroll"
+            overflowX : "scroll",
+            width:"800px"
         },
         main: {
             position: "relative",
-            width:"1000px",
+            width:"1500px",
             height:"500px",
         }
     }
     return (
     <div style={styles.conta}>
         <div style={styles.main}>
-            <Bar options={options} data={chartData} height={500} width={1000}/>
+            <Bar options={options} data={chartData} height={500} width={1500}/>
         </div>
     </div>
     );
