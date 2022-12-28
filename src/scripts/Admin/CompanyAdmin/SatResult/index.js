@@ -3,11 +3,10 @@ import { useParams } from "react-router-dom";
 import { useGetCompanyResult } from '../../../../api/assessments';
 import { useAccount } from '../../../../api/utils';
 import CompanyResultChart from './Components/CompanyResult';
-import { BarChart, Bar, YAxis, XAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import Loading from '../../../Helpers/Loading';
 import TopScore from './Components/TopScore';
-import NotFound from '../../../Helpers/NotFound/NotFound';
 import { ButtonKMQ } from '../../../KMQComponents/ButtonKMQ';
+import ParticipantList from './Components/ParticipantsList';
 
 const SATResult = () => {
     const { test_id } = useParams();
@@ -36,6 +35,8 @@ const SATResult = () => {
                 </div>
                 <CompanyResultChart data={data?.company_results} />
                 <TopScore company_id={user?.company_id} test_id={test_id}/>
+                <ParticipantList company_id={user?.company_id} test_id={test_id}/>
+                
             </div>
         )}
         </div>
