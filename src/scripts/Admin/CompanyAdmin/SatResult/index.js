@@ -6,18 +6,31 @@ import CompanyResultChart from './Components/CompanyResult';
 import { BarChart, Bar, YAxis, XAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import Loading from '../../../Helpers/Loading';
 import TopScore from './Components/TopScore';
+import NotFound from '../../../Helpers/NotFound/NotFound';
+import { ButtonKMQ } from '../../../KMQComponents/ButtonKMQ';
 
 const SATResult = () => {
     const { test_id } = useParams();
     const [user, loading] = useAccount('me');
-    const [data, dataLoading] = useGetCompanyResult({test_id: test_id, company_id: user?.company_id});
-    console.log(data)
+    const [data, dataLoading, error] = useGetCompanyResult({test_id: test_id, company_id: user?.company_id});
     return (
         <div>
         {(loading || dataLoading) && (<Loading />)}
+        {(error) && (
+            <div class="text-center mt-24">
+                <div class="text-gray-600 text-6xl">⚠</div>
+                <div class="text-gray-900 text-2xl">
+                    No results have been added yet
+                </div>
+                <div class="text-gray-600 text-base">
+                    This information needs to be added by your company's participants
+                </div>
+                <ButtonKMQ dark className={"mt-12"} text="Back to the List" onClick={() => window.location.href = '/admin-page/companies'} />
+            </div>
+        )}
         {data && user && (
             <div className={'p-12'}>
-                <div className={'font-bold text-4xl mb-8'}>Test Result</div>
+                <div className={'font-bold text-[40px] mb-8'}>Test Result</div>
                 <div className={'text-lg mb-12'}>
                     {data?.test_title}
                 </div>

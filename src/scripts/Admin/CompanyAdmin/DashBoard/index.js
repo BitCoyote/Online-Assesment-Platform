@@ -3,7 +3,7 @@ import { useAccount } from "../../../../api/utils";
 import { useGetAllAssessments } from "../../../../api/assessments";
 import Error from '../../../Helpers/Error';
 import Loading from '../../../Helpers/Loading';
-import AssessmentCard from "../../../MainPageComponent/Components/SATList/Components/AssessmentCard";
+import SatCard from "../SatCard";
 
 const CompanyAdminDashBoard = () => {
     const [user, accountLoading, authError] = useAccount('me');
@@ -20,7 +20,7 @@ const CompanyAdminDashBoard = () => {
                 </div>
                 <div className={'pb-24 table w-full'}>
                     {data && data.SAT_Assessments && data.SAT_Assessments.map((item, index) =>
-                        <AssessmentCard key={index} assessment={item} companyAdmin={true} />)
+                        <SatCard key={index} assessment={item} />)
                     }
                 </div>
             </div>
