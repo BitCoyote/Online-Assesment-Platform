@@ -1,8 +1,7 @@
 import React from "react"
 import AnswerRaw from "./Components/AnswerRaw";
 
-const AssessmentComponentQuestion = ({currAnswers, setCurrAnswers}) => {
-
+const AssessmentComponentQuestion = ({currAnswers, setCurrAnswers, question}) => {
 
     const handleChooseAnswer = (answer, questionType) => {
         setCurrAnswers((currAnswers) => {
@@ -14,18 +13,20 @@ const AssessmentComponentQuestion = ({currAnswers, setCurrAnswers}) => {
         <AnswerRaw
             handleChooseAnswer={handleChooseAnswer}
             label={'current'}
+            options={{from: question.current_and_desired_lowest_answer, to: question.current_and_desired_highest_answer}}
             currAnswer={currAnswers.current}
             canChoose={() => true}
-            afterChoose={(item) => (item + 1 > currAnswers.desired && currAnswers.desired)
-                ? setCurrAnswers({...currAnswers, desired: null, current: item + 1})
+            afterChoose={(item) => (item > currAnswers.desired && currAnswers.desired)
+                ? setCurrAnswers({...currAnswers, desired: null, current: item})
                 : () => {}}
         />
         <AnswerRaw
             handleChooseAnswer={handleChooseAnswer}
             label={'desired'}
             currAnswer={currAnswers.desired}
-            canChoose={(item) => item + 1 >= currAnswers.current}
+            canChoose={(item) => item >= currAnswers.current}
             afterChoose={() => {}}
+            options={{from: question.current_and_desired_lowest_answer, to: question.current_and_desired_highest_answer}}
         />
         <AnswerRaw
             handleChooseAnswer={handleChooseAnswer}
@@ -33,6 +34,7 @@ const AssessmentComponentQuestion = ({currAnswers, setCurrAnswers}) => {
             currAnswer={currAnswers.value}
             canChoose={() => true}
             afterChoose={() => {}}
+            options={{from: question.value_lowest_answer, to: question.value_highest_answer}}
         />
     </div>
 }

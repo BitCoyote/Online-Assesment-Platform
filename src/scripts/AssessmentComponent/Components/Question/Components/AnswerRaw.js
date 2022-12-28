@@ -1,6 +1,6 @@
 import AnswerContainer from "./AnswerContainer";
 
-const AnswerRaw = ({currAnswer, label, handleChooseAnswer, canChoose, afterChoose}) => {
+const AnswerRaw = ({currAnswer, label, handleChooseAnswer, canChoose, afterChoose, options}) => {
     return <div className={'mb-8'}>
         <h1 className={'mb-4'}>
             {label.charAt(0).toUpperCase() + label.slice(1)}:
@@ -11,6 +11,7 @@ const AnswerRaw = ({currAnswer, label, handleChooseAnswer, canChoose, afterChoos
             currAnswer={currAnswer}
             canChoose={canChoose}
             afterChoose={afterChoose}
+            options={options}
         />
     </div>
 }

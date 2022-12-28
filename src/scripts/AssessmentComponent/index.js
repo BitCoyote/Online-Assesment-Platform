@@ -118,8 +118,6 @@ function AssessmentComponent() {
         }
     }, [isSubmitted, user])
 
-    console.log('currAssessment', currAssessment)
-
     return (
         <div className={'pb-24 mx-auto px-4 min-w-[800px] w-2/3'}>
             {(accountLoading || loading) && (<Loading />)}
@@ -137,6 +135,7 @@ function AssessmentComponent() {
                         <AssessmentComponentQuestion
                             setCurrAnswers={setCurrAnswers}
                             currAnswers={currAnswers}
+                            question={currAssessment.questions[currQuestion]}
                         />
 
                         <AssessmentFooter
