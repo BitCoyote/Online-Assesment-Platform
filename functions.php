@@ -32,21 +32,23 @@ function kmq_allow_admin_area_to_admins_only() {
   $is_login_uri = str_starts_with($uri, '/wp-json/knowmeq-api/login');
   $is_default_uri = str_starts_with($uri, '/wp-json/wp/v2/');
   if ( ! is_wp_error( $errors ) ) { // do nothing if there's already an error
-      if ( !is_user_logged_in() && !$is_login_uri) {
+      if ( !is_user_logged_in()) {
+        if(!$is_login_uri)
           return new WP_Error( 'api_not_allowed',
               'Sorry, you have to login to the website.',
               array( 'status' => rest_authorization_required_code() )
           );   
       }
-      
-      $roles      = (array) wp_get_current_user()->roles;
-      $can_access = in_array( 'administrator', $roles ); // allows only the Administrator role
-      if ( !$can_access && $is_default_uri ) {
-          return new WP_Error( 'user_not_allowed',
-              'Sorry, you are not allowed to access the REST API.',
-              array( 'status' => rest_authorization_required_code() )
-          );
-      } 
+      else {
+        $roles      = (array) wp_get_current_user()->roles;
+        $can_access = in_array( 'administrator', $roles ); // allows only the Administrator role
+        if ( !$can_access && $is_default_uri ) {
+            return new WP_Error( 'user_not_allowed',
+                'Sorry, you are not allowed to access the REST API.',
+                array( 'status' => 403 )
+            );
+        } 
+      }
   }
   return $errors;
 } );
@@ -84,6 +86,7 @@ function my_rest_api_init() {
       'callback'            => 'kmq_function_get_company_list'
     ) );
 
+    //Custom rest api...
     register_rest_route( 'knowmeq-api', '/users/(?P<id>[\d]+)', array(
       'methods'             => 'GET',
       'callback'            => 'kmq_function_get_user'
@@ -92,6 +95,8 @@ function my_rest_api_init() {
       'methods'             => 'GET',
       'callback'            => 'kmq_function_get_me'
     ) );
+
+
 }
 
 add_action( 'rest_api_init', 'my_rest_api_init', 10, 1 );
