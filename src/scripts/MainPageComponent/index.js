@@ -9,7 +9,7 @@ const MainPageComponent = () => {
     const [user, accountLoading, authError] = useAccount('me');
     const [data, loading, error] = useGetAllAssessments({user_id: user?.id});
     const [assessmentStatus, setAssessmentStatus] = useState([]);
-
+    console.log(accountLoading, loading, user);
     useEffect(() => {
         if (user) {
             getAssessmentStatus({user_id: user?.id})

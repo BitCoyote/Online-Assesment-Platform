@@ -6,7 +6,7 @@ export const loginUser = async ({username, password}) => {
         if (!username.includes('@')) {
             throw error;
         }
-        const {data} = await axios.post('/wp-json/kmq-user/login', {
+        const {data} = await axios.post('/wp-json/knowmeq-api/login', {
             username: username,
             password: password,
         }, {

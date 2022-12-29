@@ -6,15 +6,15 @@ export const submitAssessmentResultUrl = 'sat-tool/sat-submit';
 
 export const getAssessmentResultUrl = 'sat-tool/get-results';
 
-export const submitToDraftUrl = '/wp-json/knowmeq/wp-api/finish-later';
+export const submitToDraftUrl = '/wp-json/knowmeq-api/finish-later';
 
-export const retakeTestUrl = '/wp-json/knowmeq/wp-api/retake-assessment';
+export const retakeTestUrl = '/wp-json/knowmeq-api/retake-assessment';
 
-export const getFromDraftUrl = '/wp-json/knowmeq/wp-api/get-draft';
+export const getFromDraftUrl = '/wp-json/knowmeq-api/get-draft';
 
-export const getAssessmentStatusUrl = '/wp-json/knowmeq/wp-api/get-assessments-status';
+export const getAssessmentStatusUrl = '/wp-json/knowmeq-api/get-assessments-status';
 
-export const getCompanyList = '/wp-json/knowmeq/wp-api/get-company-list';
+export const getCompanyList = '/wp-json/knowmeq-api/get-company-list';
 
 export const getCompanyResult = 'sat-tool/sat-company-result';
 

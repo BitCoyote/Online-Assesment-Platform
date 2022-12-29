@@ -1,4 +1,21 @@
 <?php 
+
+    function kmq_function_get_user ($request) {
+      return null;
+
+    }
+
+    function kmq_function_get_me ($request) {
+      $user = wp_get_current_user();
+      $company_id = get_user_meta( $user->ID, 'company', true );
+      $data = array(
+          'id' => $user->ID,
+          'role' => $user->roles[0],
+          'company_id' => $company_id
+        );
+      return $data;
+    }
+
     function kmq_function_finish_later ($request) {
         global $wpdb;
         $table_name = $wpdb->prefix . 'kmq_finish_later';

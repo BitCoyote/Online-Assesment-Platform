@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { API_URL, authToken } from "../constants/api/api";
+import { API_URL, authToken, AUTH_WORDPRESS_URL } from "../constants/api/api";
 
 const axiosInstance = (request) => {
     return axios.create({
@@ -44,7 +44,7 @@ export const useAxios = (request, allow) => {
 }
 
 export const useAccount = (user_id) => useAxios({
-    url: `/wp-json/wp/v2/users/${user_id}`,
+    url: AUTH_WORDPRESS_URL,
     method: "GET",
     target: "WP",
     headers: {

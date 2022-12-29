@@ -27,24 +27,29 @@ function kmq_allow_admin_area_to_admins_only() {
 
  }
 //below code disables all users except admins to access rest api -- including auth rest route. this needs to be changed to allow specific routes to specific users
-//  add_filter( 'rest_authentication_errors', function ( $errors ) {
-//   if ( ! is_wp_error( $errors ) ) { // do nothing if there's already an error
-//       if ( $can_access = is_user_logged_in() ) {
-//           $roles      = (array) wp_get_current_user()->roles;
-//           $can_access = in_array( 'administrator', $roles ); // allows only the Administrator role
-//       }
-
-//       if ( ! $can_access ) {
-//           return new WP_Error( 'user_not_allowed',
-//               'Sorry, you are not allowed to access the REST API.',
-//               array( 'status' => rest_authorization_required_code() )
-//           );
-//       }
-//   }
-
-//   return $errors;
-// } );
-
+ add_filter( 'rest_authentication_errors', function ( $errors ) {
+  $uri = $_SERVER['REQUEST_URI'];
+  $is_login_uri = str_starts_with($uri, '/wp-json/knowmeq-api/login');
+  $is_default_uri = str_starts_with($uri, '/wp-json/wp/v2/');
+  if ( ! is_wp_error( $errors ) ) { // do nothing if there's already an error
+      if ( !is_user_logged_in() && !$is_login_uri) {
+          return new WP_Error( 'api_not_allowed',
+              'Sorry, you have to login to the website.',
+              array( 'status' => rest_authorization_required_code() )
+          );   
+      }
+      
+      $roles      = (array) wp_get_current_user()->roles;
+      $can_access = in_array( 'administrator', $roles ); // allows only the Administrator role
+      if ( !$can_access && $is_default_uri ) {
+          return new WP_Error( 'user_not_allowed',
+              'Sorry, you are not allowed to access the REST API.',
+              array( 'status' => rest_authorization_required_code() )
+          );
+      } 
+  }
+  return $errors;
+} );
 function kmq_add_support() {
   add_theme_support('title-tag');
   add_theme_support('post-thumbnails');
@@ -57,37 +62,35 @@ add_action('after_setup_theme', 'kmq_add_support');
 
 /* Rest API initialization. */
 function my_rest_api_init() {
-    register_rest_route( 'knowmeq/wp-api', '/finish-later', array(
+    register_rest_route( 'knowmeq-api', '/finish-later', array(
         'methods'             => 'POST',
         'callback'            => 'kmq_function_finish_later'
     ) );
-    register_rest_route( 'knowmeq/wp-api', '/get-draft', array(
+    register_rest_route( 'knowmeq-api', '/get-draft', array(
         'methods'             => 'GET',
         'callback'            => 'kmq_function_get_draft'
     ) );
-    register_rest_route( 'knowmeq/wp-api', '/get-assessments-status', array(
+    register_rest_route( 'knowmeq-api', '/get-assessments-status', array(
         'methods'             => 'GET',
         'callback'            => 'kmq_function_get_status'
     ) );
-    register_rest_route( 'knowmeq/wp-api', '/retake-assessment', array(
+    register_rest_route( 'knowmeq-api', '/retake-assessment', array(
       'methods'             => 'POST',
       'callback'            => 'kmq_function_retake_assessment'
     ) );
 
-    register_rest_route( 'knowmeq/wp-api', '/get-company-list', array(
+    register_rest_route( 'knowmeq-api', '/get-company-list', array(
       'methods'             => 'GET',
       'callback'            => 'kmq_function_get_company_list'
     ) );
-      // add meta data (ex: company id for user/ endpoint)
-    register_rest_field( 'user', 'company_id', array(
-      'get_callback'        => 'user_meta_callback',
-      'update_callback'     => null,
-      'schema'              => null,
+
+    register_rest_route( 'knowmeq-api', '/users/(?P<id>[\d]+)', array(
+      'methods'             => 'GET',
+      'callback'            => 'kmq_function_get_user'
     ) );
-    register_rest_field( 'user', 'role', array(
-      'get_callback'        => 'user_role_callback',
-      'update_callback'     => null,
-      'schema'              => null,
+    register_rest_route( 'knowmeq-api', 'users/me', array(
+      'methods'             => 'GET',
+      'callback'            => 'kmq_function_get_me'
     ) );
 }
 
@@ -142,7 +145,7 @@ add_action( 'rest_api_init', 'kmq_register_api_hooks' );
 
 function kmq_register_api_hooks() {
   register_rest_route(
-    'kmq-user', '/login/',
+    'knowmeq-api', '/login',
     array(
       'methods'  => 'POST',
       'callback' => 'kmq_login_callback',
@@ -150,7 +153,7 @@ function kmq_register_api_hooks() {
   );
 
   register_rest_route(
-    'kmq-user', '/logout/',
+    'knowmeq-api', '/logout',
     array(
       'methods'  => 'GET',
       'callback' => 'kmq_logout_callback',
@@ -164,9 +167,10 @@ function kmq_login_callback($request){
     $creds['user_password'] =  $request["password"];
     $creds['remember'] = true;
     $user = wp_signon( $creds, false );
-
-    if ( is_wp_error($user) )
+    
+    if ( is_wp_error($user) ) {
       echo $user->get_error_message();
+    }
 
     return $user;
 }

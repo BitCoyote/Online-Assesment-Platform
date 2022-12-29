@@ -157,7 +157,7 @@ export const getDraftAnswers = async ({test_id, user_id}) => {
 export const getAssessmentStatus = async ({user_id}) => {
     const {data} = await axios.get(getAssessmentStatusUrl, {
             params: {
-                user_id: user_id.toString(),
+                user_id: user_id,
             }
         }
     );
