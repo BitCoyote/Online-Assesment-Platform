@@ -7,13 +7,15 @@ import Loading from '../../../Helpers/Loading';
 import TopScore from './Components/TopScore';
 import { ButtonKMQ } from '../../../KMQComponents/ButtonKMQ';
 import ParticipantList from './Components/ParticipantsList';
+import Error from '../../../Helpers/Error';
 
 const SATResult = () => {
     const { test_id } = useParams();
-    const [user, loading] = useAccount('me');
+    const [user, loading, userError] = useAccount('me');
     const [data, dataLoading, error] = useGetCompanyResult({test_id: test_id, company_id: user?.company_id});
     return (
         <div>
+        {(userError) && <Error msg={userError.message} />}
         {(loading || dataLoading) && (<Loading />)}
         {(error) && (
             <div class="text-center mt-24">

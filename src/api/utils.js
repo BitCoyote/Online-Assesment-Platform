@@ -32,6 +32,8 @@ export const useAxios = (request, allow) => {
                 .then((response) => {
                     if (response.status === 200) {
                         setData(response.data)
+                    } else {
+                        new Error("You are not allowed for this request.");
                     }
                 })
                 .catch((err) => {
