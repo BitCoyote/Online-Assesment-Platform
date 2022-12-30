@@ -1,8 +1,8 @@
 export const Tabs = {
     'Participant': {
         'SAT': '/main-page',
-        'Results': '/get-results/id-1',
-        'My Results': '/get-results/id-2',
+        //'Results': '/get-results/id-1',
+        //'My Results': '/get-results/id-2',
     },
     'Company_Admin': {
         'Dashboard' : '/admin-page/companies',

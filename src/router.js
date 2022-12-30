@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/user-login',
-                element: <LogInPage/>,
+                element: withTabs(LogInPage),
             },
             {
                 path: 'main-page',
@@ -38,7 +38,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "get-results/:id_params",
-                element: checkRole(withTabs(AssessmentResults))(['Participant', 'Company_Admin']),
+                element: checkRole(withTabs(AssessmentResults))(['Participant', 'Company_Admin', 'NGen_Admin']),
             },
             {
                 path: 'admin-page/companies',
