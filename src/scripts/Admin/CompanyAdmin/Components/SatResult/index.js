@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from "react-router-dom";
 import { useGetCompanyResult } from '../../../../../api/assessments';
 import { useAccount } from '../../../../../api/utils';
@@ -8,12 +8,23 @@ import CompanyResultChart from './Components/CompanyResultChart';
 import TopScore from './Components/TopScore';
 import ParticipantList from './Components/ParticipantsList';
 import { ButtonKMQ } from '../../../../KMQComponents/ButtonKMQ';
+import AssessmentResults from '../../../../AssessmentResults';
 
 const SATResult = () => {
     const { test_id } = useParams();
     const [user, loading, userError] = useAccount('me');
     const [data, dataLoading, error] = useGetCompanyResult({test_id: test_id, company_id: user?.company_id});
-    console.log(loading, dataLoading);
+    const [selectedParticipant, setSelectedParticipant] = useState(null);
+    if(selectedParticipant) {
+        return (
+            <div>
+                <div className="w-full p-12 float-right">
+                    <ButtonKMQ text="Back" onClick={() => setSelectedParticipant(null)} />
+                </div>    
+                <AssessmentResults user = {selectedParticipant} />
+            </div>
+        )
+    }
     return (
         <div>
         {(userError) && <Error msg={userError.message} />}
@@ -38,8 +49,7 @@ const SATResult = () => {
                 </div>
                 <CompanyResultChart data={data?.company_results} />
                 <TopScore company_id={user?.company_id} test_id={test_id}/>
-                <ParticipantList company_id={user?.company_id} test_id={test_id}/>
-                
+                <ParticipantList test_id={test_id} onClick={(e) => setSelectedParticipant({...e, id: e['ID'], name: e.display_name})} />
             </div>
         )}
         </div>

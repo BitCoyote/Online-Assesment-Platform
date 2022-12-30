@@ -2,9 +2,8 @@ import React from 'react';
 import { useGetParticipants } from '../../../../../../api/utils';
 import { ButtonKMQ } from '../../../../../KMQComponents/ButtonKMQ';
 
-const ParticipantList = ({test_id}) => {
-    const [data] = useGetParticipants(1);
-    console.log(data);
+const ParticipantList = ({test_id, onClick}) => {
+    const [data] = useGetParticipants(test_id);
     return (
         <div className="p-8 dark:border-gray-100 dark:bg-gray-100 mt-10">
             <div className={'text-lg mb-12'}>
@@ -30,7 +29,7 @@ const ParticipantList = ({test_id}) => {
                                 { (!e.quiz_finished) && (<span>❌</span>) }
                             </td>
                             <td>
-                                { (e.quiz_finished) && (<ButtonKMQ className={"px-2 py-1"} text={"See Result"} onClick={() => window.location.href = `/get-results/id-${e.quiz_id}-${e.ID}`} /> )}
+                                { (e.quiz_finished) && (<ButtonKMQ className={"px-2 py-1"} text={"See Result"} onClick={() => onClick(e)} /> )}
                             </td>
                         </tr>
                     ))
