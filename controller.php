@@ -1,17 +1,83 @@
 <?php 
 
-    function kmq_function_get_user ($request) {
-      return null;
+    function is_NGen_admin() {
+      $user = wp_get_current_user();
+      $roles = $user->roles;
+      $is_admin = in_array( 'administrator', $roles );
+      $is_ngen_admin = in_array( 'NGen_Admin', $roles );
+        // check the user role and only ngen_admin, administrator can see the company list.
+      return $is_admin || $is_ngen_admin;
+    }
 
+    function is_Company_admin () {
+      $user = wp_get_current_user();
+      $roles = $user->roles;
+      $is_admin = in_array( 'administrator', $roles );
+      $is_company_admin = in_array( 'Company_Admin', $roles );
+        // check the user role and only company_admin, administrator can see the user list of that company.
+      return $is_admin || $is_company_admin;
+    }
+
+    function kmq_function_get_participants ($request) {
+      $test_id = $request['id'];
+      $user = wp_get_current_user();
+      $company_id = get_user_meta( $user->ID, 'company', true );
+      global $wpdb;
+      $table_name = 'get_all_participants';
+      
+      if ($test_id == 'all') {
+        if(!is_NGen_admin()) {
+          return new WP_Error( 'user_not_allowed',
+                'Sorry, you are not allowed to access the REST API.',
+                array( 'status' => 403 )
+          );
+        }
+        $sql = "SELECT * FROM $table_name";
+        $results = $wpdb->get_results($sql);
+        return $results;
+      }
+      else {
+        if(!is_Company_admin()) {
+          return new WP_Error( 'user_not_allowed',
+                'Sorry, you are not allowed to access the REST API.',
+                array( 'status' => 403 )
+          );
+        }
+        $sql = "select get_all_participants.*, `t`.quiz_id, `t`.quiz_finished 
+        from get_all_participants left join (select * from wp_kmq_finish_later where wp_kmq_finish_later.quiz_id = $test_id) `t` on get_all_participants.ID = `t`.user_id 
+        where get_all_participants.company_id = '$company_id';";
+        $results = $wpdb->get_results($sql);
+        return $results;
+      }
+    }
+
+    function kmq_function_get_user($request) {
+      if(!is_Company_admin()) {
+        return new WP_Error( 'user_not_allowed',
+                'Sorry, you are not allowed to access the REST API.',
+                array( 'status' => 403 )
+        );
+      }
+      $user = get_user_by('id', $request['id']);
+      $company_id = get_user_meta( $user->ID, 'company', true );
+      $data = array(
+        'id' => $user->ID,
+        'role' => $user->roles[0],
+        'company_id' => $company_id,
+        'name' => $user->display_name
+      );
+      return $data;
     }
 
     function kmq_function_get_me ($request) {
       $user = wp_get_current_user();
       $company_id = get_user_meta( $user->ID, 'company', true );
+      //var_export($user);
       $data = array(
           'id' => $user->ID,
           'role' => $user->roles[0],
-          'company_id' => $company_id
+          'company_id' => $company_id,
+          'name' => $user->display_name
         );
       return $data;
     }
@@ -120,7 +186,14 @@
       }
       // Get company list from the db...
       function get_company_list () {
-              
+        // check the user role and only ngen_admin, administrator can see the company list.
+        if(!is_NGen_admin()) {
+          return new WP_Error( 'user_not_allowed',
+                'Sorry, you are not allowed to access the REST API.',
+                array( 'status' => 403 )
+          );
+        }
+
         global $wpdb;
         $table_name = $wpdb->prefix . 'kmq_companies';
         $sql = "SELECT * FROM `$table_name`;";

@@ -50,6 +50,7 @@ function kmq_init_table(){
 
   $check_table = "SHOW TABLES LIKE '$table_name';";
   $check_table_companies = "SHOW TABLES LIKE '$table_name_two';";
+  $check_view_users = "SHOW TABLES LIKE 'get_all_participants';";
 
   $sql = "CREATE TABLE $table_name (
     id mediumint(9) NOT NULL AUTO_INCREMENT,
@@ -68,6 +69,34 @@ function kmq_init_table(){
     PRIMARY KEY (id)
   ) $charset_collate;";
   
+  $sql_users = "CREATE OR REPLACE algorithm = UNDEFINED view `local`.`get_all_participants` as
+  select
+      `local`.`wp_users`.`ID` as `ID`,
+      `local`.`wp_users`.`user_login` as `user_login`,
+      `local`.`wp_users`.`user_nicename` as `user_nicename`,
+      `local`.`wp_users`.`user_email` as `user_email`,
+      `local`.`wp_users`.`user_url` as `user_url`,
+      `local`.`wp_users`.`user_registered` as `user_registered`,
+      `local`.`wp_users`.`user_activation_key` as `user_activation_key`,
+      `local`.`wp_users`.`user_status` as `user_status`,
+      `local`.`wp_users`.`display_name` as `display_name`,
+      `local`.`wp_usermeta`.`meta_value` as `company_id`
+  from
+      ((`local`.`wp_users`
+  join `local`.`wp_usermeta`)
+  join (
+      select
+          `local`.`wp_usermeta`.`user_id` as `user_id`,
+          `local`.`wp_usermeta`.`meta_value` as `meta_value`
+      from
+          `local`.`wp_usermeta`
+      where
+          ((`local`.`wp_usermeta`.`meta_key` = 'wp_capabilities')
+              and (substring_index(substring_index(`local`.`wp_usermeta`.`meta_value`, '\"', 2), '\"',-(1)) = 'Participant'))) `t`)
+  where
+      ((`local`.`wp_users`.`ID` = `local`.`wp_usermeta`.`user_id`)
+          and (`local`.`wp_usermeta`.`user_id` = `t`.`user_id`)
+              and (`local`.`wp_usermeta`.`meta_key` = 'company'));";
 
   require_once ABSPATH . 'wp-admin/includes/upgrade.php';
   $check = $wpdb->query($check_table);
@@ -76,6 +105,10 @@ function kmq_init_table(){
   $check_companies = $wpdb->query($check_table_companies);
   if($check_companies == 0) {
     dbDelta( $sql_companies );
+  }
+  $check_users = $wpdb->query($check_view_users);
+  if($check_users == 0) {
+    $wpdb->query( $sql_users );
   }
   insert_company_data();
   add_option( 'jal_db_version', $jal_db_version );

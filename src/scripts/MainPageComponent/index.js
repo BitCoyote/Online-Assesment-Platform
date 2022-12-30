@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import {useGetAllAssessments, getAssessmentStatus} from "../../api/assessments";
-import {useAccount} from "../../api/utils";
+import {useAccount, testUseAccount} from "../../api/utils";
 import Loading from "../Helpers/Loading";
 import Error from "../Helpers/Error";
 import SATList from "./Components/SATList";
@@ -9,7 +9,8 @@ const MainPageComponent = () => {
     const [user, accountLoading, authError] = useAccount('me');
     const [data, loading, error] = useGetAllAssessments({user_id: user?.id});
     const [assessmentStatus, setAssessmentStatus] = useState([]);
-    console.log(accountLoading, loading, user);
+    // For testing disablation of default rest api in non-admin role...
+    testUseAccount()
     useEffect(() => {
         if (user) {
             getAssessmentStatus({user_id: user?.id})

@@ -5,19 +5,26 @@ import { useParams } from "react-router-dom";
 import NoAnswersFound from "./Components/NoAnswersFound";
 import Loading from "../Helpers/Loading";
 import TableCellWithToolTip from "./Components/TableCellWithToolTip";
+import { useNavigate } from "react-router-dom";
+import { ButtonKMQ } from "../KMQComponents/ButtonKMQ";
 
 const AssessmentResults = () => {
+    const navigate = useNavigate();
     const assessments_list = ["Customer Centric Strategic Assessment Tool (CCSAT)", "New Product & Process Design and Implementation Strategic Assessment Tool (NPPDISAT)", "Reality Check Strategic Assessment Tool (RealitySAT)", "Values-Based Strategic Assessment Tool (VSAT)", "Project Management Strategic Assessment Tool (PMSAT)", "People-Centric Leadership Strategic Assessment Tool (PCLSAT)", "Values Strategic Assessment Tool - Blocks 4 - 7 Transformation (ValuesSAT--2)", "Values Strategic Assessment Tool - Blocks 1 - 3 Foundations (ValuesSAT-1)", "Strategy Strategic Assessment Tool (S-SATList)", "Supply Network Strategic Assessment Tool - Supplier View (SNSAT Supplier)", "Supply Network Strategic Assessment Tool - Customer View (SNSAT Customer)", "Industry 4.0 Strategic Assessment Tool  - Traditional View (ISAT -1)", "Innovation Strategic Assessment Tool (InnSAT)", "Execution Strategic Assessment Tool (ESAT)", "Culture SATList (CultureSAT)", "Competence Strategic Assessment Tool - Block 1 - STEM Skills (CompSAT-1)", "Competence Strategic Assessment Tool - Blocks 2,3 & 4 - Essential Skills (CompSAT-2)", "Leadership Strategic Assessment Tool (LSAT)", "Industry 4.0 Strategic Assessment Tool  - SIRI View (ISAT -2)"];
-    const { test_id } = useParams();
-    const [user, accountLoading, authError] = useAccount('me');
+    const { id_params } = useParams();
+    const params = id_params.split('-');
+    const test_id = params[1];
+    // Company admin should see the individual result. so the params endpoint could be get-results/id-1-4. 1: test_id, 4: user_id.
+    const [user, accountLoading, authError] = useAccount(params.length >= 3 ? params[2] : 'me');
     const [data, loading, error] = useGetResult(
         {
-            test_id: test_id.split('-')[1],
-            user_id: user?.id,
+            test_id: test_id,
+            user_id: user?.id, 
             company_id: user?.company_id
         }, user?.id);
     return (
-        <div className={'py-24'}>
+        <div className={'py-12 px-12'}>
+            <ButtonKMQ text="< Back" onClick={() => navigate(-1)} />
             {
                 (authError || error) && (
                     <NoAnswersFound test_id={test_id} />
@@ -35,7 +42,7 @@ const AssessmentResults = () => {
                     <div className="container p-2 mx-auto rounded-md sm:p-4 dark:text-gray-100 dark:bg-gray-900">
                         <div class="flex-none h-14"><h2 className="mb-8 text-2xl font-semibold leading-tight">{data && assessments_list[parseInt(test_id.split('-')[1]) - 1]}</h2></div>
                         <div class="flex flex-row">
-                            <h2 className="mb-3 text-2xl font-semibold leading-tight">{user.name.charAt(0).toUpperCase() + user.name.slice(1)}'s Test Result</h2>
+                            <h2 className="mb-3 text-2xl font-semibold leading-tight">{user?.name.charAt(0).toUpperCase() + user?.name.slice(1)}'s Test Result</h2>
                         </div>
 
                         <div className="overflow-x-auto">

@@ -1,6 +1,10 @@
 import React from 'react';
+import { useGetParticipants } from '../../../../../api/utils';
+import { ButtonKMQ } from '../../../../KMQComponents/ButtonKMQ';
 
-const ParticipantList = () => {
+const ParticipantList = ({test_id}) => {
+    const [data] = useGetParticipants(1);
+    console.log(data);
     return (
         <div className="p-8 dark:border-gray-100 dark:bg-gray-100 mt-10">
             <div className={'text-lg mb-12'}>
@@ -11,25 +15,26 @@ const ParticipantList = () => {
                     <tr>
                         <th>Username</th>
                         <th>Test Status</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className="text-right border-b border-opacity-20 cursor-pointer">
-                        <td className="px-3 py-2 text-left">
-                            <span>Participant 1</span>
-                        </td>
-                        <td className="px-3 py-2 text-left">
-                            <span>✅</span>
-                        </td>
-                    </tr>
-                    <tr className="text-right border-b border-opacity-20 cursor-pointer">
-                        <td className="px-3 py-2 text-left">
-                            <span>Participant 2</span>
-                        </td>
-                        <td className="px-3 py-2 text-left">
-                            <span>❌</span>
-                        </td>
-                    </tr>
+                {
+                    data && data.map((e, i) => (
+                        <tr key={i} className="text-right border-b border-opacity-20 cursor-pointer">
+                            <td className="px-3 py-2 text-left">
+                                <span>{e.display_name}</span>
+                            </td>
+                            <td className="px-3 py-2 text-left">
+                                { (e.quiz_finished) && (<span>✅</span>) }
+                                { (!e.quiz_finished) && (<span>❌</span>) }
+                            </td>
+                            <td>
+                                { (e.quiz_finished) && (<ButtonKMQ className={"px-2 py-1"} text={"See Result"} onClick={() => window.location.href = `/get-results/id-${e.quiz_id}-${e.ID}`} /> )}
+                            </td>
+                        </tr>
+                    ))
+                }
                 </tbody>
             </table>
         </div>

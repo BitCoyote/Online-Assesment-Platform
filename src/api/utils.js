@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_URL, authToken, AUTH_WORDPRESS_URL } from "../constants/api/api";
+import { getParticipants } from "../constants/api/assessments";
 
 const axiosInstance = (request) => {
     return axios.create({
@@ -44,7 +45,25 @@ export const useAxios = (request, allow) => {
 }
 
 export const useAccount = (user_id) => useAxios({
-    url: AUTH_WORDPRESS_URL,
+    url: AUTH_WORDPRESS_URL + `/${user_id}`,
+    method: "GET",
+    target: "WP",
+    headers: {
+        'X-WP-Nonce': wpApiNonce,
+    },
+}, true);
+
+export const testUseAccount = (user_id) => useAxios({
+    url: '/wp-json/wp/v2/users/me',
+    method: "GET",
+    target: "WP",
+    headers: {
+        'X-WP-Nonce': wpApiNonce,
+    },
+}, true);
+
+export const useGetParticipants = (test_id) => useAxios({
+    url: getParticipants + '/' + test_id,
     method: "GET",
     target: "WP",
     headers: {

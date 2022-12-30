@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
                 element: withTabs(AssessmentComponent),
             },
             {
-                path: "get-results/:test_id",
+                path: "get-results/:id_params",
                 element: withTabs(AssessmentResults),
             },
             {

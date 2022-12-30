@@ -40,7 +40,7 @@ function kmq_allow_admin_area_to_admins_only() {
           );   
       }
       else {
-        $roles      = (array) wp_get_current_user()->roles;
+        $roles = (array) wp_get_current_user()->roles;
         $can_access = in_array( 'administrator', $roles ); // allows only the Administrator role
         if ( !$can_access && $is_default_uri ) {
             return new WP_Error( 'user_not_allowed',
@@ -86,17 +86,19 @@ function my_rest_api_init() {
       'callback'            => 'kmq_function_get_company_list'
     ) );
 
-    //Custom rest api...
-    register_rest_route( 'knowmeq-api', '/users/(?P<id>[\d]+)', array(
+    //Custom rest api for get user account
+    register_rest_route( 'knowmeq-api', '/participants/(?P<id>[\d]+)', array(
       'methods'             => 'GET',
-      'callback'            => 'kmq_function_get_user'
+      'callback'            => 'kmq_function_get_participants'
     ) );
     register_rest_route( 'knowmeq-api', 'users/me', array(
       'methods'             => 'GET',
       'callback'            => 'kmq_function_get_me'
     ) );
-
-
+    register_rest_route( 'knowmeq-api', 'users/(?P<id>[\d]+)', array(
+      'methods'             => 'GET',
+      'callback'            => 'kmq_function_get_user'
+    ) );
 }
 
 add_action( 'rest_api_init', 'my_rest_api_init', 10, 1 );
