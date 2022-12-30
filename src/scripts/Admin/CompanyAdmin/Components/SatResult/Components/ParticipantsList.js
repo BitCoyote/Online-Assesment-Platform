@@ -1,6 +1,6 @@
 import React from 'react';
-import { useGetParticipants } from '../../../../../api/utils';
-import { ButtonKMQ } from '../../../../KMQComponents/ButtonKMQ';
+import { useGetParticipants } from '../../../../../../api/utils';
+import { ButtonKMQ } from '../../../../../KMQComponents/ButtonKMQ';
 
 const ParticipantList = ({test_id}) => {
     const [data] = useGetParticipants(1);

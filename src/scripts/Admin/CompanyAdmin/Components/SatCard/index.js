@@ -1,5 +1,5 @@
 import React from "react";
-import { ButtonKMQ } from "../../../KMQComponents/ButtonKMQ";
+import { ButtonKMQ } from "../../../../KMQComponents/ButtonKMQ";
 
 const splitTitleAndDescription = (str) => {
     //. SAT title includes () Title... ex] SAT test (SAT 1)

@@ -1,13 +1,13 @@
 import React from 'react';
 import { useParams } from "react-router-dom";
-import { useGetCompanyResult } from '../../../../api/assessments';
-import { useAccount } from '../../../../api/utils';
-import CompanyResultChart from './Components/CompanyResult';
-import Loading from '../../../Helpers/Loading';
+import { useGetCompanyResult } from '../../../../../api/assessments';
+import { useAccount } from '../../../../../api/utils';
+import Loading from '../../../../Helpers/Loading';
+import Error from '../../../../Helpers/Error';
+import CompanyResultChart from './Components/CompanyResultChart';
 import TopScore from './Components/TopScore';
-import { ButtonKMQ } from '../../../KMQComponents/ButtonKMQ';
 import ParticipantList from './Components/ParticipantsList';
-import Error from '../../../Helpers/Error';
+import { ButtonKMQ } from '../../../../KMQComponents/ButtonKMQ';
 
 const SATResult = () => {
     const { test_id } = useParams();

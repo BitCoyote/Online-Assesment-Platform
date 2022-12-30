@@ -1,9 +1,9 @@
 import React from "react"
-import { useAccount } from "../../../../api/utils";
-import { useGetAllAssessments } from "../../../../api/assessments";
-import Error from '../../../Helpers/Error';
-import Loading from '../../../Helpers/Loading';
-import SatCard from "../SatCard";
+import { useAccount } from "../../../api/utils";
+import { useGetAllAssessments } from "../../../api/assessments";
+import Error from '../../Helpers/Error';
+import Loading from '../../Helpers/Loading';
+import SatCard from "./Components/SatCard";
 
 const CompanyAdminDashBoard = () => {
     const [user, accountLoading, authError] = useAccount('me');

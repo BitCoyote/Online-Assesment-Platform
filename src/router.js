@@ -7,10 +7,8 @@ import Auth from "./scripts/Auth";
 import WelcomeComponent from "./scripts/WelcomeComponent";
 import LogInPage from "./scripts/LogInPage";
 import withTabs from "./hoc/withTabs";
-import DashboardContainer from "./scripts/Admin/DashboardContainer";
-import CompanyAdminDashBoard from "./scripts/Admin/CompanyAdmin/DashBoard";
-import SATResult from "./scripts/Admin/CompanyAdmin/SatResult";
-import RedirectionComponent from "./scripts/Admin/RedirectionComponent";
+import CompanyAdminDashBoard from "./scripts/Admin/CompanyAdmin";
+import SATResult from "./scripts/Admin/CompanyAdmin/Components/SatResult";
 import checkRole from "./hoc/checkRole";
 import CompanyList from "./scripts/Admin/CompanyList";
 

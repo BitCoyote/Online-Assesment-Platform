@@ -1,6 +1,5 @@
 import React from 'react';
-import { useGetCompanyTopScore } from '../../../../../api/assessments';
-import TableCellWithToolTip from "../../../../AssessmentResults/Components/TableCellWithToolTip";
+import { useGetCompanyTopScore } from '../../../../../../api/assessments';
 
 const TopScore = ({ company_id, test_id }) => {
     const [data] = useGetCompanyTopScore({ company_id });
