@@ -110,7 +110,9 @@ function kmq_pages_creator() {
         "Main page" => "main-page",
         "Login" => "user-login",
         "Assessment" => "assessment",
-        "Results" => "get-results"
+        "Results" => "get-results",
+        "Company_Dashboard" => "admin-page/companies",
+        "Company_Results" => "admin-page/company-results",
   );
 
   $pages_with_children = array(

@@ -15,7 +15,7 @@ const HeaderKMQ = () => {
         <div className={'inline-block text-right float-right'}>
             <a href={user ? '' : '/login'}>
                 <ButtonKMQ text={user ? 'Logout' : 'Login'} className={'mx-8'}
-                           onClick={user ? () => logoutUser().then(url => window.location.href = url) : () => {}}
+                           onClick={user ? () => logoutUser().then(url => window.location.href = url) : () => {window.location.href="/user-login"}}
                                />
             </a>
         </div>

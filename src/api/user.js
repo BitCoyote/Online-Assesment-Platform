@@ -28,7 +28,7 @@ export const logoutUser = () => {
 
 const logoutUserCall = async () => {
     try {
-        const {data} = await axios.get('/wp-json/kmq-user/logout', {
+        const {data} = await axios.get('/wp-json/knowmeq-api/logout', {
             headers: {
                 'Accept': 'application/json',
                 'X-WP-Nonce': wpApiNonce,
