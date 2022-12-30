@@ -12,7 +12,7 @@ const DashboardContainer = () => {
         {loading && <Loading />}
         {error && ( window.location.href = "/user-login" )}
         <div className={'w-[20vw] table-cell border-r-2 border-solid border-slate-200 align-top'}>
-            <TabsMenu role={user?.role || 'Participant'} />
+            <TabsMenu />
         </div>
         <div className={'w-[80vw] table-cell relative'}>
             <Outlet />

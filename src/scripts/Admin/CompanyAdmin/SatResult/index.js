@@ -13,6 +13,7 @@ const SATResult = () => {
     const { test_id } = useParams();
     const [user, loading, userError] = useAccount('me');
     const [data, dataLoading, error] = useGetCompanyResult({test_id: test_id, company_id: user?.company_id});
+    console.log(loading, dataLoading);
     return (
         <div>
         {(userError) && <Error msg={userError.message} />}

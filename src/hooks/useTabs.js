@@ -1,24 +1,12 @@
 import {useMemo} from "react";
-// import Tab from "../scripts/Tabs/Tab";
+import {Tabs} from "../constants/tabs";
+import {useAccount} from "../api/utils";
 
-const Tabs = {
-    'Participant': {
-        'SAT': '/main-page',
-        'Results': '/get-results/id-1',
-        'My Results': '/get-results/id-2',
-    },
-    'Company_Admin': {
-        'SAT' : '/admin-page/companies',
-        'Results': '/admin-page/company-results',
-    },
-    'NGen_Admin': {
-        'SAT' : '/admin-page/ngen',
-        'Results': '/admin-page/results',
-    }
-}
 
-export const useTabs = (role = 'Participant') => {
-    const TabsUrl = Tabs[role] || Tabs['Participant'];
+export const useTabs = () => {
+    const [user, accountLoading, authError] = useAccount('me');
+    const TabsUrl = useMemo(() => Tabs[user?.role] ?? {}, [user]);
+
     const urlToTab = () => {
         let tab = '';
         Object.keys(TabsUrl).forEach(item => {
@@ -29,7 +17,7 @@ export const useTabs = (role = 'Participant') => {
         return tab;
     }
 
-    const currTab = useMemo(() => urlToTab(), [window.location.href]);
+    const currTab = useMemo(() => urlToTab(), [window.location.href, TabsUrl]);
 
     const handleClickTab = (clickedTab) => {
         window.location.href = TabsUrl[clickedTab];
