@@ -6,7 +6,6 @@ import AssessmentFooter from "./Components/Footer";
 import { useParams } from "react-router-dom";
 import { useAccount } from "../../api/utils";
 import Loading from "../Helpers/Loading";
-import HeaderKMQ from "../Header/HeaderKMQ";
 
 
 function AssessmentComponent() {

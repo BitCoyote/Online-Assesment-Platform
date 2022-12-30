@@ -11,6 +11,8 @@ import DashboardContainer from "./scripts/Admin/DashboardContainer";
 import CompanyAdminDashBoard from "./scripts/Admin/CompanyAdmin/DashBoard";
 import SATResult from "./scripts/Admin/CompanyAdmin/SatResult";
 import RedirectionComponent from "./scripts/Admin/RedirectionComponent";
+import checkRole from "./hoc/checkRole";
+import CompanyList from "./scripts/Admin/CompanyList";
 
 export const router = createBrowserRouter([
     {
@@ -30,33 +32,27 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'main-page',
-                element: withTabs(MainPageComponent),
+                element: checkRole(withTabs(MainPageComponent))(['Participant']),
             },
             {
                 path: "assessment/:test_id",
-                element: withTabs(AssessmentComponent),
+                element: checkRole(withTabs(AssessmentComponent))(['Participant']),
             },
             {
-                path: "get-results/:id_params",
-                element: withTabs(AssessmentResults),
+                path: "get-results/:test_id",
+                element: checkRole(withTabs(AssessmentResults))(['Participant']),
             },
             {
-                path: "/admin-page",
-                element: <DashboardContainer />,
-                children: [
-                    {
-                        path: "",
-                        element: <RedirectionComponent />
-                    },
-                    {
-                        path: "companies",
-                        element: <CompanyAdminDashBoard />
-                    },
-                    {
-                        path: "company-results/:test_id",
-                        element: <SATResult />
-                    }
-                ]
+                path: 'admin-page/companies',
+                element: checkRole(withTabs(CompanyAdminDashBoard))(['Company_Admin'])
+            },
+            {
+                path: "admin-page/company-results/:test_id",
+                element: checkRole(withTabs(SATResult))(['Company_Admin'])
+            },
+            {
+                path: 'admin-page/companies-list',
+                element: checkRole(withTabs(CompanyList))(['NGen_Admin'])
             }
         ]
     }
