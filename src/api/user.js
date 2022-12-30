@@ -41,3 +41,19 @@ const logoutUserCall = async () => {
         alert('Wrong credentials!')
     }
 }
+
+export const getUser = async () => {
+    try {
+        const { data } = await axios.get('/wp-json/wp/v2/users/me', {
+            headers: {
+                'Accept': 'application/json',
+                'X-WP-Nonce': wpApiNonce,
+            }
+        });
+
+        console.log('data', data)
+        return data;
+    } catch {
+        console.log('error in getting current user')
+    }
+}
