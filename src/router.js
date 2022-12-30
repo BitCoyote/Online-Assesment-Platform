@@ -39,8 +39,8 @@ export const router = createBrowserRouter([
                 element: checkRole(withTabs(AssessmentComponent))(['Participant']),
             },
             {
-                path: "get-results/:test_id",
-                element: checkRole(withTabs(AssessmentResults))(['Participant']),
+                path: "get-results/:id_params",
+                element: checkRole(withTabs(AssessmentResults))(['Participant', 'Company_Admin']),
             },
             {
                 path: 'admin-page/companies',
