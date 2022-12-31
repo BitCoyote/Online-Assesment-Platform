@@ -6,7 +6,7 @@ function kmq_company_submenu_page() {
     add_submenu_page(
         'users.php',
         'Company',
-        'Company',
+        'All Companies',
         'manage_options',
         'company',
         'kmq_company_menu_callback'

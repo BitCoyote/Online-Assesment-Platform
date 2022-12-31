@@ -207,3 +207,20 @@ function kmq_remove_admin_bar() {
 
 add_action ('init', 'kmq_remove_admin_bar');
 
+// add company name to user in admin panel
+function new_modify_user_table( $column ) {
+  $column['company'] = 'company';
+  unset( $column['posts'] );
+  return $column;
+}
+add_filter( 'manage_users_columns', 'new_modify_user_table' );
+
+function new_modify_user_table_row( $val, $column_name, $user_id ) {
+  switch ($column_name) {
+      case 'company' :
+          return get_the_author_meta( 'company', $user_id );
+  }
+  return $val;
+}
+add_filter( 'manage_users_custom_column', 'new_modify_user_table_row', 10, 3 );
+
