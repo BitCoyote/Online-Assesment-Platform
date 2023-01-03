@@ -10,7 +10,7 @@ const splitTitleAndDescription = (str) => {
 }
 
 const SatCard = ({assessment}) => {
-    const url = '/admin-page/company-results/' + assessment.test_id;
+    const url = window.location.href + '/' + assessment.test_id;
     return <div className={'cursor-pointer align-top inline-block w-1/4 mr-16 mb-8 p-6 border-2 border-solid border-slate-400 h-52 relative'}
                 onClick={() => {
                     document.location.href = url;

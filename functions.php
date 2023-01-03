@@ -111,13 +111,15 @@ function kmq_pages_creator() {
         "Login" => "user-login",
         "Assessment" => "assessment",
         "Results" => "get-results",
-        "Company_Dashboard" => "admin-page/companies",
-        "Company_Results" => "admin-page/company-results",
+        "Company Dashboard" => "admin-page/companies",
+        "Company Results" => "admin-page/company-results",
+        "Company List" => "admin-page/companies-list"
   );
 
   $pages_with_children = array(
         'Assessment',
-        'Results'
+        'Results',
+        'Company Results'
   );
 
   $children_count = 20;

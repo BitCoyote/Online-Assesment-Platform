@@ -11,9 +11,9 @@ import { ButtonKMQ } from '../../../../KMQComponents/ButtonKMQ';
 import AssessmentResults from '../../../../AssessmentResults';
 
 const SATResult = () => {
-    const { test_id } = useParams();
+    const { test_id, company_id } = useParams();
     const [user, loading, userError] = useAccount('me');
-    const [data, dataLoading, error] = useGetCompanyResult({test_id: test_id, company_id: user?.company_id});
+    const [data, dataLoading, error] = useGetCompanyResult({test_id: test_id, company_id: company_id ?? user?.company_id});
     const [selectedParticipant, setSelectedParticipant] = useState(null);
     if(selectedParticipant) {
         return (
@@ -38,7 +38,7 @@ const SATResult = () => {
                 <div class="text-gray-600 text-base">
                     This information needs to be added by your company's participants
                 </div>
-                <ButtonKMQ dark className={"mt-12"} text="Back to the List" onClick={() => window.location.href = '/admin-page/companies'} />
+                <ButtonKMQ dark className={"mt-12"} text="Back to the List" onClick={() => window.location.href = '/admin-page/company-results'} />
             </div>
         )}
         {data && user && (

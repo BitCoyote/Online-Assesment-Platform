@@ -2,7 +2,8 @@ import React from 'react';
 
 const CompanyCard = ({data}) => {
     return (
-        <div className={'cursor-pointer align-top inline-block w-1/4 mr-16 mb-8 p-6 border-2 border-solid border-slate-400 h-52 relative'}>
+        <div onClick={() => window.location.href = '/admin-page/companies-list/' + data.id}
+             className={'cursor-pointer align-top inline-block w-1/4 mr-16 mb-8 p-6 border-2 border-solid border-slate-400 h-52 relative'}>
             <div className="bg-white flex flex-col justify-between leading-normal">
                 <div className="mb-8">
                 <div className="text-gray-900 font-bold text-xl mb-2">{data.name}</div>

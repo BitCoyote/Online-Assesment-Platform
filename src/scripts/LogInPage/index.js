@@ -1,9 +1,8 @@
-import { ButtonKMQ } from "../KMQComponents/ButtonKMQ";
+import {ButtonKMQ} from "../KMQComponents/ButtonKMQ";
 import MainImg from '../../assets/login/login_main.png';
 import InputKMQ from "../KMQComponents/InputKMQ";
-import { useState } from "react";
-import { loginUser } from "../../api/user";
-import {useTabs} from "../../hooks/useTabs";
+import {useState} from "react";
+import {loginUser} from "../../api/user";
 import {Tabs} from "../../constants/tabs";
 
 const LogInPage = () => {
@@ -11,7 +10,7 @@ const LogInPage = () => {
     const [password, setPassword] = useState('');
 
     const handleLogin = () => {
-        loginUser({ username: username, password: password })
+        loginUser({username: username, password: password})
             .then((response) => {
                 response
                     ? window.location.href = Object.values(Tabs[response.roles[0]])[0]
@@ -31,15 +30,15 @@ const LogInPage = () => {
                 <div className={'text-4xl font-bold mb-12'}>Welcome</div>
                 <div className={'text-left mb-2'}>E-mail</div>
                 <InputKMQ value={username} type={'email'} className={'block'} placeholder={'Enter E-mail'}
-                    onChange={e => setUsername(e.target.value)} onKeyPress={onKeyPress}/>
+                          onChange={e => setUsername(e.target.value)} onKeyPress={onKeyPress}/>
                 <div className={'text-left mb-2'}>Password</div>
                 <InputKMQ value={password} type={'password'} className={'block'} placeholder={'Enter password'}
-                    onChange={e => setPassword(e.target.value)} onKeyPress={onKeyPress}/>
-                <ButtonKMQ text={'Login'} onClick={() => handleLogin()} />
+                          onChange={e => setPassword(e.target.value)} onKeyPress={onKeyPress}/>
+                <ButtonKMQ text={'Login'} onClick={() => handleLogin()}/>
             </div>
         </div>
         <div className={'table-cell w-[45vw]'}>
-            <img className={'w-[45vw]'} alt={'main'} src={MainImg} />
+            <img className={'w-[45vw]'} alt={'main'} src={MainImg}/>
         </div>
     </div>
 }
