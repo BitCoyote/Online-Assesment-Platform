@@ -29,6 +29,7 @@ function kmq_init_table(){
     id mediumint(9) NOT NULL AUTO_INCREMENT,
     `name` TEXT NOT NULL ,
     company_id char(36) NOT NULL ,
+    is_company_active boolean not null default true ,
     PRIMARY KEY (id)
   ) $charset_collate;";
   

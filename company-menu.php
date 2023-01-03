@@ -59,6 +59,7 @@ if ( !empty( $companies ) ) {
   <tr>
     <th>Company Name</th>
     <th>Company ID </th>
+    <th>is active</th>
   </tr>
 <?php
   foreach ( $companies as $company ) {
@@ -66,6 +67,7 @@ if ( !empty( $companies ) ) {
     <tr>
       <td><?php echo esc_html( $company->name ); ?></td>
       <td><?php echo esc_html( $company->company_id ); ?></td>
+      <td><?php echo esc_html( $company->is_company_active);?></td>
     </tr>
   <?php } ?>
 </ul>
