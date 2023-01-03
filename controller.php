@@ -77,7 +77,8 @@
           'id' => $user->ID,
           'role' => $user->roles[0],
           'company_id' => $company_id,
-          'name' => $user->display_name
+          'name' => $user->display_name,
+          'email' => $user->user_email
         );
       return $data;
     }
