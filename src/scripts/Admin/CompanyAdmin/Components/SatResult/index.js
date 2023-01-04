@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from "react-router-dom";
-import { useGetCompanyResult } from '../../../../../api/assessments';
+import { useGetCompanyResult, useGetCompanyTopScore } from '../../../../../api/assessments';
 import { useAccount } from '../../../../../api/utils';
 import Loading from '../../../../Helpers/Loading';
 import Error from '../../../../Helpers/Error';
@@ -9,12 +9,27 @@ import TopScore from './Components/TopScore';
 import ParticipantList from './Components/ParticipantsList';
 import { ButtonKMQ } from '../../../../KMQComponents/ButtonKMQ';
 import AssessmentResults from '../../../../AssessmentResults';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import DownloadReport from './Components/DownloadReport';
 
 const SATResult = () => {
-    const { test_id, company_id } = useParams();
+    const { test_id } = useParams();
     const [user, loading, userError] = useAccount('me');
-    const [data, dataLoading, error] = useGetCompanyResult({test_id: test_id, company_id: company_id ?? user?.company_id});
+    const [data, dataLoading, error] = useGetCompanyResult({test_id: test_id, company_id: user?.company_id});
+    const [topScores] = useGetCompanyTopScore({ company_id: user?.company_id });
     const [selectedParticipant, setSelectedParticipant] = useState(null);
+    const createPDF = async () => {
+        const pdf = new jsPDF("portrait", "pt", "a4"); 
+        const exportData = await html2canvas(document.querySelector("#pdf_export"));
+        const img = exportData.toDataURL("image/png");  
+        console.log(img);
+        const imgProperties = pdf.getImageProperties(img);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
+        pdf.addImage(img, "PNG", 0, 0, pdfWidth, pdfHeight);
+        pdf.save("shipping_label.pdf");
+    }
     if(selectedParticipant) {
         return (
             <div>  
@@ -44,9 +59,13 @@ const SATResult = () => {
                 <div className={'text-lg mb-12'}>
                     {data?.test_title}
                 </div>
+                <div className="flex-none w-[100px]">
+                    <button onClick={createPDF}>download report</button>
+                </div>
                 <CompanyResultChart data={data?.company_results} />
-                <TopScore company_id={user?.company_id} test_id={test_id}/>
+                <TopScore data={topScores} test_id={test_id}/>
                 <ParticipantList test_id={test_id} onClick={(e) => setSelectedParticipant({...e, id: e['ID'], name: e.display_name})} />
+                <DownloadReport topScores={topScores} data={data} test_id={test_id}/>
             </div>
         )}
         </div>

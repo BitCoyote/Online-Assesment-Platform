@@ -1,8 +1,6 @@
 import React from 'react';
-import { useGetCompanyTopScore } from '../../../../../../api/assessments';
 
-const TopScore = ({ company_id, test_id }) => {
-    const [data] = useGetCompanyTopScore({ company_id });
+const TopScore = ({ data, test_id }) => {
     return (
         <div className="p-[40px] mt-[50px] bg-[#D9D9D9]/20">
             <div className={'text-2xl mb-12 font-bold'}>

@@ -41,7 +41,7 @@ export const getAssessment = async ({test_id, user_id}) => {
     }
 }
 
-export const submitAssessment = async ({answers, test_id, user_id}) => {
+export const submitAssessment = async ({answers, test_id, user_id, company_id}) => {
     //const base_url = 'http://15.222.168.158/';
     let jwtToken = jsonToJwt({
         "test_id": test_id,
@@ -63,7 +63,7 @@ export const submitAssessment = async ({answers, test_id, user_id}) => {
     return data;
 }
 
-export const getAllAssessments = async ({user_id}) => {
+export const getAllAssessments = async ({user_id, company_id}) => {
     //const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoxLCJjb21wYW55X2lkIjoiOGRkMGRlZjktOTdhNC00NTE4LWFmNjItNWVhNjI5ZjRiZDMwIiwidXNlcl9pZCI6NjcwfQ.SOrF2dAuvfVTif6cfKSrxEqNoF7Pm_xkKwEDdS8U1Es';
     let jwtToken = jsonToJwt({
         "user_id": user_id,
@@ -86,7 +86,7 @@ export const getAllAssessments = async ({user_id}) => {
     }
 }
 
-export const useGetAssessmentByTestId = ({test_id, user_id}) => {
+export const useGetAssessmentByTestId = ({test_id, user_id, company_id}) => {
     const request = {
         url: getSatQuestionsUrl,
         method: 'GET',
