@@ -18,7 +18,8 @@ function AssessmentComponent() {
     const [user, accountLoading, authError] = useAccount('me');
     const [currAssessment, loading, error] = useGetAssessmentByTestId({
         test_id: test_id.split('-')[1],
-        user_id: user?.id
+        user_id: user?.id,
+        company_id: user?.company_id
     }, user?.id);
     const isAllAnswered = () => {
         return currAnswers.current && currAnswers.desired && currAnswers.value;
@@ -105,6 +106,7 @@ function AssessmentComponent() {
                 answers: answersToJson(),
                 test_id: test_id.split('-')[1],
                 user_id: user.id,
+                company_id: user.company_id
             }).then(data => {
                 submitAnswersToDraft({
                     answers: allAnswers,
