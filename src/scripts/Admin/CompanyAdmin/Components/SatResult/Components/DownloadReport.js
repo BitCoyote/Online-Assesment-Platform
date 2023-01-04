@@ -13,13 +13,13 @@ const DownloadReport = ({data, topScores ,test_id}) => {
                 <div className={'text-2xl mb-2 font-bold'}>
                     Tope 4 Scores
                 </div>
-                <table class="table-auto w-full">
+                <table class="table-fixed min-w-full text-xs text-sm">
                     <thead className="font-bold text-base">
                         <tr>
-                            <th className='w-1/5'>Question Number</th>
-                            <th className='w-2/5'>Question Title</th>
-                            <th className='w-1/5'>Question Category</th>
-                            <th className='w-1/5'>Question Top Score</th>
+                            <th className='text-[16px] p-3 text-left'>Question Number</th>
+                            <th className='text-[16px] p-3 text-left'>Question Title</th>
+                            <th className='text-[16px] p-3 text-center'>Question Category</th>
+                            <th className='text-[16px] p-3 text-center'>Question Top Score</th>
                         </tr>
                     </thead>
                     <tbody>

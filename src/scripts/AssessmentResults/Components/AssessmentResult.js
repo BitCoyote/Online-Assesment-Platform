@@ -31,7 +31,7 @@ const AssessmentResult = ({ data, onBack }) => {
                             {title.split('(')[title.split('(').length - 1].slice(0, -1)}
                         </h2>
                     </div>
-                    <div className="overflow-x-auto">
+                    <div className="overflow-visible">
                         <table className="table-fixed min-w-full text-xs text-sm">
                             <thead className="rounded-t-lg dark:bg-gray-700">
                                 <tr className="text-right border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-800 cursor-pointer">
