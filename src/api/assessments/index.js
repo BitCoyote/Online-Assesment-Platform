@@ -1,28 +1,29 @@
 import axios from 'axios';
 import {useAxios} from '../utils';
 import {
-    submitAssessmentResultUrl,
-    getAllAssessmentsUrl,
-    getSatQuestionsUrl,
-    getAssessmentResultUrl,
-    submitToDraftUrl,
-    getFromDraftUrl,
-    getAssessmentStatusUrl,
-    retakeTestUrl,
+    submitAssessmentResultUrl, 
+    getAllAssessmentsUrl, 
+    getSatQuestionsUrl, 
+    getAssessmentResultUrl, 
+    submitToDraftUrl, 
+    getFromDraftUrl, 
+    getAssessmentStatusUrl, 
+    retakeTestUrl, 
     getCompanyList,
     getCompanyResult,
-    getTopScore, getAssessmentIntroUrl,
+    getTopScore,
 } from "../../constants/api/assessments";
 import {API_URL, authToken} from "../../constants/api/api";
 import {jsonToJwt} from "../../helper/jwt/jsonToJwt";
 
-export const getAssessment = async ({test_id, user_id}) => {
+export const getAssessment = async ({test_id, user_id, company_id}) => {
+    //const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoxLCJjb21wYW55X2lkIjoiOGRkMGRlZjktOTdhNC00NTE4LWFmNjItNWVhNjI5ZjRiZDMwIiwidXNlcl9pZCI6NjcwfQ.SOrF2dAuvfVTif6cfKSrxEqNoF7Pm_xkKwEDdS8U1Es';
     const jwtToken = jsonToJwt({
         "test_id": test_id,
-        "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30",
+        "company_id": company_id,
         "user_id": user_id
     });
-
+    const config = {method}
     try {
         const {data} = await axios.get(API_URL + getSatQuestionsUrl, {
             headers: {
@@ -32,18 +33,20 @@ export const getAssessment = async ({test_id, user_id}) => {
             },
         });
 
+        console.log('data', data)
+
         return data;
     } catch (err) {
         return err.message;
     }
 }
 
-export const submitAssessment = async ({answers, test_id, user_id}) => {
+export const submitAssessment = async ({answers, test_id, user_id, company_id}) => {
     //const base_url = 'http://15.222.168.158/';
     let jwtToken = jsonToJwt({
         "test_id": test_id,
         "user_id": user_id,
-        "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30",
+        "company_id": company_id,
         answers: answers,
     });
 
@@ -60,11 +63,11 @@ export const submitAssessment = async ({answers, test_id, user_id}) => {
     return data;
 }
 
-export const getAllAssessments = async ({user_id}) => {
+export const getAllAssessments = async ({user_id, company_id}) => {
     //const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoxLCJjb21wYW55X2lkIjoiOGRkMGRlZjktOTdhNC00NTE4LWFmNjItNWVhNjI5ZjRiZDMwIiwidXNlcl9pZCI6NjcwfQ.SOrF2dAuvfVTif6cfKSrxEqNoF7Pm_xkKwEDdS8U1Es';
     let jwtToken = jsonToJwt({
         "user_id": user_id,
-        "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30",
+        "company_id": company_id,
     });
     try {
         const {data} = await axios.get(API_URL + getAllAssessmentsUrl, {
@@ -83,7 +86,7 @@ export const getAllAssessments = async ({user_id}) => {
     }
 }
 
-export const useGetAssessmentByTestId = ({test_id, user_id}) => {
+export const useGetAssessmentByTestId = ({test_id, user_id, company_id}) => {
     const request = {
         url: getSatQuestionsUrl,
         method: 'GET',
@@ -91,21 +94,21 @@ export const useGetAssessmentByTestId = ({test_id, user_id}) => {
             KMQJWT: jsonToJwt({
                 "test_id": test_id,
                 "user_id": user_id ? user_id : 0,
-                "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30"
+                "company_id": company_id
             })
         },
     }
     return useAxios(request, !!user_id);
 }
 
-export const useGetAllAssessments = ({user_id}) => {
+export const useGetAllAssessments = ({user_id, company_id}) => {
     const request = {
         url: getAllAssessmentsUrl,
         method: 'GET',
         headers: {
             KMQJWT: jsonToJwt({
                 "user_id": user_id ? user_id : 0,
-                "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30"
+                "company_id": company_id
             })
         },
     }
