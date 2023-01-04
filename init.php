@@ -1,41 +1,4 @@
 <?php
-// Temporary insert company's info.
-function insert_company_data() {
-  
-  $temporary_data = array(
-    array ( 'company_id' => '8dd0def9-97a4-4518-af62-5ea629f4bd30', 'name' => 'KnowmeQ'),
-    array ( 'company_id' => '8dcc47f3-3f91-4e4a-8d7e-0767c1ab11a9', 'name' => 'Company_A' ),
-    array ( 'company_id' => '384a6716-e25a-412a-8996-ceaa208d9e9f', 'name' => 'Company_B' ),
-    array ( 'company_id' => '8db33fb1-643b-4bcd-ad69-5c138ae5c301', 'name' => 'Company_C' ),
-    array ( 'company_id' => '6a84c80b-bfad-4018-a04f-98188871ec5b', 'name' => 'Company_D' ),
-    array ( 'company_id' => '5e19650a-a364-4804-87cd-c00e9a4ae115', 'name' => 'Company_E' ),
-    array ( 'company_id' => '0b67c95a-d02c-4de4-b46e-59d1288b41e7', 'name' => 'Company_F' ),
-    array ( 'company_id' => '65784794-e523-4b95-8bf5-f59c0b7d768b', 'name' => 'Company_G' ),
-    array ( 'company_id' => '71694405-0680-4961-9b19-5159b5504475', 'name' => 'Company_H' ),
-    array ( 'company_id' => '72a2e250-5b6f-4ae3-afbc-ccf0685d8822', 'name' => 'Company_I' ),
-    array ( 'company_id' => '43348ff7-9f9b-4416-a0cd-1a920e2f2ddc', 'name' => 'Company_J' ),
-    array ( 'company_id' => 'e8e15d23-2abc-482f-8c58-1e41dc79351d', 'name' => 'Company_K' ),
-    array ( 'company_id' => '03a30db6-2797-4a6c-a216-6a790e29b78e', 'name' => 'Company_L' ),
-    array ( 'company_id' => 'ccc20489-c9cc-4429-9588-8caaab7d113a', 'name' => 'Company_M' ),
-    array ( 'company_id' => '3905b61a-7007-4c5d-8f05-501acecc979c', 'name' => 'Company_N' ),
-    array ( 'company_id' => '368f4feb-ecef-44dd-b2ab-19334575d2c5', 'name' => 'Company_O' ),
-    array ( 'company_id' => '70c46fab-84e0-46e5-b0d2-4b353d70d9f6', 'name' => 'Company_P' ),
-    array ( 'company_id' => '8e8cdde7-ad21-464c-a6c5-4359e1fb87ee', 'name' => 'Company_Q' ),
-    array ( 'company_id' => 'b29c9051-fdc7-427c-a759-e3bae1bc447b', 'name' => 'Company_R' ),
-    array ( 'company_id' => '6e688313-1ffd-4a7c-8ccf-b65db96246a8', 'name' => 'Company_S' ),
-  );
-
-  global $wpdb;
-  $table_name = $wpdb->prefix . 'kmq_companies';
-  $wpdb->query("DELETE FROM $table_name;");
-  foreach($temporary_data as $company) {
-    $columns = implode(", ",array_keys($company));
-    $escaped_values = array_values($company);
-    $values  = implode("', '", $escaped_values);
-    $sql = "INSERT INTO `$table_name`($columns) VALUES ('$values')";
-    $wpdb->query($sql);
-  }
-}
 
 add_action("after_switch_theme", "kmq_init");
 
@@ -65,7 +28,8 @@ function kmq_init_table(){
   $sql_companies = "CREATE TABLE $table_name_two (
     id mediumint(9) NOT NULL AUTO_INCREMENT,
     `name` TEXT NOT NULL ,
-    company_id TEXT NOT NULL ,
+    company_id char(36) NOT NULL ,
+    is_company_active boolean not null default true ,
     PRIMARY KEY (id)
   ) $charset_collate;";
   
@@ -110,7 +74,7 @@ function kmq_init_table(){
   if($check_users == 0) {
     $wpdb->query( $sql_users );
   }
-  insert_company_data();
+  // insert_company_data();
   add_option( 'jal_db_version', $jal_db_version );
 }
 
@@ -196,5 +160,4 @@ function save_custom_user_profile_fields($user_id){
 }
 add_action('user_register', 'save_custom_user_profile_fields');
 add_action('profile_update', 'save_custom_user_profile_fields');
-
 ?>
