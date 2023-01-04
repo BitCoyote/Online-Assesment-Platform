@@ -5,7 +5,7 @@ export const Tabs = {
         //'My Results': '/get-results/id-2',
     },
     'Company_Admin': {
-        'Dashboard' : '/admin-page/companies',
+        'Dashboard' : '/admin-page/company-results',
         //'Results': '/admin-page/company-results',
     },
     'NGen_Admin': {

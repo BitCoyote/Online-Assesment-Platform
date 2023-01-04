@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import {createBrowserRouter} from "react-router-dom";
 import MainPageComponent from "./scripts/MainPageComponent";
 import AssessmentComponent from "./scripts/AssessmentComponent";
 import AssessmentResults from "./scripts/AssessmentResults";
@@ -14,19 +14,15 @@ import CompanyList from "./scripts/Admin/CompanyList";
 
 export const router = createBrowserRouter([
     {
-        element: <Auth />,
+        element: <Auth/>,
         children: [
             {
                 path: '*',
-                element: <NotFound />,
-            },
-            {
-                path: '',
-                element: <WelcomeComponent/>,
+                element: <NotFound/>,
             },
             {
                 path: '/user-login',
-                element: withTabs(LogInPage),
+                element: <LogInPage/>,
             },
             {
                 path: 'main-page',
@@ -41,7 +37,7 @@ export const router = createBrowserRouter([
                 element: checkRole(withTabs(AssessmentResults))(['Participant', 'Company_Admin', 'NGen_Admin']),
             },
             {
-                path: 'admin-page/companies',
+                path: 'admin-page/company-results',
                 element: checkRole(withTabs(CompanyAdminDashBoard))(['Company_Admin'])
             },
             {
@@ -51,6 +47,14 @@ export const router = createBrowserRouter([
             {
                 path: 'admin-page/companies-list',
                 element: checkRole(withTabs(CompanyList))(['NGen_Admin'])
+            },
+            {
+                path: 'admin-page/companies-list/:company_id',
+                element: checkRole(withTabs(CompanyAdminDashBoard))(['NGen_Admin'])
+            },
+            {
+                path: 'admin-page/companies-list/:company_id/:test_id',
+                element: checkRole(withTabs(SATResult))(['NGen_Admin'])
             }
         ]
     }
