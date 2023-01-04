@@ -129,7 +129,7 @@ function custom_user_profile_fields($user){
       <tr class="form-field form-required">
           <th><label for="company"><?php _e("Company Name",'KnowMeQ'); ?> <span class="description"><?php _e('(required)'); ?></span></label></th>
           <td>
-          <select id="company" name="company" class="form-select" aria-required="true" aria-invalid="true" aria-describedby="wpcf7-f676-p73-o1-ve-text-anruf">
+          <select id="company" name="company" class="form-select" aria-required="true" aria-invalid="true" aria-describedby="wpcf7-f676-p73-o1-ve-text-anruf" required>
             <option value="">Choose a Company</option>
             <?php 
               foreach($temporary_data as $company) {
@@ -160,4 +160,15 @@ function save_custom_user_profile_fields($user_id){
 }
 add_action('user_register', 'save_custom_user_profile_fields');
 add_action('profile_update', 'save_custom_user_profile_fields');
+
+
+add_action( 'user_profile_update_errors', 'crf_user_profile_update_errors', 10, 3 );
+function crf_user_profile_update_errors( $errors, $update, $user ) {
+	
+	if ( empty( $_POST['company'] ) ) {
+		$errors->add( 'Company information error', __( '<strong>ERROR</strong>: You must select company.', 'crf' ) );
+	}
+}
+
 ?>
+

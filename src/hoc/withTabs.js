@@ -7,7 +7,7 @@ const withTabs = (WrappedComponent) => {
             <TabsMenu/>
         </div>
         <div className={'w-[80vw] table-cell relative'}>
-            <WrappedComponent/>
+            <WrappedComponent />
         </div>
     </div>
 }
