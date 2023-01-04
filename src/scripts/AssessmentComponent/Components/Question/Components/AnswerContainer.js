@@ -13,7 +13,7 @@ const AnswerContainer = ({currAnswer, chooseOnClick, canChoose, afterChoose, opt
             Array.from({length: options.to - options.from + 1},(a, b)=> options.from + b)
                 .map(item =>
                 <span className={'inline-block w-12 p-3.5 ml-8 mr-16 text-center '
-                    + (canChoose(item) ? 'cursor-pointer' : 'cursor-not-allowed')}
+                    + (canChoose(item) ? 'cursor-pointer' : 'cursor-not-allowed opacity-40')}
                     onClick={() => handleAnswer(item)}
                 >
                     <input className={'w-5 h-5 relative block mt-0 mx-auto mb-2.5 accent-[#ed4e1d] '

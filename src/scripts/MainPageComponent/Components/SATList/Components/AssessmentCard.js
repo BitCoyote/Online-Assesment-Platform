@@ -5,20 +5,22 @@ const AssessmentCard = ({assessment, savedItem}) => {
     const isFinished = (savedItem?.quiz_finished || "") === "1";
     const url = (isFinished ? "/get-results/id-" : "/assessment/id-") + assessment.test_id;
 
-    return <div className={'cursor-pointer align-top inline-block w-1/4 mr-16 mb-8 p-6 border-2 border-solid border-slate-400 h-52 relative'}
-                onClick={() => {
-                    document.location.href = url;
-                }}>
+    return <div
+        className={'cursor-pointer align-top inline-block w-1/4 mr-16 mb-8 p-6 border-2 border-solid border-slate-400 h-52 relative'}
+        onClick={() => {
+            document.location.href = url;
+        }}>
         <div className={'h-8'}>
             {
                 isFinished
                     ? <span className={'float-right bg-[#d1efdf] text-[#22a265] px-4 py-0 rounded-2xl text-[.9rem]'}>
                         Completed
                       </span>
-                    : isSaved ? <span className={'float-right bg-[#fceadd] text-[#ff9252] px-4 py-0 rounded-2xl text-[.9rem]'}>
+                    : isSaved ?
+                        <span className={'float-right bg-[#fceadd] text-[#ff9252] px-4 py-0 rounded-2xl text-[.9rem]'}>
                                     In Progress
                                 </span>
-                              : null
+                        : null
             }
         </div>
         <div className={'text-2xl mb-4'}>

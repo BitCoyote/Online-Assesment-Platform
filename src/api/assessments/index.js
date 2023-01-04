@@ -1,29 +1,28 @@
 import axios from 'axios';
 import {useAxios} from '../utils';
 import {
-    submitAssessmentResultUrl, 
-    getAllAssessmentsUrl, 
-    getSatQuestionsUrl, 
-    getAssessmentResultUrl, 
-    submitToDraftUrl, 
-    getFromDraftUrl, 
-    getAssessmentStatusUrl, 
-    retakeTestUrl, 
+    submitAssessmentResultUrl,
+    getAllAssessmentsUrl,
+    getSatQuestionsUrl,
+    getAssessmentResultUrl,
+    submitToDraftUrl,
+    getFromDraftUrl,
+    getAssessmentStatusUrl,
+    retakeTestUrl,
     getCompanyList,
     getCompanyResult,
-    getTopScore,
+    getTopScore, getAssessmentIntroUrl,
 } from "../../constants/api/assessments";
 import {API_URL, authToken} from "../../constants/api/api";
 import {jsonToJwt} from "../../helper/jwt/jsonToJwt";
 
 export const getAssessment = async ({test_id, user_id}) => {
-    //const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoxLCJjb21wYW55X2lkIjoiOGRkMGRlZjktOTdhNC00NTE4LWFmNjItNWVhNjI5ZjRiZDMwIiwidXNlcl9pZCI6NjcwfQ.SOrF2dAuvfVTif6cfKSrxEqNoF7Pm_xkKwEDdS8U1Es';
     const jwtToken = jsonToJwt({
         "test_id": test_id,
         "company_id": "8dd0def9-97a4-4518-af62-5ea629f4bd30",
         "user_id": user_id
     });
-    const config = {method}
+
     try {
         const {data} = await axios.get(API_URL + getSatQuestionsUrl, {
             headers: {
@@ -32,8 +31,6 @@ export const getAssessment = async ({test_id, user_id}) => {
                 'KMQJWT': jwtToken,
             },
         });
-
-        console.log('data', data)
 
         return data;
     } catch (err) {
@@ -213,4 +210,24 @@ export const useGetCompanyTopScore = ({company_id}) => {
         },
     }
     return useAxios(request, !!company_id); 
+}
+
+export const getAssessmentIntro = async ({test_id}) => {
+    const jwtToken = jsonToJwt({
+        "test_id": test_id,
+    });
+
+    try {
+        const {data} = await axios.get(API_URL + getAssessmentIntroUrl, {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': authToken,
+                'KMQJWT': jwtToken,
+            },
+        });
+
+        return data;
+    } catch (err) {
+        return err.message;
+    }
 }

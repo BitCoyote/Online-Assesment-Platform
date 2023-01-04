@@ -6,7 +6,7 @@ const AssessmentResult = ({ data, onBack }) => {
     if (!data) {
         return null;
     }
-    console.log(data)
+
     return (
         <div class="flex">
                 <div class="flex-none w-14 pt-2 mx-auto rounded-md sm:pt-4">
