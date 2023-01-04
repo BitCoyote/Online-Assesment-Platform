@@ -3,8 +3,7 @@ import React from 'react';
 const DownloadReport = ({data, topScores ,test_id}) => {
     const title = data?.test_title || '';
     return (
-        <div className="">
-        <div id="pdf_export" className="container p-2 mx-auto rounded-md sm:p-4 dark:text-gray-100 dark:bg-gray-900">
+        <div id="pdf_export" style={{display: "none"}} className="container p-2 mx-auto rounded-md sm:p-4 dark:text-gray-100 dark:bg-gray-900">
             <div className="flex-1 h-14">
                 <h2 className="mb-8 text-[40px] font-semibold leading-tight">
                     {title.split('(')[title.split('(').length - 1].slice(0, -1)}
@@ -84,7 +83,6 @@ const DownloadReport = ({data, topScores ,test_id}) => {
                     </tbody>
                 </table>
             </div>
-        </div>
         </div>
     )
 }

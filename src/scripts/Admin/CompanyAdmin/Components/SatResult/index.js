@@ -20,14 +20,22 @@ const SATResult = () => {
     const [topScores] = useGetCompanyTopScore({ company_id: user?.company_id });
     const [selectedParticipant, setSelectedParticipant] = useState(null);
     const createPDF = async () => {
-        const pdf = new jsPDF("portrait", "pt", "a4"); 
-        const exportData = await html2canvas(document.querySelector("#pdf_export"));
-        const img = exportData.toDataURL("image/png");  
-        console.log(img);
+        const pdf = new jsPDF("portrait", "pt", "a4", true); 
+        const temp = await html2canvas(document.querySelector('#pdf_export'), {
+            onclone: function(doc){
+                var content = doc.querySelector('#pdf_export');
+                content.style.display = 'block';
+            },
+            onrendered: function(canvas) {
+                theCanvas = canvas;
+                Canvas2Image.saveAsPNG(canvas); 
+            }
+        });
+        const img = temp.toDataURL("image/png");  
         const imgProperties = pdf.getImageProperties(img);
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
-        pdf.addImage(img, "PNG", 0, 0, pdfWidth, pdfHeight);
+        pdf.addImage(img, "PNG", 0, 0, pdfWidth, pdfHeight, '', 'FAST');
         pdf.save("shipping_label.pdf");
     }
     if(selectedParticipant) {
