@@ -17,11 +17,8 @@ const SATResult = () => {
     const [selectedParticipant, setSelectedParticipant] = useState(null);
     if(selectedParticipant) {
         return (
-            <div>
-                <div className="w-full p-12 float-right">
-                    <ButtonKMQ text="Back" onClick={() => setSelectedParticipant(null)} />
-                </div>    
-                <AssessmentResults user = {selectedParticipant} />
+            <div>  
+                <AssessmentResults user = {selectedParticipant} onBack= {() => setSelectedParticipant(null)} />
             </div>
         )
     }

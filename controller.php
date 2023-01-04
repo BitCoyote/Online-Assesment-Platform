@@ -198,8 +198,7 @@
         global $wpdb;
         $table_name = $wpdb->prefix . 'kmq_companies';
         $sql = "SELECT * FROM `$table_name`;";
-        $results = $wpdb->get_results($sql);
-        
+        $results = $wpdb->get_results($sql);   
         return $results;
       }
        
