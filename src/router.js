@@ -11,6 +11,7 @@ import CompanyAdminDashBoard from "./scripts/Admin/CompanyAdmin";
 import SATResult from "./scripts/Admin/CompanyAdmin/Components/SatResult";
 import checkRole from "./hoc/checkRole";
 import CompanyList from "./scripts/Admin/CompanyList";
+import MyResults from "./scripts/MyResults";
 
 export const router = createBrowserRouter([
     {
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
             {
                 path: 'main-page',
                 element: checkRole(withTabs(MainPageComponent))(['Participant']),
+            },
+            {
+                path: 'my-results',
+                element: checkRole(withTabs(MyResults))(['Participant']),
             },
             {
                 path: "assessment/:test_id",

@@ -1,6 +1,6 @@
 import React from "react";
 
-const AssessmentCard = ({assessment, savedItem}) => {
+const AssessmentCard = ({assessment, savedItem, onlyResults}) => {
     const isSaved = (savedItem?.answers_obj || "[]") !== "[]";
     const isFinished = (savedItem?.quiz_finished || "") === "1";
     const url = (isFinished ? "/get-results/id-" : "/assessment/id-") + assessment.test_id;
@@ -11,8 +11,8 @@ const AssessmentCard = ({assessment, savedItem}) => {
             document.location.href = url;
         }}>
         <div className={'h-8'}>
-            {
-                isFinished
+            {!onlyResults
+                ? isFinished
                     ? <span className={'float-right bg-[#d1efdf] text-[#22a265] px-4 py-0 rounded-2xl text-[.9rem]'}>
                         Completed
                       </span>
@@ -21,6 +21,7 @@ const AssessmentCard = ({assessment, savedItem}) => {
                                     In Progress
                                 </span>
                         : null
+                : null
             }
         </div>
         <div className={'text-2xl mb-4'}>

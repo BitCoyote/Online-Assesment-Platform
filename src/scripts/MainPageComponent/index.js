@@ -5,7 +5,7 @@ import Loading from "../Helpers/Loading";
 import Error from "../Helpers/Error";
 import SATList from "./Components/SATList";
 
-const MainPageComponent = () => {
+const MainPageComponent = ({onlyResults}) => {
     const [user, accountLoading, authError] = useAccount('me');
     const [data, loading, error] = useGetAllAssessments({user_id: user?.id, company_id: user?.company_id});
     const [assessmentStatus, setAssessmentStatus] = useState([]);
@@ -31,6 +31,7 @@ const MainPageComponent = () => {
                 data={data}
                 user={user}
                 assessmentStatus={assessmentStatus}
+                onlyResults={onlyResults}
             />
         </div>
     )
