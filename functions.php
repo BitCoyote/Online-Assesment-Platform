@@ -113,7 +113,6 @@ add_action( 'rest_api_init', 'my_rest_api_init', 10, 1 );
 function kmq_pages_creator() {
   $pages = array(
         "Welcome" => "/",
-        "Main page" => "main-page",
         "Login" => "user-login",
         "Assessment" => "assessment",
         "Results" => "get-results",

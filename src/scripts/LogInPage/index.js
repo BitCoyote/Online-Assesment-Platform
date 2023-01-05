@@ -1,11 +1,13 @@
 import {ButtonKMQ} from "../KMQComponents/ButtonKMQ";
 import MainImg from '../../assets/login/login_main.png';
 import InputKMQ from "../KMQComponents/InputKMQ";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {loginUser} from "../../api/user";
 import {Tabs} from "../../constants/tabs";
+import {useAccount} from "../../api/utils";
 
 const LogInPage = () => {
+    const [user, loading, userError] = useAccount('me');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -23,6 +25,12 @@ const LogInPage = () => {
             handleLogin();
         }
     }
+
+    useEffect(() => {
+        if (user) {
+            window.location.href = Object.values(Tabs[user.role])[0];
+        }
+    }, [window.location.href, loading])
 
     return <div className={'w-screen table'}>
         <div className={'table-cell w-[55vw] relative'}>

@@ -19,8 +19,6 @@ const FooterLinks = () => {
                     Terms and Conditions
                 </div>
                 <div className={'mb-8'}>
-                    With reference to Section 3: Obligations of the Recipient Regarding the Collection of Information of
-                    the <span className={'underline'}>Sectoral Workforce Solutions Program Contribution Agreement</span>:<br/><br/>
                     PARTICIPANT INFORMATION INCLUDES INFORMATION SUCH AS AGE RANGE AND SELF IDENTIFICATION AS A MEMBER
                     OF AN
                     EQUITY-DESERVING GROUP.<br/><br/>
