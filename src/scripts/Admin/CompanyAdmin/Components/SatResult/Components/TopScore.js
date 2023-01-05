@@ -4,7 +4,7 @@ const TopScore = ({ data, test_id }) => {
     return (
         <div className="p-[40px] mt-[50px] bg-[#D9D9D9]/20">
             <div className={'text-2xl mb-12 font-bold'}>
-                Tope 4 Scores
+                Top 4 Scores
             </div>
             <table class="table-auto w-full">
                 <thead className="font-bold text-base">
@@ -41,7 +41,7 @@ const TopScore = ({ data, test_id }) => {
                                         <span>{row.question_category}</span>
                                     </td>
                                     <td className="w-1/5 px-3 py-2 text-center">
-                                        <span>{row.average_score}</span>
+                                        <span>{parseInt(row.average_score * 100) / 100}</span>
                                     </td>
                                 </tr>
                             ))

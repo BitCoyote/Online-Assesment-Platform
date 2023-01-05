@@ -1,7 +1,6 @@
 <?php
 include "init.php";
 include "controller.php";
-include "company-menu.php";
 /* Import React components into WordPress */
 function kmq_load_assets() {
   wp_enqueue_script('ourmainjs', get_theme_file_uri('/build/index.js'), array('wp-element'), '1.0', true);
@@ -53,6 +52,7 @@ function kmq_allow_admin_area_to_admins_only() {
   }
   return $errors;
 } );
+
 function kmq_add_support() {
   add_theme_support('title-tag');
   add_theme_support('post-thumbnails');
@@ -100,6 +100,10 @@ function my_rest_api_init() {
       'methods'             => 'GET',
       'callback'            => 'kmq_function_get_user'
     ) );
+    register_rest_route( 'knowmeq-api', '/get-company-name', array(
+      'methods'             => 'GET',
+      'callback'            => 'kmq_function_get_print_info'
+    ) );
 }
 
 add_action( 'rest_api_init', 'my_rest_api_init', 10, 1 );
@@ -112,15 +116,13 @@ function kmq_pages_creator() {
         "Login" => "user-login",
         "Assessment" => "assessment",
         "Results" => "get-results",
-        "Company Dashboard" => "admin-page/companies",
-        "Company Results" => "admin-page/company-results",
-        "Company List" => "admin-page/companies-list"
+        "Company_Dashboard" => "admin-page/companies",
+        "Company_Results" => "admin-page/company-results",
   );
 
   $pages_with_children = array(
         'Assessment',
-        'Results',
-        'Company Results'
+        'Results'
   );
 
   $children_count = 20;
@@ -210,21 +212,3 @@ function kmq_remove_admin_bar() {
 }
 
 add_action ('init', 'kmq_remove_admin_bar');
-
-// add company name to user in admin panel
-function new_modify_user_table( $column ) {
-  $column['company'] = 'company';
-  unset( $column['posts'] );
-  return $column;
-}
-add_filter( 'manage_users_columns', 'new_modify_user_table' );
-
-function new_modify_user_table_row( $val, $column_name, $user_id ) {
-  switch ($column_name) {
-      case 'company' :
-          return get_the_author_meta( 'company', $user_id );
-  }
-  return $val;
-}
-add_filter( 'manage_users_custom_column', 'new_modify_user_table_row', 10, 3 );
-

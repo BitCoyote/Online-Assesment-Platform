@@ -9,8 +9,6 @@ const MainPageComponent = () => {
     const [user, accountLoading, authError] = useAccount('me');
     const [data, loading, error] = useGetAllAssessments({user_id: user?.id, company_id: user?.company_id});
     const [assessmentStatus, setAssessmentStatus] = useState([]);
-    // For testing disablation of default rest api in non-admin role...
-    testUseAccount()
     useEffect(() => {
         if (user) {
             getAssessmentStatus({user_id: user?.id})

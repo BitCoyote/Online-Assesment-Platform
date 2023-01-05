@@ -51,6 +51,21 @@
       }
     }
 
+    // Get company name and date time of the server.
+    function kmq_function_get_print_info($request) {
+      global $wpdb;
+      $table_name = $wpdb->prefix . 'kmq_companies';
+      $company_id = $request['company_id'];
+      $sql = "SELECT `name` FROM $table_name WHERE company_id = '$company_id'";
+      $results = $wpdb->get_results($sql);
+      $result = $results[0];
+      $data = array(
+        'name' => $result->name,
+        'timestamp' => date("Y-m-d H:i:s") // calculated date time in server side. because we have to get time in server side.
+      );
+      return $data;
+    }
+
     function kmq_function_get_user($request) {
       if(!is_Company_admin()) {
         return new WP_Error( 'user_not_allowed',

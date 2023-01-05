@@ -55,15 +55,6 @@ export const useAccount = (user_id) => useAxios({
     },
 }, true);
 
-export const testUseAccount = (user_id) => useAxios({
-    url: '/wp-json/wp/v2/users/me',
-    method: "GET",
-    target: "WP",
-    headers: {
-        'X-WP-Nonce': wpApiNonce,
-    },
-}, true);
-
 export const useGetParticipants = (test_id) => useAxios({
     url: getParticipants + '/' + test_id,
     method: "GET",
@@ -72,3 +63,17 @@ export const useGetParticipants = (test_id) => useAxios({
         'X-WP-Nonce': wpApiNonce,
     },
 }, true);
+
+export const useGetCompanyInfo = async (company_id) => {
+    const {data} = await axios.get(`/wp-json/knowmeq-api/get-company-name`
+    , {
+        headers: {
+            'Accept': 'application/json',
+            'X-WP-Nonce': wpApiNonce,
+        },
+        params: {
+            company_id: company_id,
+        }
+        });
+    return data;
+}

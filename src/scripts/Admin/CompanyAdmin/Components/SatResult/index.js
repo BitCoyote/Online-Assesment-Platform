@@ -12,6 +12,7 @@ import AssessmentResults from '../../../../AssessmentResults';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import DownloadReport from './Components/DownloadReport';
+import { useGetCompanyInfo } from '../../../../../api/utils';
 
 const SATResult = () => {
     const { test_id } = useParams();
@@ -21,9 +22,16 @@ const SATResult = () => {
     const [selectedParticipant, setSelectedParticipant] = useState(null);
     const createPDF = async () => {
         const pdf = new jsPDF("portrait", "pt", "a4", true);
+        // Get company information and generation date (From the Server.)
+        const company_info = await useGetCompanyInfo(user?.company_id);
+        // Preparing Export data to PDF.
         const temp = await html2canvas(document.querySelector('#pdf_export'), {
             onclone: function (doc) {
                 var content = doc.querySelector('#pdf_export');
+                var company_name = content.querySelector('#company_name');
+                var generation_date = content.querySelector("#generation_date");
+                company_name.innerHTML += company_info['name'];
+                generation_date.innerHTML += company_info['timestamp'];
                 content.style.display = 'block';
             },
             onrendered: function (canvas) {
@@ -33,10 +41,10 @@ const SATResult = () => {
         });
         const img = temp.toDataURL("image/png");
         const imgProperties = pdf.getImageProperties(img);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfWidth = pdf.internal.pageSize.getWidth() - 50;
         const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
-        pdf.addImage(img, "PNG", 0, 0, pdfWidth, pdfHeight, '', 'FAST');
-        pdf.save("shipping_label.pdf");
+        pdf.addImage(img, "PNG", 25, 30, pdfWidth, pdfHeight, '', 'FAST');
+        pdf.save(`${company_info['name']}_${company_info['timestamp']}.pdf`);
     }
     if (selectedParticipant) {
         return (
