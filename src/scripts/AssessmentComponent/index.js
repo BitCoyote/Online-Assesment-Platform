@@ -7,6 +7,7 @@ import {useParams} from "react-router-dom";
 import {useAccount} from "../../api/utils";
 import Loading from "../Helpers/Loading";
 import AssessmentIntro from "./Components/AssessmentIntro";
+import Snackbar from '../KMQComponents/SnackBar';
 
 
 function AssessmentComponent() {
@@ -16,6 +17,7 @@ function AssessmentComponent() {
     const [currAnswers, setCurrAnswers] = useState({current: null, desired: null, value: null})
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [showIntro, setShowIntro] = useState(true);
+    const [isOpenModal, setIsOpenModal] = useState(false);
     const {test_id} = useParams();
     const [user, accountLoading, authError] = useAccount('me');
     const [currAssessment, loading, error] = useGetAssessmentByTestId({
@@ -34,7 +36,7 @@ function AssessmentComponent() {
     }
     const handleNextQuestion = () => {
         if (!isAllAnswered()) {
-            alert('Answer every question!');
+            setIsOpenModal(true);
             return;
         }
         if (currQuestion < allAnswers.length) {
@@ -129,6 +131,8 @@ function AssessmentComponent() {
     }
 
     return (
+        <div>
+        <Snackbar text={"Please answer all questions to continue."} isOpen={isOpenModal} onClose={() => setIsOpenModal(false)} />
         <div className={'pb-24 mx-auto px-4 min-w-[800px] w-2/3'}>
             {(accountLoading || loading) && (<Loading/>)}
             {(authError) && (<Error msg={"Please sign in"}/>)}
@@ -162,6 +166,7 @@ function AssessmentComponent() {
                     </div>
                 )
             }
+        </div>
         </div>
     )
 }

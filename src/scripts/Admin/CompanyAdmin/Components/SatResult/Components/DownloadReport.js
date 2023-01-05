@@ -3,7 +3,7 @@ import React from 'react';
 const DownloadReport = ({data, topScores ,test_id}) => {
     const title = data?.test_title || '';
     return (
-        <div id="pdf_export" style={{display: "none"}} className="container p-2 mx-auto rounded-md sm:p-4 text-gray-100">
+        <div id="pdf_export" style={{display: "none"}} className="container p-2 mx-auto rounded-md sm:p-4">
             <div className="flex-1 h-14">
                 <div className='flex'>
                     <div className='flex-1'>
