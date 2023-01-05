@@ -14,7 +14,7 @@ const CompanyAdminDashBoard = () => {
             {(authError) && (window.location.href = "/user-login")}
             {(error) && (<Error msg={error.message} />)}
             <div className='p-12'>
-                <div className={'font-bold text-4xl mb-8'}>Company Admin DashBoard</div>
+                <div className={'font-bold text-4xl mb-8'}>Company Admin Dashboard</div>
                 <div className={'text-lg mb-12'}>
                     Welcome to your Strategic Assessment Tools screen.<br />These surveys will help your company achieve alignment, focus and clarity around its priorities for growth and transformation.
                 </div>
