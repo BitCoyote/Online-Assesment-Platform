@@ -6,7 +6,7 @@ const AssessmentCard = ({assessment, savedItem, onlyResults}) => {
     const url = (isFinished ? "/get-results/id-" : "/assessment/id-") + assessment.test_id;
 
     return <div
-        className={'cursor-pointer align-top inline-block w-1/4 mr-16 mb-8 p-6 border-2 border-solid border-slate-400 h-52 relative'}
+        className={'cursor-pointer align-top inline-block w-[26.5%] mr-16 mb-8 p-6 border-2 border-solid border-slate-400 h-52 relative'}
         onClick={() => {
             document.location.href = url;
         }}>
