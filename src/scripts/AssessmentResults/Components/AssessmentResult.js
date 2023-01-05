@@ -24,7 +24,7 @@ const AssessmentResult = ({ data, onBack }) => {
                 </div>
             </div>
             <div className="flex-1">
-                <div className="container p-2 mx-auto rounded-md sm:p-4 dark:text-gray-100 dark:bg-gray-900">
+                <div className="container p-2 mx-auto rounded-md sm:p-4 dark:text-gray-100">
 
                     <div className="flex-1 h-14">
                         <h2 className="mb-8 text-[40px] font-semibold leading-tight">
@@ -34,7 +34,7 @@ const AssessmentResult = ({ data, onBack }) => {
                     <div className="overflow-visible">
                         <table className="table-fixed min-w-full text-xs text-sm">
                             <thead className="rounded-t-lg dark:bg-gray-700">
-                                <tr className="text-right border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-800 cursor-pointer">
+                                <tr className="text-right border-b border-opacity-20 dark:border-gray-700 cursor-pointer">
                                     <th title="Question" className="text-[16px] p-3 font-anvirnext text-left">QUESTIONS</th>
                                     <th title="Category" className="text-[16px] p-3 font-anvirnext text-center">CATEGORY</th>
                                     <th title="Answer(Current)" className="text-[16px] p-3 font-anvirnext text-center">CURRENT STATE</th>
@@ -47,7 +47,7 @@ const AssessmentResult = ({ data, onBack }) => {
                             <tbody>
                                 {data && data.user_results.length > 0 && data?.user_results?.map((result, key) => (
                                     <tr key={key}
-                                        className="text-right border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-800 cursor-pointer">
+                                        className="text-right border-b border-opacity-20 dark:border-gray-700 cursor-pointer">
                                         <td className="text-[16px] p-3 font-anvirnext text-left">
                                             <TableCellWithToolTip
                                                 content={`${result.question.question_number} ${result.question.question_title}`}
