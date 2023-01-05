@@ -214,3 +214,23 @@ export const useGetCompanyTopScore = ({company_id}) => {
     }
     return useAxios(request, !!company_id); 
 }
+
+export const getAssessmentIntro = async ({test_id}) => {
+    const jwtToken = jsonToJwt({
+        "test_id": test_id,
+    });
+
+    try {
+        const {data} = await axios.get(API_URL + getAssessmentIntroUrl, {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': authToken,
+                'KMQJWT': jwtToken,
+            },
+        });
+
+        return data;
+    } catch (err) {
+        return err.message;
+    }
+}

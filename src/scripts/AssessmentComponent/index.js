@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from "react"
-import { submitAssessment, useGetAssessmentByTestId, submitAnswersToDraft, getDraftAnswers } from "../../api/assessments";
+import React, {useState, useEffect} from "react"
+import {submitAssessment, useGetAssessmentByTestId, submitAnswersToDraft, getDraftAnswers} from "../../api/assessments";
 import AssessmentComponentHeader from "./Components/Header/Header";
 import AssessmentComponentQuestion from "./Components/Question/Question";
 import AssessmentFooter from "./Components/Footer";
-import { useParams } from "react-router-dom";
-import { useAccount } from "../../api/utils";
+import {useParams} from "react-router-dom";
+import {useAccount} from "../../api/utils";
 import Loading from "../Helpers/Loading";
+import AssessmentIntro from "./Components/AssessmentIntro";
 
 
 function AssessmentComponent() {
     //const [currAssessment, setCurrAssessment] = useState(null);
     const [currQuestion, setCurrQuestion] = useState(0);
     const [allAnswers, setAllAnswers] = useState([]);
-    const [currAnswers, setCurrAnswers] = useState({ current: null, desired: null, value: null })
+    const [currAnswers, setCurrAnswers] = useState({current: null, desired: null, value: null})
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const { test_id } = useParams();
+    const [showIntro, setShowIntro] = useState(true);
+    const {test_id} = useParams();
     const [user, accountLoading, authError] = useAccount('me');
     const [currAssessment, loading, error] = useGetAssessmentByTestId({
         test_id: test_id.split('-')[1],
@@ -63,7 +65,7 @@ function AssessmentComponent() {
     }
 
     const answersToJson = () => {
-        let result = { current: {}, desired: {}, value: {} }
+        let result = {current: {}, desired: {}, value: {}}
         allAnswers.forEach((answer, index) => {
             let questionNumber = currAssessment.questions[index].question_number
             Object.keys(result).forEach(key => result[key][questionNumber] = answer[key])
@@ -73,7 +75,7 @@ function AssessmentComponent() {
 
     useEffect(() => {
         if (user?.id && !loading)
-            getDraftAnswers({ test_id: test_id.split('-')[1], user_id: user?.id })
+            getDraftAnswers({test_id: test_id.split('-')[1], user_id: user?.id})
                 .then(data => {
                     if (data) {
                         try {
@@ -84,8 +86,7 @@ function AssessmentComponent() {
                                 setCurrQuestion(answers.length - 1)
                             }
                             console.log(isFinished);
-                        }
-                        catch (e) {
+                        } catch (e) {
                             return;
                         }
                     }
@@ -96,7 +97,7 @@ function AssessmentComponent() {
         if (currQuestion < allAnswers.length) {
             setCurrAnswers(allAnswers[currQuestion]);
         } else {
-            setCurrAnswers({ current: null, desired: null, value: null });
+            setCurrAnswers({current: null, desired: null, value: null});
         }
     }, [allAnswers, currQuestion])
 
@@ -119,14 +120,26 @@ function AssessmentComponent() {
         }
     }, [isSubmitted, user])
 
+    if (showIntro) {
+        return <AssessmentIntro onClose={() => {
+            setShowIntro(false);
+            window.scroll(0, 0)
+        }
+        }/>
+    }
+
     return (
         <div className={'pb-24 mx-auto px-4 min-w-[800px] w-2/3'}>
-            {(accountLoading || loading) && (<Loading />)}
-            {(authError) && (<Error msg={"Please sign in"} />)}
-            {(error) && (<Error msg={error.message} />)}
+            {(accountLoading || loading) && (<Loading/>)}
+            {(authError) && (<Error msg={"Please sign in"}/>)}
+            {(error) && (<Error msg={error.message}/>)}
             {
                 currAssessment && (
                     <div>
+                        <div className={'font-bold uppercase text-4xl mt-16'}>
+                            {currAssessment.assessment_title.split('(')[currAssessment.assessment_title.split('(').length - 1].slice(0, -1)}
+                        </div>
+
                         <AssessmentComponentHeader
                             currQuestion={currAssessment.questions[currQuestion]}
                             currQuestionNumber={currQuestion}

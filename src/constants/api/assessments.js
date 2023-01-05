@@ -2,6 +2,8 @@ export const getSatQuestionsUrl = 'sat-tool/get-sat-questions';
 
 export const getAllAssessmentsUrl = 'sat-tool/get-sat-assessment-info';
 
+export const getAssessmentIntroUrl = '/sat-tool/get-sat-assessmnet-full-description';
+
 export const submitAssessmentResultUrl = 'sat-tool/sat-submit';
 
 export const getAssessmentResultUrl = 'sat-tool/get-results';
