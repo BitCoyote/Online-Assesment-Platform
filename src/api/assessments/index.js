@@ -1,17 +1,17 @@
 import axios from 'axios';
 import {useAxios} from '../utils';
 import {
-    submitAssessmentResultUrl, 
-    getAllAssessmentsUrl, 
-    getSatQuestionsUrl, 
-    getAssessmentResultUrl, 
-    submitToDraftUrl, 
-    getFromDraftUrl, 
-    getAssessmentStatusUrl, 
-    retakeTestUrl, 
+    submitAssessmentResultUrl,
+    getAllAssessmentsUrl,
+    getSatQuestionsUrl,
+    getAssessmentResultUrl,
+    submitToDraftUrl,
+    getFromDraftUrl,
+    getAssessmentStatusUrl,
+    retakeTestUrl,
     getCompanyList,
     getCompanyResult,
-    getTopScore,
+    getTopScore, getAssessmentIntroUrl,
 } from "../../constants/api/assessments";
 import {API_URL, authToken} from "../../constants/api/api";
 import {jsonToJwt} from "../../helper/jwt/jsonToJwt";
