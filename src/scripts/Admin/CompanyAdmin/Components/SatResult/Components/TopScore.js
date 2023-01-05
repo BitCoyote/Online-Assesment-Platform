@@ -23,7 +23,7 @@ const TopScore = ({ data, test_id }) => {
                                 e.test_id.toString() === test_id.toString()
                             )[0].company_results.map((row, key) => (
                                 <tr key={key}
-                                    className="text-right border-b border-opacity-20 dark:border-gray-700 cursor-pointer">
+                                    className="text-right border-b border-opacity-20 border-gray-700 cursor-pointer">
                                     <td className="w-1/5 px-3 py-2 text-center">
                                         <span>{row.question_number}</span>
                                     </td>

@@ -5,7 +5,7 @@ import { ButtonKMQ } from '../../../../../KMQComponents/ButtonKMQ';
 const ParticipantList = ({test_id, onClick}) => {
     const [data] = useGetParticipants(test_id);
     return (
-        <div className="p-8 dark:border-gray-100 mt-10">
+        <div className="p-8 border-gray-100 mt-10">
             <div className={'text-lg mb-12'}>
                 Participant List
             </div>
