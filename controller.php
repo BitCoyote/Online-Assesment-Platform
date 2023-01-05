@@ -94,7 +94,7 @@
           'company_id' => $company_id,
           'name' => $user->display_name,
           'email' => $user->user_email
-        );
+      );
       return $data;
     }
 

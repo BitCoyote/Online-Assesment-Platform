@@ -34,13 +34,13 @@ const AssessmentResult = ({ data, onBack }) => {
                         <table className="table-fixed w-full">
                             <thead>
                                 <tr className="border-b border-opacity-20 border-gray-700 cursor-pointer text-[16px]">
-                                    <th className={"p-3 font-anvirnext text-left truncate" + responsiveClassName}><TableCellWithToolTip content="QUESTIONS" /></th>
-                                    <th className="p-3 font-anvirnext text-center truncate"><TableCellWithToolTip content="CATEGORY" /></th>
-                                    <th className="p-3 font-anvirnext text-center truncate w-[14%]"><TableCellWithToolTip content="CURRENT STATE" /></th>
-                                    <th className="p-3 font-anvirnext text-center truncate w-[14%]"><TableCellWithToolTip content="DESIRED STATE" /></th>
-                                    <th className="p-3 font-anvirnext text-center truncate w-[8%]"><TableCellWithToolTip content="VALUE" /></th>
-                                    <th className="p-3 font-anvirnext text-center truncate w-[8%]"><TableCellWithToolTip content="GAP" /></th>
-                                    <th className="p-3 font-anvirnext text-center truncate w-[8%]"><TableCellWithToolTip content="SCORE" /></th>
+                                    <th className={"p-3 font-anvirnext text-left overflow-visible " + responsiveClassName}><TableCellWithToolTip content="QUESTIONS" /></th>
+                                    <th className="p-3 font-anvirnext text-center overflow-visible "><TableCellWithToolTip content="CATEGORY" /></th>
+                                    <th className="p-3 font-anvirnext text-center overflow-visible w-[14%]"><TableCellWithToolTip content="CURRENT STATE" /></th>
+                                    <th className="p-3 font-anvirnext text-center overflow-visible w-[14%]"><TableCellWithToolTip content="DESIRED STATE" /></th>
+                                    <th className="p-3 font-anvirnext text-center overflow-visible w-[8%]"><TableCellWithToolTip content="VALUE" /></th>
+                                    <th className="p-3 font-anvirnext text-center overflow-visible w-[8%]"><TableCellWithToolTip content="GAP" /></th>
+                                    <th className="p-3 font-anvirnext text-center overflow-visible w-[8%]"><TableCellWithToolTip content="SCORE" /></th>
                                 </tr>
                             </thead>
                             <tbody>

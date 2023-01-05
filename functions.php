@@ -2,7 +2,6 @@
 include "init.php";
 include "controller.php";
 include "company-menu.php";
-
 /* Import React components into WordPress */
 function kmq_load_assets() {
   wp_enqueue_script('ourmainjs', get_theme_file_uri('/build/index.js'), array('wp-element'), '1.0', true);
