@@ -55,8 +55,8 @@ export const useAccount = (user_id) => useAxios({
     },
 }, true);
 
-export const useGetParticipants = (test_id) => useAxios({
-    url: getParticipants + '/' + test_id,
+export const useGetParticipants = ({test_id, company_id}) => useAxios({
+    url: getParticipants + '/' + test_id + '?company=' + company_id,
     method: "GET",
     target: "WP",
     headers: {

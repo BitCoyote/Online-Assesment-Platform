@@ -15,15 +15,15 @@ import DownloadReport from './Components/DownloadReport';
 import { useGetCompanyInfo } from '../../../../../api/utils';
 
 const SATResult = () => {
-    const { test_id } = useParams();
+    const { test_id, company_id } = useParams();
     const [user, loading, userError] = useAccount('me');
-    const [data, dataLoading, error] = useGetCompanyResult({ test_id: test_id, company_id: user?.company_id });
-    const [topScores] = useGetCompanyTopScore({ company_id: user?.company_id });
+    const [data, dataLoading, error] = useGetCompanyResult({ test_id: test_id, company_id: company_id ?? user?.company_id });
+    const [topScores] = useGetCompanyTopScore({ company_id: company_id ?? user?.company_id });
     const [selectedParticipant, setSelectedParticipant] = useState(null);
     const createPDF = async () => {
         const pdf = new jsPDF("portrait", "pt", "a4", true);
         // Get company information and generation date (From the Server.)
-        const company_info = await useGetCompanyInfo(user?.company_id);
+        const company_info = await useGetCompanyInfo(company_id ?? user?.company_id);
         // Preparing Export data to PDF.
         const temp = await html2canvas(document.querySelector('#pdf_export'), {
             onclone: function (doc) {
@@ -66,7 +66,7 @@ const SATResult = () => {
                     <div class="text-gray-600 text-base">
                         This information needs to be added by your company's participants
                     </div>
-                    <ButtonKMQ dark className={"mt-12"} text="Back to the List" onClick={() => window.location.href = '/admin-page/company-results'} />
+                    <ButtonKMQ dark className={"mt-12"} text="Back to the List" onClick={() => window.history.back()} />
                 </div>
             )}
             {data && user && (
@@ -90,7 +90,11 @@ const SATResult = () => {
                     </div>
                     <CompanyResultChart data={data?.company_results} />
                     <TopScore data={topScores} test_id={test_id} />
-                    <ParticipantList test_id={test_id} onClick={(e) => setSelectedParticipant({ ...e, id: e['ID'], name: e.display_name })} />
+                    <ParticipantList
+                        test_id={test_id}
+                        company_id={company_id ?? user?.company_id}
+                        onClick={(e) => setSelectedParticipant({ ...e, id: e['ID'], name: e.display_name })}
+                    />
                     <DownloadReport topScores={topScores} data={data} test_id={test_id} />
                 </div>
             )}
