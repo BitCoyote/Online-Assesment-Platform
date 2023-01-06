@@ -24,7 +24,7 @@ const LogInPage = () => {
         }
     }
 
-    return <div className={'w-screen table'}>
+    return <div className={'w-full table'}>
         <div className={'table-cell w-[55vw] relative'}>
             <div className={'w-1/2 text-center absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]'}>
                 <div className={'text-4xl font-bold mb-12'}>Welcome</div>
