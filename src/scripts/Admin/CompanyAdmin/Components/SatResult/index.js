@@ -8,18 +8,18 @@ import CompanyResultChart from './Components/CompanyResultChart';
 import TopScore from './Components/TopScore';
 import ParticipantList from './Components/ParticipantsList';
 import { ButtonKMQ } from '../../../../KMQComponents/ButtonKMQ';
-import AssessmentResults from '../../../../AssessmentResults';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import DownloadReport from './Components/DownloadReport';
 import { useGetCompanyInfo } from '../../../../../api/utils';
+import { useNavigate } from 'react-router-dom';
 
 const SATResult = () => {
     const { test_id } = useParams();
     const [user, loading, userError] = useAccount('me');
     const [data, dataLoading, error] = useGetCompanyResult({ test_id: test_id, company_id: user?.company_id });
     const [topScores] = useGetCompanyTopScore({ company_id: user?.company_id });
-    const [selectedParticipant, setSelectedParticipant] = useState(null);
+    const navigate = useNavigate();
     const createPDF = async () => {
         const pdf = new jsPDF("portrait", "pt", "a4", true);
         // Get company information and generation date (From the Server.)
@@ -46,13 +46,6 @@ const SATResult = () => {
         pdf.addImage(img, "PNG", 25, 30, pdfWidth, pdfHeight, '', 'FAST');
         pdf.save(`${company_info['name']}_${company_info['timestamp']}.pdf`);
     }
-    if (selectedParticipant) {
-        return (
-            <div>
-                <AssessmentResults user={selectedParticipant} onBack={() => setSelectedParticipant(null)} />
-            </div>
-        )
-    }
     return (
         <div>
             {(userError) && <Error msg={userError.message} />}
@@ -66,15 +59,27 @@ const SATResult = () => {
                     <div class="text-gray-600 text-base">
                         This information needs to be added by your company's participants
                     </div>
-                    <ButtonKMQ dark className={"mt-12"} text="Back to the List" onClick={() => window.location.href = '/admin-page/company-results'} />
+                    <ButtonKMQ dark className={"mt-12"} text="Back to the List" onClick={() => navigate(-1)} />
                 </div>
             )}
             {data && user && (
-                <div className={'p-12'}>
+                <div className={'pt-[30px]'}>
                     <div className={'text-lg mb-12'}>
                         <div className="flex justify-between">
                             <div className='flex-1 font-bold text-[40px]'>
-                                {data?.test_title}
+                                <div className="px-[30px] inline-block">
+                                    <a href="#" className='mt-[8px] no-underline' onClick={() => navigate(-1)}>
+                                        <svg
+                                            className="fill-[#383738] hover:fill-[#ED4E1C]"
+                                            height="32"
+                                            viewBox="0 0 1792 1792"
+                                            width="32"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                {data ? data.test_title.split('(')[data.test_title.split('(').length - 1].slice(0, -1) : ''} Results
                             </div>
                             <div className='flex-none w-[160px]'>
                                 <button onClick={createPDF}>
@@ -90,7 +95,7 @@ const SATResult = () => {
                     </div>
                     <CompanyResultChart data={data?.company_results} />
                     <TopScore data={topScores} test_id={test_id} />
-                    <ParticipantList test_id={test_id} onClick={(e) => setSelectedParticipant({ ...e, id: e['ID'], name: e.display_name })} />
+                    <ParticipantList test_id={test_id} />
                     <DownloadReport topScores={topScores} data={data} test_id={test_id} />
                 </div>
             )}

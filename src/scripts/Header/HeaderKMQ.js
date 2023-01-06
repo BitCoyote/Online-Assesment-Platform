@@ -7,7 +7,7 @@ import {Tabs} from "../../constants/tabs";
 const HeaderKMQ = () => {
     const [user, accountLoading, authError] = useAccount('me');
 
-    return <div className={'px-4 bg-[#f0f0f0] relative left-0 top-0 w-screen p-6 z-50'}>
+    return <div className={'px-4 bg-[#f0f0f0] relative left-0 top-0 w-full p-6 z-50'}>
         <div className={'inline-block text-left'}>
             <a href={Object.values(Tabs[user?.role ?? 'Participant'])[0]} className={'cursor-pointer'}>
                 <img src={Logo} alt={'logo'} className={'cursor-pointer'}/>

@@ -16,7 +16,9 @@ const CompanyList = () => {
             error && (<Error />)
         }
         {
-            data && JSON.parse(data).map(e => <CompanyCard data={e}/>)
+            data && JSON.parse(data)
+            .filter(e => (e.name !== 'KnowmeQ' && e.name !== 'NGen'))
+            .map(e => <CompanyCard data={e}/>)
         }
         </div>
     )

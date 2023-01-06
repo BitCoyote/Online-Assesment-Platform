@@ -2,17 +2,18 @@ import React from 'react';
 
 const TopScore = ({ data, test_id }) => {
     return (
-        <div className="p-[40px] mt-[50px] bg-[#D9D9D9]/20">
-            <div className={'text-2xl mb-12 font-bold'}>
+        <div className="p-[30px] mt-[50px]">
+            <div className={'text-2xl mb-7 font-bold'}>
                 Top 4 Scores
             </div>
+            <div className="p-5">
             <table class="table-auto w-full">
                 <thead className="font-bold text-base">
                     <tr>
-                        <th className='w-1/5'>Question Number</th>
-                        <th className='w-2/5'>Question Title</th>
-                        <th className='w-1/5'>Question Category</th>
-                        <th className='w-1/5'>Question Top Score</th>
+                        <th className='w-1/5'>QUESTION NUMBER</th>
+                        <th className='w-2/5'>QUESTION TITLE</th>
+                        <th className='w-1/5'>QUESTION CATEGORY</th>
+                        <th className='w-1/5'>QUESTION TOP SCORES</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,7 +24,7 @@ const TopScore = ({ data, test_id }) => {
                                 e.test_id.toString() === test_id.toString()
                             )[0].company_results.map((row, key) => (
                                 <tr key={key}
-                                    className="text-right border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-800 cursor-pointer">
+                                    className="text-right border-b border-opacity-20 border-gray-700 cursor-pointer">
                                     <td className="w-1/5 px-3 py-2 text-center">
                                         <span>{row.question_number}</span>
                                     </td>
@@ -48,6 +49,7 @@ const TopScore = ({ data, test_id }) => {
                     }
                 </tbody>
             </table>
+            </div>
         </div>
     )
 }

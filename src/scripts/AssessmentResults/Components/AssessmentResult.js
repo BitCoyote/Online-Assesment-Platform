@@ -6,7 +6,7 @@ const AssessmentResult = ({ data, onBack }) => {
     if (!data) {
         return null;
     }
-
+    const responsiveClassName = "2xl:min-w-[600px] xl:min-w-[600px] lg:min-w-[300px] md:min-w-[300px] sm:min-w-[300px] w-1/3";
     return (
         <div class="flex">
             <div class="flex-none w-14 pt-2 mx-auto rounded-md sm:pt-4">
@@ -24,34 +24,38 @@ const AssessmentResult = ({ data, onBack }) => {
                 </div>
             </div>
             <div className="flex-1">
-                <div className="container p-2 mx-auto rounded-md sm:p-4 dark:text-gray-100 dark:bg-gray-900">
-
+                <div className="p-2">
                     <div className="flex-1 h-14">
                         <h2 className="mb-8 text-[40px] font-semibold leading-tight">
                             {title.split('(')[title.split('(').length - 1].slice(0, -1)}
                         </h2>
                     </div>
                     <div className="overflow-visible">
-                        <table className="table-fixed min-w-full text-xs text-sm">
-                            <thead className="rounded-t-lg dark:bg-gray-700">
-                                <tr className="text-right border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-800 cursor-pointer">
-                                    <th title="Question" className="text-[16px] p-3 font-anvirnext text-left">QUESTIONS</th>
-                                    <th title="Category" className="text-[16px] p-3 font-anvirnext text-center">CATEGORY</th>
-                                    <th title="Answer(Current)" className="text-[16px] p-3 font-anvirnext text-center">CURRENT STATE</th>
-                                    <th title="Answer(Desired)" className="text-[16px] p-3 font-anvirnext text-center">DESIRED STATE</th>
-                                    <th title="Answer(Value)" className="text-[16px] p-3 font-anvirnext text-center">VALUE</th>
-                                    <th title="Gap" className="text-[16px] p-3 font-anvirnext text-center">GAP</th>
-                                    <th title="Score" className="text-[16px] p-3 font-anvirnext text-center">SCORE</th>
+                        <table className="table-fixed w-full">
+                            <thead>
+                                <tr className="border-b border-opacity-20 border-gray-700 cursor-pointer text-[16px]">
+                                    <th className={"p-3 font-anvirnext text-left overflow-visible " + responsiveClassName}><TableCellWithToolTip content="QUESTIONS" /></th>
+                                    <th className="p-3 font-anvirnext text-center overflow-visible "><TableCellWithToolTip content="CATEGORY" /></th>
+                                    <th className="p-3 font-anvirnext text-center overflow-visible w-[14%]"><TableCellWithToolTip content="CURRENT STATE" /></th>
+                                    <th className="p-3 font-anvirnext text-center overflow-visible w-[14%]"><TableCellWithToolTip content="DESIRED STATE" /></th>
+                                    <th className="p-3 font-anvirnext text-center overflow-visible w-[8%]"><TableCellWithToolTip content="VALUE" /></th>
+                                    <th className="p-3 font-anvirnext text-center overflow-visible w-[8%]"><TableCellWithToolTip content="GAP" /></th>
+                                    <th className="p-3 font-anvirnext text-center overflow-visible w-[8%]"><TableCellWithToolTip content="SCORE" /></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {data && data.user_results.length > 0 && data?.user_results?.map((result, key) => (
                                     <tr key={key}
-                                        className="text-right border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-800 cursor-pointer">
-                                        <td className="text-[16px] p-3 font-anvirnext text-left">
-                                            <TableCellWithToolTip
-                                                content={`${result.question.question_number} ${result.question.question_title}`}
-                                            />
+                                        className="text-right border-b border-opacity-20 border-gray-700 cursor-pointer">
+                                        <td className="p-3 font-anvirnext text-left">
+                                            <span className="group relative overflow-visible">
+                                                <span className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-black px-2 py-1 text-white opacity-0 transition before:absolute before:left-1/2 before:top-full before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-black before:content-[''] group-hover:opacity-100">
+                                                    {`${result.question.question_number} ${result.question.question_title}`}
+                                                </span>
+                                                <span className="">
+                                                    {`${result.question.question_number} ${result.question.question_title}`}
+                                                </span>
+                                            </span>
                                         </td>
                                         <td className="text-[16px] p-3 font-anvirnext text-center">
                                             <span>{result.question.question_category}</span>

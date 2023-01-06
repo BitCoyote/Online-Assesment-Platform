@@ -1,7 +1,7 @@
 import TabsMenu from "../scripts/Tabs/TabsMenu";
+import { useAccount } from "../api/utils";
 
 const withTabs = (WrappedComponent) => {
-
     return <div>
         <div className={'w-[20vw] table-cell border-r-2 border-solid border-slate-200 align-top'}>
             <TabsMenu/>
