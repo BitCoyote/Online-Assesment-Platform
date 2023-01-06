@@ -2,17 +2,18 @@ import React from 'react';
 
 const TopScore = ({ data, test_id }) => {
     return (
-        <div className="p-[40px] mt-[50px]">
-            <div className={'text-2xl mb-12 font-bold'}>
+        <div className="p-[30px] mt-[50px]">
+            <div className={'text-2xl mb-7 font-bold'}>
                 Top 4 Scores
             </div>
+            <div className="p-5">
             <table class="table-auto w-full">
                 <thead className="font-bold text-base">
                     <tr>
-                        <th className='w-1/5'>Question Number</th>
-                        <th className='w-2/5'>Question Title</th>
-                        <th className='w-1/5'>Question Category</th>
-                        <th className='w-1/5'>Question Top Score</th>
+                        <th className='w-1/5'>QUESTION NUMBER</th>
+                        <th className='w-2/5'>QUESTION TITLE</th>
+                        <th className='w-1/5'>QUESTION CATEGORY</th>
+                        <th className='w-1/5'>QUESTION TOP SCORES</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,6 +49,7 @@ const TopScore = ({ data, test_id }) => {
                     }
                 </tbody>
             </table>
+            </div>
         </div>
     )
 }

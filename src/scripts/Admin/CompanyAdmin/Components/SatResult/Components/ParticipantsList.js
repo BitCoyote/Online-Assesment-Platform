@@ -1,41 +1,50 @@
 import React from 'react';
 import { useGetParticipants } from '../../../../../../api/utils';
-import { ButtonKMQ } from '../../../../../KMQComponents/ButtonKMQ';
 
-const ParticipantList = ({test_id, onClick}) => {
+const ParticipantList = ({test_id}) => {
     const [data] = useGetParticipants(test_id);
     return (
-        <div className="p-8 border-gray-100 mt-10">
-            <div className={'text-lg mb-12'}>
-                Participant List
+        <div className="p-[30px] my-[50px]">
+            <div className={'text-2xl mb-12 font-bold'}>
+                Participants Assessment Status
             </div>
-            <table class="table-auto">
+            <div className='m-[-30px]'>
+            <table class="table-auto w-full">
                 <thead>
                     <tr>
-                        <th>Username</th>
-                        <th>Test Status</th>
-                        <th></th>
+                        <th className="w-1/4 min-w-[200px] py-2">PARTICIPANTS</th>
+                        <th className="w-1/4 py-2">JOB TITLE</th>
+                        <th className="w-1/4 py-2"></th>
+                        <th className="w-1/4 py-2">ASSESSMENT STATUS</th>
                     </tr>
                 </thead>
                 <tbody>
                 {
                     data && data.map((e, i) => (
-                        <tr key={i} className="text-right border-b border-opacity-20 cursor-pointer">
-                            <td className="px-3 py-2 text-left">
-                                <span>{e.display_name}</span>
+                        <tr key={i} className={`border-none ${i % 2 ? 'bg-white' : 'bg-[#F0F0F0]'} cursor-pointer`}>
+                            <td className="px-5 py-2 text-left">
+                                <div class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-[#F24011] rounded-full">
+                                    <span class="font-bold text-white">
+                                        {e.display_name.split(' ')[0].slice(0,1)}
+                                        {e.display_name.split(' ')[1].slice(0,1)}
+                                    </span>
+                                </div>
+                                <span>&nbsp;&nbsp;{e.display_name}</span>
                             </td>
-                            <td className="px-3 py-2 text-left">
-                                { (e.quiz_finished) && (<span>✅</span>) }
-                                { (!e.quiz_finished) && (<span>❌</span>) }
+                            <td className="px-3 py-2 text-center">
+                                Title of Participant
                             </td>
-                            <td>
-                                { (e.quiz_finished) && (<ButtonKMQ className={"px-2 py-1"} text={"See Result"} onClick={() => onClick(e)} /> )}
+                            <td></td>
+                            <td className="px-3 py-2 text-center">
+                                { (e.quiz_finished) && (<span>Completed</span>) }
+                                { (!e.quiz_finished) && (<span>Not Completed</span>) }
                             </td>
                         </tr>
                     ))
                 }
                 </tbody>
             </table>
+            </div>
         </div>
     )
 }

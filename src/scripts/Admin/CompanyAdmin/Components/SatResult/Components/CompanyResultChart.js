@@ -66,9 +66,9 @@ const CompanyResultChart = ({data}) => {
           ]
     }
     return (
-    <div className='w-[1230px] overflow-x-scroll border-gray-100'>
-        <div className='relative w-[1500px] h-[500px]'>
-            <Bar options={options} data={chartData} height={500} width={1500}/>
+    <div className='w-[80vw] overflow-x-scroll border-gray-100 ml-[30px]'>
+        <div className='relative w-[2000px] h-[520px]'>
+            <Bar options={options} data={chartData} height={520} width={2000}/>
         </div>
     </div>
     );
