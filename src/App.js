@@ -5,13 +5,13 @@ import HeaderKMQ from "./scripts/Header/HeaderKMQ";
 import Footer from "./scripts/Footer/Footer";
 
 const App = () => {
-    return (
-       <div className={''}>
+    return (<div className={''}>
+        <HeaderKMQ/>
         <div className={'min-h-[90vh]'}>
-           <RouterProvider router={router}/>
+            <RouterProvider router={router}/>
         </div>
-    </div>
-    )
+        <Footer/>
+    </div>)
 }
 
 export default App;
