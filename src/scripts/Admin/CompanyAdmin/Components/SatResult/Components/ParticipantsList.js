@@ -1,5 +1,6 @@
 import React from 'react';
 import { useGetParticipants } from '../../../../../../api/utils';
+import { getOmissionName } from '../../../../../../helper/string/getOmissionName';
 
 const ParticipantList = ({test_id}) => {
     const [data] = useGetParticipants(test_id);
@@ -25,8 +26,7 @@ const ParticipantList = ({test_id}) => {
                             <td className="px-5 py-2 text-left">
                                 <div class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-[#F24011] rounded-full">
                                     <span class="font-bold text-white">
-                                        {e.display_name.split(' ')[0].slice(0,1)}
-                                        {e.display_name.split(' ')[1].slice(0,1)}
+                                       {getOmissionName(e.display_name)}
                                     </span>
                                 </div>
                                 <span>&nbsp;&nbsp;{e.display_name}</span>
