@@ -212,7 +212,7 @@
 
         global $wpdb;
         $table_name = $wpdb->prefix . 'kmq_companies';
-        $sql = "SELECT * FROM `$table_name`;";
+        $sql = "SELECT * FROM `$table_name` WHERE `name` NOT IN ('Knowmeq', 'NGen');";
         $results = $wpdb->get_results($sql);   
         return $results;
       }
