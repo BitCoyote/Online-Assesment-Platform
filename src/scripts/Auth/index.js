@@ -2,6 +2,8 @@ import React from 'react';
 import { useAccount } from '../../api/utils';
 import { Outlet } from 'react-router-dom';
 import Loading from '../Helpers/Loading';
+import HeaderKMQ from '../Header/HeaderKMQ';
+import Footer from '../Footer/Footer';
 import Error from '../Helpers/Error';
 
 const Auth = () => {
