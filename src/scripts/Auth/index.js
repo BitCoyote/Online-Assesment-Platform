@@ -16,7 +16,7 @@ const Auth = () => {
                 {(authError && !window.location.href.includes('user-login')) && <Error msg="Please sign in to view this page"/>}
                 {(user || window.location.href.includes('user-login')) && <Outlet />}
             </div>
-            <Footer />
+            <Footer user={user}/>
         </div>
     )
 }
