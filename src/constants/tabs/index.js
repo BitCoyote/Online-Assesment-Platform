@@ -9,7 +9,7 @@ export const Tabs = {
         //'Results': '/admin-page/company-results',
     },
     'NGen_Admin': {
-        'Dashboard' : '/admin-page/companies-list',
+        'Companies' : '/admin-page/companies-list',
         //'Results': '/admin-page/results',
     },
     'administrator': {
