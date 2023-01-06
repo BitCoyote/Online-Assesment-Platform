@@ -110,50 +110,50 @@ function my_rest_api_init() {
 add_action( 'rest_api_init', 'my_rest_api_init', 10, 1 );
 
 /* Dynamically create WP page for React. */
-function kmq_pages_creator() {
-  $pages = array(
-        "Welcome" => "/",
-        "Login" => "user-login",
-        "Assessment" => "assessment",
-        "Results" => "get-results",
-        "Company_Dashboard" => "admin-page/companies",
-        "Company_Results" => "admin-page/company-results",
-  );
+// function kmq_pages_creator() {
+//   $pages = array(
+//         "Welcome" => "/",
+//         "Login" => "user-login",
+//         "Assessment" => "assessment",
+//         "Results" => "get-results",
+//         "Company_Dashboard" => "admin-page/companies",
+//         "Company_Results" => "admin-page/company-results",
+//   );
 
-  $pages_with_children = array(
-        'Assessment',
-        'Results'
-  );
+//   $pages_with_children = array(
+//         'Assessment',
+//         'Results'
+//   );
 
-  $children_count = 20;
+//   $children_count = 20;
 
-  foreach($pages as $name => $url) {
-      if (get_page_by_title($name) == NULL) {
-          $page_config = array(
-               'post_title'         => $name,
-               'post_status'        => 'publish',
-               'post_type'          => 'page',
-               'post_name'          => $url
-          );
-          $inserted_page_id = wp_insert_post($page_config);
-          if (in_array($name, $pages_with_children)) {
-              for ($i = 1; $i <= $children_count; $i++) {
-                  $page_config_child = array(
-                       'post_title'         => "",
-                       'post_name'          => "id-{$i}",
-                       'post_status'        => 'publish',
-                       'post_type'          => 'page',
-                       'post_parent'        => $inserted_page_id
-                  );
-                  $child_id = wp_insert_post($page_config_child);
-              }
-          }
-      }
-  }
+//   foreach($pages as $name => $url) {
+//       if (get_page_by_title($name) == NULL) {
+//           $page_config = array(
+//                'post_title'         => $name,
+//                'post_status'        => 'publish',
+//                'post_type'          => 'page',
+//                'post_name'          => $url
+//           );
+//           $inserted_page_id = wp_insert_post($page_config);
+//           if (in_array($name, $pages_with_children)) {
+//               for ($i = 1; $i <= $children_count; $i++) {
+//                   $page_config_child = array(
+//                        'post_title'         => "",
+//                        'post_name'          => "id-{$i}",
+//                        'post_status'        => 'publish',
+//                        'post_type'          => 'page',
+//                        'post_parent'        => $inserted_page_id
+//                   );
+//                   $child_id = wp_insert_post($page_config_child);
+//               }
+//           }
+//       }
+//   }
 
-}
+// }
 
-kmq_pages_creator();
+// kmq_pages_creator();
 
 add_action( 'rest_api_init', 'kmq_register_api_hooks' );
 
@@ -229,3 +229,27 @@ function new_modify_user_table_row( $val, $column_name, $user_id ) {
   return $val;
 }
 add_filter( 'manage_users_custom_column', 'new_modify_user_table_row', 10, 3 );
+
+//add action to rewrite rules to include candidate/candidate_id list, ([0-9]+) is regex for numbers assuming candidate id is a number
+add_action('init', function(){
+  // We are redirecting all endpoints into the /index.php...
+  add_rewrite_rule( 'user-login', 'index.php?type=user-login', 'top' );
+  add_rewrite_rule( 'main-page', 'index.php?type=main-page', 'top' );
+  add_rewrite_rule( 'assessment/?', 'index.php?type=assessment', 'top' );
+  add_rewrite_rule( 'my-results', 'index.php?type=individual-results-list', 'top' );
+  add_rewrite_rule( 'get-results', 'index.php?type=individual-results', 'top' );
+  add_rewrite_rule( 'admin-page/company-results/?', 'index.php?type=CompanyAdmin&term=company-result', 'top' );
+  add_rewrite_rule( 'admin-page/companies-list/?', 'index.php?type=NGenAdmin', 'top' );
+  
+  flush_rewrite_rules();
+});
+
+add_filter( 'query_vars', function( $query_vars ) {
+  $query_vars[] = 'type';
+  return $query_vars;
+} );
+
+add_action( 'template_include', function( $template ) {
+  return ABSPATH . 'wp-content/themes/react-wp-theme/knowmeq-ngen-tlp-main/template-knowmeq.php';
+} );
+
