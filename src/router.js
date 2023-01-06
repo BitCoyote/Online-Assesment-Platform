@@ -15,15 +15,15 @@ import MyResults from "./scripts/MyResults";
 
 export const router = createBrowserRouter([
     {
-        path: '/user-login',
-        element: <LogInPage/>,
-    },
-    {
         element: <Auth/>,
         children: [
             {
                 path: '*',
                 element: <NotFound/>,
+            },
+            {
+                path: '/user-login',
+                element: <LogInPage/>,
             },
             {
                 path: 'main-page',
