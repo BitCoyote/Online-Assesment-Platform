@@ -2,8 +2,8 @@ import React from 'react';
 import { useGetParticipants } from '../../../../../../api/utils';
 import { getOmissionName } from '../../../../../../helper/string/getOmissionName';
 
-const ParticipantList = ({test_id}) => {
-    const [data] = useGetParticipants(test_id);
+const ParticipantList = ({test_id, onClick, company_id}) => {
+    const [data] = useGetParticipants({test_id, company_id});
     return (
         <div className="p-[30px] my-[50px]">
             <div className={'text-2xl mb-12 font-bold'}>

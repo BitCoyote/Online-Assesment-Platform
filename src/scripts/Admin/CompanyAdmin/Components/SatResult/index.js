@@ -15,15 +15,15 @@ import { useGetCompanyInfo } from '../../../../../api/utils';
 import { useNavigate } from 'react-router-dom';
 
 const SATResult = () => {
-    const { test_id } = useParams();
+    const { test_id, company_id } = useParams();
     const [user, loading, userError] = useAccount('me');
-    const [data, dataLoading, error] = useGetCompanyResult({ test_id: test_id, company_id: user?.company_id });
-    const [topScores] = useGetCompanyTopScore({ company_id: user?.company_id });
+    const [data, dataLoading, error] = useGetCompanyResult({ test_id: test_id, company_id: company_id ?? user?.company_id });
+    const [topScores] = useGetCompanyTopScore({ company_id: company_id ?? user?.company_id });
     const navigate = useNavigate();
     const createPDF = async () => {
         const pdf = new jsPDF("portrait", "pt", "a4", true);
         // Get company information and generation date (From the Server.)
-        const company_info = await useGetCompanyInfo(user?.company_id);
+        const company_info = await useGetCompanyInfo(company_id ?? user?.company_id);
         // Preparing Export data to PDF.
         const temp = await html2canvas(document.querySelector('#pdf_export'), {
             onclone: function (doc) {
@@ -95,7 +95,10 @@ const SATResult = () => {
                     </div>
                     <CompanyResultChart data={data?.company_results} />
                     <TopScore data={topScores} test_id={test_id} />
-                    <ParticipantList test_id={test_id} />
+                    <ParticipantList
+                        test_id={test_id}
+                        company_id={company_id ?? user?.company_id}
+                    />
                     <DownloadReport topScores={topScores} data={data} test_id={test_id} />
                 </div>
             )}

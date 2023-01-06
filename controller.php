@@ -21,7 +21,7 @@
     function kmq_function_get_participants ($request) {
       $test_id = $request['id'];
       $user = wp_get_current_user();
-      $company_id = get_user_meta( $user->ID, 'company', true );
+      $company_id = $request->get_param('company');
       global $wpdb;
       $table_name = 'get_all_participants';
       
@@ -37,7 +37,7 @@
         return $results;
       }
       else {
-        if(!is_Company_admin()) {
+        if(!is_Company_admin() && !is_NGen_admin()) {
           return new WP_Error( 'user_not_allowed',
                 'Sorry, you are not allowed to access the REST API.',
                 array( 'status' => 403 )
@@ -67,7 +67,7 @@
     }
 
     function kmq_function_get_user($request) {
-      if(!is_Company_admin()) {
+      if(!is_Company_admin() && !is_NGen_admin()) {
         return new WP_Error( 'user_not_allowed',
                 'Sorry, you are not allowed to access the REST API.',
                 array( 'status' => 403 )
