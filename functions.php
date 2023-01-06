@@ -232,7 +232,7 @@ add_filter( 'manage_users_custom_column', 'new_modify_user_table_row', 10, 3 );
 
 //add action to rewrite rules to include candidate/candidate_id list, ([0-9]+) is regex for numbers assuming candidate id is a number
 add_action('init', function(){
-  
+  // We are redirecting all endpoints into the /index.php...
   add_rewrite_rule( 'user-login', 'index.php?type=user-login', 'top' );
   add_rewrite_rule( 'main-page', 'index.php?type=main-page', 'top' );
   add_rewrite_rule( 'assessment/?', 'index.php?type=assessment', 'top' );
@@ -250,6 +250,6 @@ add_filter( 'query_vars', function( $query_vars ) {
 } );
 
 add_action( 'template_include', function( $template ) {
-  return ABSPATH . 'wp-content/themes/react-wp-theme/knowmeq-ngen-tlp-main/React.php';
+  return ABSPATH . 'wp-content/themes/react-wp-theme/knowmeq-ngen-tlp-main/template-knowmeq.php';
 } );
 
