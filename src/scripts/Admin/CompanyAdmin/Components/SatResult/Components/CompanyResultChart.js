@@ -44,7 +44,7 @@ const CompanyResultChart = ({data}) => {
           },
           title: {
             display: true,
-            text: 'Average Result Chart',
+            text: '',
           },
         },
       };
