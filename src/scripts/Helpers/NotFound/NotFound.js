@@ -1,27 +1,37 @@
 import React from 'react'
-import {Tabs} from "../../../constants/tabs";
-import {useAccount} from "../../../api/utils";
+import { ButtonKMQ } from '../../KMQComponents/ButtonKMQ';
+import MainImg from '../../../assets/login/login_main.png';
+import { useAccount } from '../../../api/utils';
+import Loading from '../Loading';
+import Error from '../Error';
 
 const NotFound = () => {
-    const [user, accountLoading, authError] = useAccount('me');
-
-    return (
-        <section className="flex items-center h-full p-16">
-            <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
-                <div className="max-w-md text-center">
-                    <h2 className="mb-8 font-extrabold text-9xl text-gray-600">
-                        <span className="sr-only">Error</span>404
-                    </h2>
-                    <p className="text-2xl font-semibold md:text-3xl">Sorry, we couldn't find this page.</p>
-                    <p className="mt-4 mb-8 text-gray-400">But dont worry, you can find plenty of other things on our homepage.</p>
-                    <a rel="noopener noreferrer" className="px-8 py-3 font-semibold rounded text-gray-900"
-                       href={user ? Object.values(Tabs[user.role])[0] : '/login'}>
-                        Back to homepage
-                    </a>
-                </div>
+    const [user, loading ,error] = useAccount('me');
+    if (loading) {
+        return (<Loading />);
+    }
+    if (error) {
+        return (<Error />);
+    }
+    const role = user?.role;
+    const mainPage = (role === 'administrator' || role === 'Participant')
+        ? '/main-page' : (role === 'NGen_Admin' ? '/admin-page/companies-list' : '/admin-page/company-results')
+    return <div className={'w-full table'}>
+    <div className={'table-cell w-[55vw] relative'}>
+        <div className={'w-full absolute top-1/2 t mx-[120px] translate-y-[-50%]'}>
+            <div className={'font-medium text-[30px] mb-[10px]'}>404</div>
+            <div className={'text-[40px] font-bold mb-[10px]'}>Page Not Found</div>
+            <div className='text-[16px] mb-[30px]'>
+                <p>We can’t seem to find the page you are looking for.</p>  
+                <p>Try going back to the main page.</p>
             </div>
-        </section>
-    )
+            <ButtonKMQ text={'Back to Main Page'} onClick={() => document.location.href = mainPage }/>
+        </div>
+    </div>
+    <div className={'table-cell w-[45vw]'}>
+        <img className={'w-[45vw]'} alt={'main'} src={MainImg}/>
+    </div>
+</div>
 }
 
 export default NotFound;
