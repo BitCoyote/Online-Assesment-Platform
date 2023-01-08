@@ -110,50 +110,50 @@ function my_rest_api_init() {
 add_action( 'rest_api_init', 'my_rest_api_init', 10, 1 );
 
 /* Dynamically create WP page for React. */
-// function kmq_pages_creator() {
-//   $pages = array(
-//         "Welcome" => "/",
-//         "Login" => "user-login",
-//         "Assessment" => "assessment",
-//         "Results" => "get-results",
-//         "Company_Dashboard" => "admin-page/companies",
-//         "Company_Results" => "admin-page/company-results",
-//   );
+function kmq_pages_creator() {
+  $pages = array(
+        "Welcome" => "/",
+        "Login" => "user-login",
+        "Assessment" => "assessment",
+        "Results" => "get-results",
+        "Company_Dashboard" => "admin-page/companies",
+        "Company_Results" => "admin-page/company-results",
+  );
 
-//   $pages_with_children = array(
-//         'Assessment',
-//         'Results'
-//   );
+  $pages_with_children = array(
+        'Assessment',
+        'Results'
+  );
 
-//   $children_count = 20;
+  $children_count = 20;
 
-//   foreach($pages as $name => $url) {
-//       if (get_page_by_title($name) == NULL) {
-//           $page_config = array(
-//                'post_title'         => $name,
-//                'post_status'        => 'publish',
-//                'post_type'          => 'page',
-//                'post_name'          => $url
-//           );
-//           $inserted_page_id = wp_insert_post($page_config);
-//           if (in_array($name, $pages_with_children)) {
-//               for ($i = 1; $i <= $children_count; $i++) {
-//                   $page_config_child = array(
-//                        'post_title'         => "",
-//                        'post_name'          => "id-{$i}",
-//                        'post_status'        => 'publish',
-//                        'post_type'          => 'page',
-//                        'post_parent'        => $inserted_page_id
-//                   );
-//                   $child_id = wp_insert_post($page_config_child);
-//               }
-//           }
-//       }
-//   }
+  foreach($pages as $name => $url) {
+      if (get_page_by_title($name) == NULL) {
+          $page_config = array(
+               'post_title'         => $name,
+               'post_status'        => 'publish',
+               'post_type'          => 'page',
+               'post_name'          => $url
+          );
+          $inserted_page_id = wp_insert_post($page_config);
+          if (in_array($name, $pages_with_children)) {
+              for ($i = 1; $i <= $children_count; $i++) {
+                  $page_config_child = array(
+                       'post_title'         => "",
+                       'post_name'          => "id-{$i}",
+                       'post_status'        => 'publish',
+                       'post_type'          => 'page',
+                       'post_parent'        => $inserted_page_id
+                  );
+                  $child_id = wp_insert_post($page_config_child);
+              }
+          }
+      }
+  }
 
-// }
+}
 
-// kmq_pages_creator();
+kmq_pages_creator();
 
 add_action( 'rest_api_init', 'kmq_register_api_hooks' );
 
@@ -230,26 +230,27 @@ function new_modify_user_table_row( $val, $column_name, $user_id ) {
 }
 add_filter( 'manage_users_custom_column', 'new_modify_user_table_row', 10, 3 );
 
-//add action to rewrite rules to include candidate/candidate_id list, ([0-9]+) is regex for numbers assuming candidate id is a number
-add_action('init', function(){
-  // We are redirecting all endpoints into the /index.php...
-  add_rewrite_rule( 'user-login', 'index.php?type=user-login', 'top' );
-  add_rewrite_rule( 'main-page', 'index.php?type=main-page', 'top' );
-  add_rewrite_rule( 'assessment/?', 'index.php?type=assessment', 'top' );
-  add_rewrite_rule( 'my-results', 'index.php?type=individual-results-list', 'top' );
-  add_rewrite_rule( 'get-results', 'index.php?type=individual-results', 'top' );
-  add_rewrite_rule( 'admin-page/company-results/?', 'index.php?type=CompanyAdmin&term=company-result', 'top' );
-  add_rewrite_rule( 'admin-page/companies-list/?', 'index.php?type=NGenAdmin', 'top' );
-  
-  flush_rewrite_rules();
-});
+//send email to user
 
-add_filter( 'query_vars', function( $query_vars ) {
-  $query_vars[] = 'type';
-  return $query_vars;
-} );
+function kmq_wp_new_user_notification_email($wp_new_user_notification_email, $user, $blogname) {
+ 
+  // $user_login = $user->user_login;
+  $user_email = $user->user_email;
+  $user_id = $user->ID;
+  $new_password = wp_generate_password( 24, true, true );
+  wp_set_password( $new_password, $user_id );
+  // The blogname option is escaped with esc_html on the way into the database in sanitize_option
+  // we want to reverse this for the plain text arena of emails.
+  $blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
 
-add_action( 'template_include', function( $template ) {
-  return ABSPATH . 'wp-content/themes/react-wp-theme/knowmeq-ngen-tlp-main/template-knowmeq.php';
-} );
+  $message  = sprintf(__('New user registration on your site %s:'), $blogname) . "\r\n\r\n";
+  // $message .= sprintf(__('Username: %s'), $user_login) . "\r\n\r\n";
+  $message .= sprintf(__('E-mail: %s'), $user_email) . "\r\n\r\n";
+  $message .= sprintf(__('Password: %s'), $new_password) . "\r\n\r\n";
 
+  $wp_new_user_notification_email['subject'] = sprintf(__('[%s] Your username and password'), $blogname);
+  $wp_new_user_notification_email['message'] = $message;
+
+  return $wp_new_user_notification_email;
+}
+add_filter('wp_new_user_notification_email', 'kmq_wp_new_user_notification_email', 10, 3);
