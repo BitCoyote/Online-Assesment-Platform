@@ -250,6 +250,30 @@ add_filter( 'query_vars', function( $query_vars ) {
 } );
 
 add_action( 'template_include', function( $template ) {
-  return ABSPATH . 'wp-content/themes/react-wp-theme/knowmeq-ngen-tlp-main/template-knowmeq.php';
+  return ABSPATH . 'wp-content/themes/knowmeq-ngen-tlp/template-knowmeq.php';
 } );
 
+//send email to user
+
+function kmq_wp_new_user_notification_email($wp_new_user_notification_email, $user, $blogname) {
+ 
+  // $user_login = $user->user_login;
+  $user_email = $user->user_email;
+  $user_id = $user->ID;
+  $new_password = wp_generate_password( 24, true, true );
+  wp_set_password( $new_password, $user_id );
+  // The blogname option is escaped with esc_html on the way into the database in sanitize_option
+  // we want to reverse this for the plain text arena of emails.
+  $blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+
+  $message  = sprintf(__('New user registration on your site %s:'), $blogname) . "\r\n\r\n";
+  // $message .= sprintf(__('Username: %s'), $user_login) . "\r\n\r\n";
+  $message .= sprintf(__('E-mail: %s'), $user_email) . "\r\n\r\n";
+  $message .= sprintf(__('Password: %s'), $new_password) . "\r\n\r\n";
+
+  $wp_new_user_notification_email['subject'] = sprintf(__('[%s] Your username and password'), $blogname);
+  $wp_new_user_notification_email['message'] = $message;
+
+  return $wp_new_user_notification_email;
+}
+add_filter('wp_new_user_notification_email', 'kmq_wp_new_user_notification_email', 10, 3);
