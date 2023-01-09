@@ -112,17 +112,9 @@ function kmq_init_user_role() {
   }
 }
 
-//Enabling rewrite rules.
-function pmg_rewrite_activation()
-{
-    pmg_rewrite_add_rewrites();
-    flush_rewrite_rules();
-}
-
 function kmq_init() {
   kmq_init_table();
   kmq_init_user_role();
-  pmg_rewrite_activation();
 }
 
 function custom_user_profile_fields($user){
