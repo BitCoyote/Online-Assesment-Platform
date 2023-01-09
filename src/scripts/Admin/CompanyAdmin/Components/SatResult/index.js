@@ -58,6 +58,17 @@ const SATResult = () => {
                     <div className='font-medium text-[16px] w-[660px]'>
                         This is the SAT results page for your company. These surveys will help your company achieve alignment, focus, and clarity around its priorities for growth and transformation.​
                     </div>
+                    <div className='mt-[30px] mx-auto w-[418px] h-[84px] border-[2px] border-[#ED4E1C] p-[20px] font-medium flex justify-between'>
+                        <span className="py-[5px] text-[20px] align-middle">No results have been added yet.</span>
+                        <button
+                            type="button"
+                            class="w-[50px] h-[40px] bg-[#ED4E1C] text-white text-[19px] rounded-lg font-medium ml-[20px]"
+                            data-bs-dismiss="modal"
+                            onClick={() => navigate(-1)}
+                        >
+                            OK
+                        </button>
+                    </div>
                 </div>
             )}
             {data && user && (

@@ -4,7 +4,7 @@
 
 @font-face {
     font-family: 'Avenir LT';
-    src: url('AvenirNextLTPro-Regular.ttf');
+    src: url('../src/AvenirNextLTPro-Regular.ttf');
     font-display: swap;
 }
 
