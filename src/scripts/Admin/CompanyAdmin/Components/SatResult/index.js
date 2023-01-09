@@ -51,34 +51,33 @@ const SATResult = () => {
             {(userError) && <Error msg={userError.message} />}
             {(loading || dataLoading) && (<Loading />)}
             {(error) && (
-                <div class="text-center mt-24">
-                    <div class="text-gray-600 text-6xl">⚠</div>
-                    <div class="text-gray-900 text-2xl">
-                        No results have been added yet
+                <div className="block m-[30px]">
+                    <div className='font-bold text-[40px] mb-[10px]'>
+                        Strategic Assessment Tools Results
                     </div>
-                    <div class="text-gray-600 text-base">
-                        This information needs to be added by your company's participants
+                    <div className='font-medium text-[16px] w-[660px]'>
+                        This is the SAT results page for your company. These surveys will help your company achieve alignment, focus, and clarity around its priorities for growth and transformation.​
                     </div>
-                    <ButtonKMQ dark className={"mt-12"} text="Back to the List" onClick={() => navigate(-1)} />
                 </div>
             )}
             {data && user && (
-                <div className={'pt-[30px]'}>
+                <div className={''}>
                     <div className={'text-lg mb-12'}>
+                        <div className="mx-[30px]">
+                            <a href="#" className='mx-[15px] my-[25px] no-underline hover:underline h-[32px] block align-middle' onClick={() => navigate(-1)}>
+                                <svg
+                                    className="fill-[#383738] inline-block mt-[-5px]"
+                                    height="32"
+                                    viewBox="0 0 1792 1792"
+                                    width="32"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z" />
+                                </svg>
+                                Back to SAT Results
+                            </a>
+                        </div>
                         <div className="flex justify-between">
-                            <div className='flex-1 font-bold text-[40px]'>
-                                <div className="px-[30px] inline-block">
-                                    <a href="#" className='mt-[8px] no-underline' onClick={() => navigate(-1)}>
-                                        <svg
-                                            className="fill-[#383738] hover:fill-[#ED4E1C]"
-                                            height="32"
-                                            viewBox="0 0 1792 1792"
-                                            width="32"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z" />
-                                        </svg>
-                                    </a>
-                                </div>
+                            <div className='flex-1 font-bold text-[40px] px-[30px]'>
                                 {data ? data.test_title.split('(')[data.test_title.split('(').length - 1].slice(0, -1) : ''} Results
                             </div>
                             <div className='flex-none w-[160px]'>
