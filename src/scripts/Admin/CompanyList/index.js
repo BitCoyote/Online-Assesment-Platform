@@ -3,7 +3,6 @@ import CompanyCard from './Components/CompanyCard';
 import {useGetCompanyList} from '../../../api/assessments';
 import Loading from '../../Helpers/Loading';
 import Error from '../../Helpers/Error';
-import AssessmentCard from "../../MainPageComponent/Components/SATList/Components/AssessmentCard";
 import MainComponentUI from "../../MainComponentUI";
 
 const CompanyList = () => {

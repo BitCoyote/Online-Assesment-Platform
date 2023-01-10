@@ -7,7 +7,6 @@ import Error from '../../../../Helpers/Error';
 import CompanyResultChart from './Components/CompanyResultChart';
 import TopScore from './Components/TopScore';
 import ParticipantList from './Components/ParticipantsList';
-import { ButtonKMQ } from '../../../../KMQComponents/ButtonKMQ';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import DownloadReport from './Components/DownloadReport';
