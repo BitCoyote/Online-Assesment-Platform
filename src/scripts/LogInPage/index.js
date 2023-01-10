@@ -33,20 +33,20 @@ const LogInPage = () => {
     }, [window.location.href, loading])
 
     return <div className={'w-full table'}>
-        <div className={'table-cell w-[55vw] relative'}>
-            <div className={'w-1/2 text-center absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]'}>
-                <div className={'text-4xl font-bold mb-12'}>Welcome</div>
-                <div className={'text-left mb-2'}>E-mail</div>
-                <InputKMQ value={username} type={'email'} className={'block'} placeholder={'Enter E-mail'}
+        <div className={'table-cell w-[45vw] relative'}>
+            <div className={'w-[55%] text-center absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]'}>
+                <div className={'text-4.5xl font-bold mb-7.5 font-anvirnext'}>Welcome</div>
+                <div className={'text-left mb-1'}>Email</div>
+                <InputKMQ value={username} type={'email'} className={'block mb-7.5'} placeholder={'Enter Email'}
                           onChange={e => setUsername(e.target.value)} onKeyPress={onKeyPress}/>
-                <div className={'text-left mb-2'}>Password</div>
-                <InputKMQ value={password} type={'password'} className={'block'} placeholder={'Enter password'}
+                <div className={'text-left mb-1'}>Password</div>
+                <InputKMQ value={password} type={'password'} className={'block mb-7.5'} placeholder={'Enter Password'}
                           onChange={e => setPassword(e.target.value)} onKeyPress={onKeyPress}/>
-                <ButtonKMQ text={'Login'} onClick={() => handleLogin()}/>
+                <ButtonKMQ className={'w-[50%]'} text={'Login'} onClick={() => handleLogin()}/>
             </div>
         </div>
-        <div className={'table-cell w-[45vw]'}>
-            <img className={'w-[45vw]'} alt={'main'} src={MainImg}/>
+        <div className={'table-cell w-[55vw]'}>
+            <img className={'w-[55vw]'} alt={'main'} src={MainImg}/>
         </div>
     </div>
 }

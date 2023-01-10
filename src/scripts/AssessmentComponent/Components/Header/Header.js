@@ -8,8 +8,8 @@ const AssessmentComponentHeader = ({currQuestion, currQuestionNumber, questionsL
             currQuestion={currQuestionNumber}
             questionsLength={questionsLength}
         />
-        <div className={'mb-8 uppercase'}>{currQuestion.question_category}</div>
-        <h2 className={'text-3xl'}>{currQuestion.question_number} {currQuestion.question_title}</h2>
+        <div className={'mb-5 uppercase'}>{currQuestion.question_category}</div>
+        <h2 className={'text-3xl mb-5'}>{currQuestion.question_number} {currQuestion.question_title}</h2>
     </div>
 }
 

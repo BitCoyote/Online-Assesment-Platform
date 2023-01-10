@@ -1,25 +1,37 @@
 import React from 'react';
 import CompanyCard from './Components/CompanyCard';
-import { useGetCompanyList } from '../../../api/assessments';
+import {useGetCompanyList} from '../../../api/assessments';
 import Loading from '../../Helpers/Loading';
 import Error from '../../Helpers/Error';
+import AssessmentCard from "../../MainPageComponent/Components/SATList/Components/AssessmentCard";
+import MainComponentUI from "../../MainComponentUI";
 
 const CompanyList = () => {
     const [data, loading, error] = useGetCompanyList();
 
+    if (data) console.log(JSON.parse(data))
+
     return (
-        <div className="p-12">
-        {
-            loading && (<Loading />)
-        }
-        {
-            error && (<Error />)
-        }
-        {
-            data && JSON.parse(data)
-            .filter(e => (e.name !== 'Knowmeq' && e.name !== 'NGen'))
-            .map(e => <CompanyCard data={e}/>)
-        }
+        <div className="">
+            {
+                loading && (<Loading/>)
+            }
+            {
+                error && (<Error/>)
+            }
+            {
+                <MainComponentUI
+                    title={'Companies'}
+                    text={'Here is a list of all the companies that are currently registered with Future Ready.'}
+                    data={data
+                        ? JSON.parse(data).filter(e => (e?.name !== 'Knowmeq' && e?.name !== 'NGen'))
+                        : []
+                    }
+                    CardComponent={CompanyCard}
+                    cardProps={(item, index) => {return {company: item}}}
+                    dontAlignTitle
+                />
+            }
         </div>
     )
 }

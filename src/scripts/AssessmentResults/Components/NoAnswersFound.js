@@ -8,13 +8,13 @@ const NoAnswersFound = ({test_id}) => {
         <div>
             <button className={'h-12 border-solid border-2 mx-2 mr-5 mt-2 px-4'}
                     onClick={() => {
-                        document.location.href = "/assessment/" + test_id
+                        document.location.href = "/assessments/" + test_id
                     }}>
                 Go to Assessment Page
             </button>
             <button className={'h-12 border-solid border-2 mx-2 mr-5 mt-2 px-4'}
                     onClick={() => {
-                        document.location.href = "/main-page"
+                        document.location.href = "/assessments"
                     }}>
                 Go to Main Page
             </button>

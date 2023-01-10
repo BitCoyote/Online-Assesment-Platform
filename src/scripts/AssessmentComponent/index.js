@@ -24,7 +24,7 @@ function AssessmentComponent() {
         test_id: test_id.split('-')[1],
         user_id: user?.id,
         company_id: user?.company_id
-    }, user?.id);
+    });
     const isAllAnswered = () => {
         return currAnswers.current && currAnswers.desired && currAnswers.value;
     }
@@ -62,7 +62,7 @@ function AssessmentComponent() {
             user_id: user.id,
             completed: false,
         }).then((res) => {
-            window.location.href = '/main-page/'
+            window.location.href = '/assessments/'
         })
     }
 
@@ -118,7 +118,7 @@ function AssessmentComponent() {
                     completed: true,
                 })
             })
-                .then(() => window.location.href = '/get-results/' + test_id);
+                .then(() => window.location.href = '/my-results/' + test_id);
         }
     }, [isSubmitted, user])
 
@@ -133,14 +133,14 @@ function AssessmentComponent() {
     return (
         <div>
         <Snackbar text={"Please answer all questions to continue."} isOpen={isOpenModal} onClose={() => setIsOpenModal(false)} />
-        <div className={'pb-24 mx-auto px-4 min-w-[800px] w-2/3'}>
+        <div className={'px-40'}>
             {(accountLoading || loading) && (<Loading/>)}
             {(authError) && (<Error msg={"Please sign in"}/>)}
             {(error) && (<Error msg={error.message}/>)}
             {
                 currAssessment && (
-                    <div>
-                        <div className={'font-bold uppercase text-4xl mt-16'}>
+                    <div className={'w-fit pb-7.5'}>
+                        <div className={'font-bold uppercase text-4.5xl mt-16 mb-7.5 font-anvirnext'}>
                             {currAssessment.assessment_title.split('(')[currAssessment.assessment_title.split('(').length - 1].slice(0, -1)}
                         </div>
 

@@ -9,7 +9,7 @@ const AssessmentComponentQuestion = ({currAnswers, setCurrAnswers, question}) =>
         })
     }
 
-    return <div className={'mt-8'}>
+    return <div className={''}>
         <AnswerRaw
             handleChooseAnswer={handleChooseAnswer}
             label={'current'}
