@@ -11,14 +11,14 @@ const FooterMenu = () => {
             {
                 user
                     ? <div className={'inline-block w-1/2'}>
-                        <div className={'inline-block w-1/3 min-w-[200px] align-top'}>
+                        <div className={'inline-block w-1/3 min-w-[150px] align-top'}>
                             <div className={'font-bold text-xl font-anvirnext'}>
                                 <span className={'cursor-pointer'} onClick={() => setCurrTab(MainPageTabs[0])}>
                                     {MainPageTabs[0]}
                                 </span>
                             </div>
                         </div>
-                        <div className={'inline-block w-1/3 min-w-[200px] font-anvirnext'}>
+                        <div className={'inline-block w-1/3 min-w-[150px] font-anvirnext'}>
                             {
                                 MainPageTabs.slice(1).map((item, index) =>
                                     <div className={'text-xl mb-5 '

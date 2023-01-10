@@ -95,7 +95,7 @@ const SATResult = () => {
                                             className={'mr-1.5 inline-block'}
                                         />
                                         <span className={'underline text-[#ED4E1C] inline-block align-middle'}>
-                                            Download report
+                                            Download Report
                                         </span>
                                     </span>
                                 </button>
