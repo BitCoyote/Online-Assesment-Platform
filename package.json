@@ -28,8 +28,6 @@
     "tailwindcss": "^3.1.4"
   },
   "dependencies": {
-    "@azure/identity": "^3.1.2",
-    "@azure/keyvault-secrets": "^4.6.0",
     "axios": "^1.2.1",
     "chart.js": "^4.1.1",
     "crypto-js": "^4.1.1",
