@@ -466,6 +466,20 @@ function kmq_register_api_hooks() {
         'callback' => 'kmq_logout_callback',
       )
     );
+    register_rest_route(
+      'knowmeq-api', '/accept-terms-and-conditions',
+      array(
+        'methods'  => 'POST',
+        'callback' => 'accept_terms_and_conditions',
+      )
+    );
+    register_rest_route(
+      'knowmeq-api', '/accept-terms-and-conditions',
+      array(
+        'methods'  => 'GET',
+        'callback' => 'get_accept_terms_and_conditions',
+      )
+    );
 }
 
 ?>

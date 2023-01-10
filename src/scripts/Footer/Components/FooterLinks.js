@@ -1,15 +1,32 @@
 import {useState} from "react";
 import ModalKMQ from "../../KMQComponents/ModalKMQ";
 import {ButtonKMQ} from "../../KMQComponents/ButtonKMQ";
+import {acceptTermsAndConditions} from "../../../api/user";
+import {useAccount} from "../../../api/utils";
 
-const FooterLinks = () => {
+const FooterLinks = ({opened, setOpened}) => {
     const [termsModalOpen, setTermsModalOpen] = useState(false);
+    const [user, loading, userError] = useAccount('me');
+    console.log(user)
+
+    const handleAcceptConditions = () => {
+        acceptTermsAndConditions().then(data => {
+            if (data) {
+                setOpened(false);
+                if (window.location.href.includes('login')) {
+                    window.location.href = '/assessments';
+                }
+            }
+        });
+        setTermsModalOpen(false);
+    }
+
     return <div>
         <span className={'cursor-pointer underline inline-block'} onClick={() => setTermsModalOpen(true)}>
             Terms and Conditions
         </span>
 
-        <ModalKMQ open={termsModalOpen}>
+        <ModalKMQ open={termsModalOpen || (opened && user?.role === 'Participant')}>
             <div>
                 <div className={'text-center mb-7.5 text-3xl'}>
                     Terms and Conditions
@@ -33,7 +50,7 @@ const FooterLinks = () => {
                     By accepting, you confirm NGen has consent to collect, and disclose such information.
                 </div>
                 <div className={'text-center'}>
-                    <ButtonKMQ onClick={() => setTermsModalOpen(false)} text={'Accept'}/>
+                    <ButtonKMQ onClick={handleAcceptConditions} text={'Accept'}/>
                 </div>
             </div>
         </ModalKMQ>
