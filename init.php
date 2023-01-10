@@ -410,7 +410,7 @@ add_filter( 'query_vars', function( $query_vars ) {
 } );
 add_action( 'template_include', function( $template ) {
   $theme_dir_path = dirname(__FILE__);
-  return $theme_dir_path . '/index.php';
+  return $theme_dir_path . DIRECTORY_SEPARATOR . 'index.php';
 } );
 
 /* Rest API initialization. */
