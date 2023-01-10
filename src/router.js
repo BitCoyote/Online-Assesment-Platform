@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
                 element: <LogInPage/>,
             },
             {
-                path: 'main-page',
+                path: 'assessments',
                 element: checkRole(withTabs(MainPageComponent))(['Participant']),
             },
             {
@@ -34,11 +34,11 @@ export const router = createBrowserRouter([
                 element: checkRole(withTabs(MyResults))(['Participant']),
             },
             {
-                path: "assessment/:test_id",
+                path: "assessments/:test_id",
                 element: checkRole(withTabs(AssessmentComponent))(['Participant']),
             },
             {
-                path: "get-results/:test_id",
+                path: "my-results/:test_id",
                 element: checkRole(withTabs(AssessmentResults))(['Participant', 'Company_Admin', 'NGen_Admin']),
             },
             {

@@ -1,19 +1,15 @@
 export const Tabs = {
     'Participant': {
-        'SAT': '/main-page',
-        //'Results': '/get-results/id-1',
+        'SAT': '/assessments',
         'My Results': '/my-results',
     },
     'Company_Admin': {
-        'Dashboard' : '/admin-page/company-results',
-        //'Results': '/admin-page/company-results',
+        'SAT Results': '/admin-page/company-results',
     },
     'NGen_Admin': {
-        'Companies' : '/admin-page/companies-list',
-        //'Results': '/admin-page/results',
+        'Companies': '/admin-page/companies-list',
     },
     'administrator': {
-        'SAT': '/main-page',
-        'Dashboard' : '/admin-page/companies-list',
+        'Companies': '/admin-page/companies-list',
     }
 }

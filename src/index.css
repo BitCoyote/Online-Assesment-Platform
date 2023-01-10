@@ -8,6 +8,12 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Avenir LT Bold';
+    src: url('../src/AvenirNextLTPro-Medium.ttf');
+    font-display: swap;
+}
+
 @layer base {
     html {
         font-family: "Avenir LT", sans-serif;

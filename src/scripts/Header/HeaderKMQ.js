@@ -12,7 +12,7 @@ const HeaderKMQ = () => {
         return <Loading/>
     }
 
-    return <div className={'px-4 bg-[#f0f0f0] relative left-0 top-0 w-full p-6 z-50'}>
+    return <div className={'px-7.5 h-[75px] py-3.5 bg-[#f0f0f0] relative left-0 top-0 w-screen z-50'}>
         <div className={'inline-block text-left'}>
             <a href={Object.values(Tabs[user?.role ?? 'Participant'])[0]} className={'cursor-pointer'}>
                 <img src={Logo} alt={'logo'} className={'cursor-pointer'}/>
@@ -20,8 +20,8 @@ const HeaderKMQ = () => {
         </div>
         <div className={'inline-block text-right float-right'}>
             {user?.name
-                ? <span className={'inline-block mr-[40px] text-base'}>
-                    <span className={'uppercase text-base font-bold text-white bg-[#ed4e1d] rounded-full p-2.5 mr-2.5'}>
+                ? <span className={'inline-block mr-7.5 text-lg'}>
+                    <span className={'uppercase text-lg font-bold text-white bg-[#ed4e1d] rounded-full p-2.5 mr-2.5 inline-block h-[45px] w-[45px] text-center'}>
                         {user.name.split(' ').map(item => item[0])}
                     </span>
                     {user.name.split(' ').map(item => item.charAt(0).toUpperCase() + item.slice(1) + ' ')}
@@ -29,10 +29,10 @@ const HeaderKMQ = () => {
                 : null
             }
             <a href={user ? '' : '/login'}>
-                <ButtonKMQ text={user ? 'Logout' : 'Login'} className={'mx-8'}
+                <ButtonKMQ text={user ? 'Logout' : 'Login'} className={'mt-[1px]'}
                            onClick={user ? () => logoutUser().then(url => window.location.href = url) : () => {
                                window.location.href = "/user-login"
-                           }}
+                           }} dark
                 />
             </a>
         </div>

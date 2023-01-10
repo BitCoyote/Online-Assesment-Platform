@@ -15,7 +15,7 @@ const NotFound = () => {
     }
     const role = user?.role;
     const mainPage = (role === 'administrator' || role === 'Participant')
-        ? '/main-page' : (role === 'NGen_Admin' ? '/admin-page/companies-list' : '/admin-page/company-results')
+        ? '/assessments' : (role === 'NGen_Admin' ? '/admin-page/companies-list' : '/admin-page/company-results')
     return <div className={'w-full table'}>
     <div className={'table-cell w-[55vw] relative'}>
         <div className={'w-full absolute top-1/2 t mx-[120px] translate-y-[-50%]'}>

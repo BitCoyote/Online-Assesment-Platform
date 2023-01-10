@@ -7,7 +7,7 @@ const RedirectionComponent = () => {
     if(user) {
         switch (user.role) {
             case "Participant":
-                window.location.href = "/main-page";
+                window.location.href = "/assessments";
                 break;
             case "Company_Admin":
                 window.location.href += "/companies";

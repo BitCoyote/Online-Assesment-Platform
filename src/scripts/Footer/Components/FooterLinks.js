@@ -3,35 +3,34 @@ import ModalKMQ from "../../KMQComponents/ModalKMQ";
 import {ButtonKMQ} from "../../KMQComponents/ButtonKMQ";
 
 const FooterLinks = () => {
-    //const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
     const [termsModalOpen, setTermsModalOpen] = useState(false);
     return <div>
-        <span className={'cursor-pointer underline inline-block mr-16'} onClick={() => setTermsModalOpen(true)}>
-            Privacy Policy
-        </span>
         <span className={'cursor-pointer underline inline-block'} onClick={() => setTermsModalOpen(true)}>
             Terms and Conditions
         </span>
 
         <ModalKMQ open={termsModalOpen}>
             <div>
-                <div className={'text-center text-3xl mb-8'}>
+                <div className={'text-center mb-7.5 text-3xl'}>
                     Terms and Conditions
                 </div>
-                <div className={'mb-8'}>
-                    PARTICIPANT INFORMATION INCLUDES INFORMATION SUCH AS AGE RANGE AND SELF IDENTIFICATION AS A MEMBER
-                    OF AN
-                    EQUITY-DESERVING GROUP.<br/><br/>
-                    ALL PARTICIPANT INFORMATION THAT IS PROVIDED IS VOLUNTARY AND SHALL BE TREATED AS CONFIDENTIAL.<br/><br/>
-                    SUBJECT TO PARTICIPANT ELIGIBILITY, NGEN WILL SHARE PARTICIPANT INFORMATION WITH THE GOVERNMENT OF
-                    CANADA (“CANADA”) FOR THE ONGOING MONTORING AND EVALUATION OF THE SECTORAL WORKFORCE SOLUTIONS
-                    PROGRAM.<br/><br/>
-                    THE INFORMATION IS ADMINISTERED IN ACCORDANCE WITH PRIVACY ACT (R.S.C., 1985, C. P-21) AND THE
-                    DEPARTMENT OF EMPLOYMENT AND SOCIAL DEVELOPMENT CANADA (S.C. 2005, C.34).<br/><br/>
-                    PARTICIPANTS HAVE THE RIGHT UNDER THE ACCESS TO INFORMATION ACT (R.S.C., 1985, C. A-1) TO OBTAIN
-                    ACCESS
-                    TO THAT INFORMATION FROM CANADA.<br/><br/>
-                    BY [CHECKING THE BOX BELOW], YOU CONFIRM NGEN HAS CONSENT TO COLLECT, AND DISCLOSE SUCH INFORMATION.
+                <div className={'mb-7.5'}>
+                    Participant information includes information such as age range and self identification as a member
+                    of an equity-deserving group. <br/><br/>
+
+                    All participant information that is provided is voluntary and shall be treated as confidential.<br/><br/>
+
+                    Subject to participant eligibility, NGen will share participant information with the government of
+                    Canada (“Canada”) for the ongoing monitoring and evaluation of the sectoral workforce solutions
+                    program. <br/><br/>
+
+                    The information is administered in accordance with privacy act (R.S.C., 1985, C. P-21) and the
+                    department of employment and social development Canada (S.C 2005, C.34). <br/><br/>
+
+                    Participants have the right under the the access to information act (R.S.C., 1985, C. A-1) to obtain
+                    access to that information from Canada.<br/><br/>
+
+                    By accepting, you confirm NGen has consent to collect, and disclose such information.
                 </div>
                 <div className={'text-center'}>
                     <ButtonKMQ onClick={() => setTermsModalOpen(false)} text={'Accept'}/>

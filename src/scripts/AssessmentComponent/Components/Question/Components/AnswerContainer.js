@@ -8,7 +8,7 @@ const AnswerContainer = ({currAnswer, chooseOnClick, canChoose, afterChoose, opt
         }
     }
 
-    return <div className={'mb-4'}>
+    return <div className={''}>
         {
             Array.from({length: options.to - options.from + 1},(a, b)=> options.from + b)
                 .map(item =>

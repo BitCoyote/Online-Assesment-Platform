@@ -251,7 +251,7 @@ add_filter( 'query_vars', function( $query_vars ) {
 
 add_action( 'template_include', function( $template ) {
   $theme_dir_path = dirname(__FILE__);
-  return $theme_dir_path . '\template-knowmeq.php';
+  return $theme_dir_path . '/template-knowmeq.php';
 } );
 
 //send email to user
