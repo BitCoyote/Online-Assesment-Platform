@@ -57,3 +57,34 @@ export const getUser = async () => {
         console.log('error in getting current user')
     }
 }
+
+export const acceptTermsAndConditions = async () => {
+    try {
+        const {data} = await axios.post('/wp-json/knowmeq-api/accept-terms-and-conditions', {
+        }, {
+            headers: {
+                'Accept': 'application/json',
+                'X-WP-Nonce': wpApiNonce,
+            }
+        });
+
+        return data;
+    } catch {
+        console.log('Terms and conditions are not accepted')
+    }
+}
+
+export const getAcceptedTermsAndConditions = async () => {
+    try {
+        const {data} = await axios.get('/wp-json/knowmeq-api/accept-terms-and-conditions', {
+            headers: {
+                'Accept': 'application/json',
+                'X-WP-Nonce': wpApiNonce,
+            }
+        });
+
+        return data;
+    } catch {
+        console.log('Cannot get terms and conditions')
+    }
+}

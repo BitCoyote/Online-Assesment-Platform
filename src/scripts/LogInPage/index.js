@@ -2,7 +2,7 @@ import {ButtonKMQ} from "../KMQComponents/ButtonKMQ";
 import MainImg from '../../assets/login/login_main.png';
 import InputKMQ from "../KMQComponents/InputKMQ";
 import {useEffect, useState} from "react";
-import {loginUser} from "../../api/user";
+import {getAcceptedTermsAndConditions, loginUser} from "../../api/user";
 import {Tabs} from "../../constants/tabs";
 import {useAccount} from "../../api/utils";
 
@@ -14,9 +14,17 @@ const LogInPage = () => {
     const handleLogin = () => {
         loginUser({username: username, password: password})
             .then((response) => {
-                response
-                    ? window.location.href = Object.values(Tabs[response.roles[0]])[0]
-                    : null
+                if (response) {
+                    if (response.roles[0] === 'Participant') {
+                        getAcceptedTermsAndConditions().then(accepted =>
+                            accepted
+                                ? window.location.href = Object.values(Tabs[response.roles[0]])[0]
+                                : window.location.reload()
+                        );
+                    } else {
+                        window.location.href = Object.values(Tabs[response.roles[0]])[0]
+                    }
+                }
             })
     }
 
@@ -28,7 +36,15 @@ const LogInPage = () => {
 
     useEffect(() => {
         if (user) {
-            window.location.href = Object.values(Tabs[user.role])[0];
+            if (user.role === 'Participant') {
+                getAcceptedTermsAndConditions().then(accepted =>
+                    accepted
+                        ? window.location.href = Object.values(Tabs[user.role])[0]
+                        : null
+                );
+            } else {
+                window.location.href = Object.values(Tabs[user.role])[0];
+            }
         }
     }, [window.location.href, loading])
 
