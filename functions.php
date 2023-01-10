@@ -19,13 +19,13 @@ function kmq_logout_callback(){
   return wp_logout_url('/user-login');
 }
 
-function accept_terms_and_conditions($request) {
+function kmq_accept_terms_and_conditions($request) {
     $user = wp_get_current_user();
     $data = add_user_meta($user->ID, 'accepted_conditions', true);
     return $data;
 }
 
-function get_accept_terms_and_conditions($request) {
+function kmq_get_accept_terms_and_conditions($request) {
     $user = wp_get_current_user();
     $accepted = get_user_meta($user->ID, 'accepted_conditions');
     return !empty($accepted) && $accepted[0];
@@ -118,7 +118,6 @@ function kmq_get_user($request) {
 function kmq_get_me ($request) {
   $user = wp_get_current_user();
   $company_id = get_user_meta( $user->ID, 'company', true );
-  //var_export($user);
   $data = array(
       'id' => $user->ID,
       'role' => $user->roles[0],

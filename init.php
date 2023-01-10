@@ -470,14 +470,14 @@ function kmq_register_api_hooks() {
       'knowmeq-api', '/accept-terms-and-conditions',
       array(
         'methods'  => 'POST',
-        'callback' => 'accept_terms_and_conditions',
+        'callback' => 'kmq_accept_terms_and_conditions',
       )
     );
     register_rest_route(
       'knowmeq-api', '/accept-terms-and-conditions',
       array(
         'methods'  => 'GET',
-        'callback' => 'get_accept_terms_and_conditions',
+        'callback' => 'kmq_get_accept_terms_and_conditions',
       )
     );
 }
