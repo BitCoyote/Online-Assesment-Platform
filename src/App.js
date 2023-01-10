@@ -5,7 +5,6 @@ import HeaderKMQ from "./scripts/Header/HeaderKMQ";
 import Footer from "./scripts/Footer/Footer";
 
 const App = () => {
-    console.log(process)
     return (<div className={''}>
         <HeaderKMQ/>
         <div className={'min-h-[90vh]'}>
