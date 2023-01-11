@@ -40,7 +40,7 @@ function kmq_init_table(){
     PRIMARY KEY (id)
   ) $charset_collate;";
   
-  $sql_users = "CREATE OR REPLACE algorithm = UNDEFINED view `local`.`get_all_participants` as
+  $sql_users = "CREATE OR REPLACE algorithm = UNDEFINED view `get_all_participants` as
    select `wp_users`.`ID` AS `ID`,
     `wp_users`.`user_login` AS `user_login`,
     `wp_users`.`user_nicename` AS `user_nicename`,
