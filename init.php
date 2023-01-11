@@ -41,33 +41,21 @@ function kmq_init_table(){
   ) $charset_collate;";
   
   $sql_users = "CREATE OR REPLACE algorithm = UNDEFINED view `local`.`get_all_participants` as
-  select
-      `local`.`wp_users`.`ID` as `ID`,
-      `local`.`wp_users`.`user_login` as `user_login`,
-      `local`.`wp_users`.`user_nicename` as `user_nicename`,
-      `local`.`wp_users`.`user_email` as `user_email`,
-      `local`.`wp_users`.`user_url` as `user_url`,
-      `local`.`wp_users`.`user_registered` as `user_registered`,
-      `local`.`wp_users`.`user_activation_key` as `user_activation_key`,
-      `local`.`wp_users`.`user_status` as `user_status`,
-      `local`.`wp_users`.`display_name` as `display_name`,
-      `local`.`wp_usermeta`.`meta_value` as `company_id`
-  from
-      ((`local`.`wp_users`
-  join `local`.`wp_usermeta`)
-  join (
-      select
-          `local`.`wp_usermeta`.`user_id` as `user_id`,
-          `local`.`wp_usermeta`.`meta_value` as `meta_value`
-      from
-          `local`.`wp_usermeta`
-      where
-          ((`local`.`wp_usermeta`.`meta_key` = 'wp_capabilities')
-              and (substring_index(substring_index(`local`.`wp_usermeta`.`meta_value`, '\"', 2), '\"',-(1)) = 'Participant'))) `t`)
-  where
-      ((`local`.`wp_users`.`ID` = `local`.`wp_usermeta`.`user_id`)
-          and (`local`.`wp_usermeta`.`user_id` = `t`.`user_id`)
-              and (`local`.`wp_usermeta`.`meta_key` = 'company'));";
+   select `wp_users`.`ID` AS `ID`,
+    `wp_users`.`user_login` AS `user_login`,
+    `wp_users`.`user_nicename` AS `user_nicename`,
+    `wp_users`.`user_email` AS `user_email`,
+    `wp_users`.`user_url` AS `user_url`,
+    `wp_users`.`user_registered` AS `user_registered`,
+    `wp_users`.`user_activation_key` AS `user_activation_key`,
+    `wp_users`.`user_status` AS `user_status`,
+    `wp_users`.`display_name` AS `display_name`,
+    `wp_usermeta`.`meta_value` AS `company_id` 
+  from ((`wp_users` join `wp_usermeta`) join (select `wp_usermeta`.`user_id` AS `user_id`,`wp_usermeta`.`meta_value` AS `meta_value` from `wp_usermeta` where ((`wp_usermeta`.`meta_key` = 'wp_capabilities') 
+   and (substring_index(substring_index(`wp_usermeta`.`meta_value`,'\"',2),'\"',-(1)) = 'Participant'))) `t`) 
+   where ((`wp_users`.`ID` = `wp_usermeta`.`user_id`) 
+   and (`wp_usermeta`.`user_id` = `t`.`user_id`) 
+   and (`wp_usermeta`.`meta_key` = 'company'));";
 
   require_once ABSPATH . 'wp-admin/includes/upgrade.php';
   $check = $wpdb->query($check_table);
