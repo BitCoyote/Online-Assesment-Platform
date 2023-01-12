@@ -1,4 +1,4 @@
-import Logo from '../../assets/header/logo.png';
+import Logo from '../../assets/header/logo.svg';
 import {ButtonKMQ} from "../KMQComponents/ButtonKMQ";
 import {useAccount} from "../../api/utils";
 import {logoutUser} from "../../api/user";
@@ -13,7 +13,7 @@ const HeaderKMQ = () => {
     }
 
     return <div className={'px-7.5 h-[75px] py-3.5 bg-[#f0f0f0] relative left-0 top-0 w-screen z-50'}>
-        <div className={'inline-block text-left'}>
+        <div className={'inline-block text-left align-text-topm'}>
             <a href={Object.values(Tabs[user?.role ?? 'Participant'])[0]} className={'cursor-pointer'}>
                 <img src={Logo} alt={'logo'} className={'cursor-pointer'}/>
             </a>

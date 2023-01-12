@@ -19,7 +19,6 @@ export const loginUser = async ({username, password}) => {
 
         return data;
     } catch {
-        alert('Wrong credentials!')
     }
 }
 

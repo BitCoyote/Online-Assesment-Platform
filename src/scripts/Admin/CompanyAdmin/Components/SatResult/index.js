@@ -56,7 +56,7 @@ const SATResult = () => {
             {(loading || dataLoading) && (<Loading />)}
             {(error) && (
                 <div className="block m-[30px]">
-                    <div className='font-bold text-[40px] mb-[10px]'>
+                    <div className='text-4.5xl font-bold font-anvirnext mb-[10px]'>
                         Strategic Assessment Tools Results
                     </div>
                     <div className='font-medium text-[16px] w-[660px]'>

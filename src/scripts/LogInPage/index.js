@@ -1,12 +1,14 @@
 import {ButtonKMQ} from "../KMQComponents/ButtonKMQ";
 import MainImg from '../../assets/login/login_main.png';
 import InputKMQ from "../KMQComponents/InputKMQ";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {getAcceptedTermsAndConditions, loginUser} from "../../api/user";
 import {Tabs} from "../../constants/tabs";
 import {useAccount} from "../../api/utils";
+import Snackbar from "../KMQComponents/SnackBar";
 
 const LogInPage = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [user, loading, userError] = useAccount('me');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -24,6 +26,8 @@ const LogInPage = () => {
                     } else {
                         window.location.href = Object.values(Tabs[response.roles[0]])[0]
                     }
+                } else {
+                    setIsModalOpen(true);
                 }
             })
     }
@@ -49,6 +53,7 @@ const LogInPage = () => {
     }, [window.location.href, loading])
 
     return <div className={'w-full table'}>
+        <Snackbar text={"Wrong credentials!"} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         <div className={'table-cell w-[45vw] relative'}>
             <div className={'w-[55%] text-center absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]'}>
                 <div className={'text-4.5xl font-bold mb-7.5 font-anvirnext'}>Welcome</div>

@@ -250,6 +250,12 @@ function kmq_new_modify_user_table_row( $val, $column_name, $user_id ) {
   return $val;
 }
 
+//change mail type to html
+add_filter( 'wp_mail_content_type', 'set_html_content_type' );
+function set_html_content_type() {
+    return 'text/html';
+}
+
 //send email to user
 add_filter('wp_new_user_notification_email', 'kmq_wp_new_user_notification_email', 10, 3);
 function kmq_wp_new_user_notification_email($wp_new_user_notification_email, $user, $blogname) {
@@ -263,13 +269,17 @@ function kmq_wp_new_user_notification_email($wp_new_user_notification_email, $us
   // we want to reverse this for the plain text arena of emails.
   $blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
 
-  $message  = sprintf(__('New user registration on your site %s:'), $blogname) . "\r\n\r\n";
-  // $message .= sprintf(__('Username: %s'), $user_login) . "\r\n\r\n";
-  $message .= sprintf(__('E-mail: %s'), $user_email) . "\r\n\r\n";
-  $message .= sprintf(__('Password: %s'), $new_password) . "\r\n\r\n";
+  $thanks_message = "<p>Thank you for registering!</p><br/>";
+  $url_message = '<a href="http://20.220.211.23/login-user" target="_blank" rel="noopener noreferrer">20.220.211.23/login-user</a>';
+  $email_message = "<p>Email: {$user_email}</p>";
+  $password_message = "<p>Password: {$new_password}</p><br/>";
+  $contact = "<p>Contact us: <strong>tlp@ngen.ca</strong></p>";
+  $contact_img = "<img src='http://20.220.211.23/wp-content/themes/kmq-ngen-wp-theme/build/images/logo.a6823ed7.png'/>";
+
+  $html_message = "<!DOCTYPE html><html><body>{$thanks_message}{$url_message}{$email_message}{$password_message}{$contact}{$contact_img}</body></html>";
 
   $wp_new_user_notification_email['subject'] = sprintf(__('[%s] Your username and password'), $blogname);
-  $wp_new_user_notification_email['message'] = $message;
+  $wp_new_user_notification_email['message'] = $html_message;
 
   return $wp_new_user_notification_email;
 }
