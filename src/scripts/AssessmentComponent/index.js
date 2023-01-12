@@ -18,6 +18,7 @@ function AssessmentComponent() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [showIntro, setShowIntro] = useState(true);
     const [isOpenModal, setIsOpenModal] = useState(false);
+    const [showMessage, setShowMessage] = useState(true);
     const {test_id} = useParams();
     const [user, accountLoading, authError] = useAccount('me');
     const [currAssessment, loading, error] = useGetAssessmentByTestId({
@@ -139,8 +140,8 @@ function AssessmentComponent() {
             {(error) && (<Error msg={error.message}/>)}
             {
                 currAssessment && (
-                    <div className={'w-fit pb-7.5'}>
-                        <div className={'font-bold uppercase text-4.5xl mt-16 mb-7.5 font-anvirnext'}>
+                    <div className={'pb-7.5'}>
+                        <div className={'font-bold uppercase text-4.5xl mt-16 mb-7.5 font-anvirnext transition-all ' + (!showMessage ? 'mt-8' : '')}>
                             {currAssessment.assessment_title.split('(')[currAssessment.assessment_title.split('(').length - 1].slice(0, -1)}
                         </div>
 
@@ -148,6 +149,8 @@ function AssessmentComponent() {
                             currQuestion={currAssessment.questions[currQuestion]}
                             currQuestionNumber={currQuestion}
                             questionsLength={currAssessment.questions.length}
+                            showMessage={showMessage}
+                            setShowMessage={setShowMessage}
                         />
 
                         <AssessmentComponentQuestion

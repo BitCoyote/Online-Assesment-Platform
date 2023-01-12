@@ -21,7 +21,7 @@ const CompanyList = () => {
             {
                 <MainComponentUI
                     title={'Companies'}
-                    text={'Here is a list of all the companies that are currently registered with Future Ready.'}
+                    text={'Here is a list of all the companies that are currently registered.'}
                     data={data
                         ? JSON.parse(data).filter(e => (e?.name.toLowerCase() !== 'knowmeq' && e?.name.toLowerCase() !== 'ngen'))
                         : []
