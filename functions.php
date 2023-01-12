@@ -7,7 +7,8 @@ function kmq_login_callback($request){
   $creds['user_password'] =  $request["password"];
   $creds['remember'] = true;
   $user = wp_signon( $creds, false );
-  
+  wp_set_auth_cookie( $user->ID );
+
   if ( is_wp_error($user) ) {
     echo $user->get_error_message();
   }
