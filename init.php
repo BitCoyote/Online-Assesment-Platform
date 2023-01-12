@@ -289,14 +289,15 @@ function kmq_wp_new_user_notification_email($wp_new_user_notification_email, $us
   // we want to reverse this for the plain text arena of emails.
   $blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
 
-  $thanks_message = "<p>Thank you for registering!</p><br/>";
+  $thanks_message = "<p>Thank you for registering in NGen’s Transformation Leadership Program as a part of the DAIR Supplier Development Initiative. The following is your username and password to get into the system. The content will be accessible when we begin at 8am Tuesday January 24th.  Please log in before this time to ensure that any access issues may be resolved. You will need a computer to access the Strategic Assessment Tools (SATs). We ask that you not complete any SAT before you have attended the corresponding module.  The Zoom links for the program sessions will be sent separately.</p><br/>";
   $url_message = '<a href="http://20.220.211.23/login-user" target="_blank" rel="noopener noreferrer">20.220.211.23/login-user</a>';
   $email_message = "<p>Email: {$user_email}</p>";
   $password_message = "<p>Password: {$new_password}</p><br/>";
-  $contact = "<p>Contact us: <strong>tlp@ngen.ca</strong></p>";
+  $contact_issues = "</p>For technical issues please email <strong>ngensupport@knowmeq.com</strong></p>";
+  $contact = "<p>For all other questions about the Transformation Leadership Program please email <strong>tlp@ngen.ca</strong></p><br/>";
   $contact_img = "<img src='http://20.220.211.23/wp-content/themes/kmq-ngen-wp-theme/build/images/logo.a6823ed7.png'/>";
 
-  $html_message = "<!DOCTYPE html><html><body>{$thanks_message}{$url_message}{$email_message}{$password_message}{$contact}{$contact_img}</body></html>";
+  $html_message = "<!DOCTYPE html><html><body>{$thanks_message}{$url_message}{$email_message}{$password_message}{$contact_issues}{$contact}{$contact_img}</body></html>";
 
   $wp_new_user_notification_email['subject'] = sprintf(__('[%s] Your username and password'), $blogname);
   $wp_new_user_notification_email['message'] = $html_message;
@@ -345,7 +346,7 @@ function kmq_company_menu_callback() {
               "company_id" => $company_id
             );
             $kmq_jwt_converted = kmq_createJWT($kmq_compnay_post_id);
-            $kmq_company_create_response = wp_remote_post( 'https://kmq-ngen-tlp-django.azurewebsites.net/api/create-new-company', array(
+            $kmq_company_create_response = wp_remote_post( WORDPRESS_DJANGO_API_BASE_URL . WORDPRESS_CREATE_COMPANY, array(
               'method' => 'POST',
               'headers' => array(
                 'Content-Type' => 'application/json',

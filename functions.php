@@ -243,7 +243,7 @@ function kmq_finish_later ($request) {
 
     $base64UrlHeader = kmq_base64UrlEncode($header);
     $base64UrlPayload = kmq_base64UrlEncode($payload);
-    $signature = hash_hmac("sha256", $base64UrlHeader . "." . $base64UrlPayload, "knowmeq1", true);
+    $signature = hash_hmac("sha256", $base64UrlHeader . "." . $base64UrlPayload, JWT_SECRET, true);
     $base64UrlSignature = kmq_base64UrlEncode($signature);
 
     return $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;

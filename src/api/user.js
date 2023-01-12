@@ -27,7 +27,7 @@ export const logoutUser = () => {
 }
 
 const logoutUserCall = async () => {
-    try {
+    //try {
         const {data} = await axios.get(wordPressBaseUrl(process.env.REACT_APP_LOGOUT), {
             headers: {
                 'Accept': 'application/json',
@@ -37,8 +37,23 @@ const logoutUserCall = async () => {
 
         console.log('data', data)
         return data.replace('amp;', '');
+    //} catch {
+    //    alert('Wrong credentials!')
+   // }
+}
+
+export const getUser = async () => {
+    try {
+        const { data } = await axios.get(wordPressBaseUrl(process.env.REACT_APP_AUTH + '/me'), {
+            headers: {
+                'Accept': 'application/json',
+                'X-WP-Nonce': wpApiNonce,
+            }
+        });
+
+        return data;
     } catch {
-        alert('Wrong credentials!')
+        console.log('error in getting current user')
     }
 }
 

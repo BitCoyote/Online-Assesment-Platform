@@ -1,7 +1,7 @@
 import Logo from '../../assets/header/logo.svg';
 import {ButtonKMQ} from "../KMQComponents/ButtonKMQ";
 import {useAccount} from "../../api/utils";
-import {logoutUser} from "../../api/user";
+import {getUser, logoutUser} from "../../api/user";
 import {Tabs} from "../../constants/tabs";
 import Loading from "../Helpers/Loading";
 
@@ -28,13 +28,11 @@ const HeaderKMQ = () => {
                 </span>
                 : null
             }
-            <a href={user ? '' : '/login'}>
                 <ButtonKMQ text={user ? 'Logout' : 'Login'} className={'mt-[1px]'}
-                           onClick={user ? () => logoutUser().then(url => window.location.href = url) : () => {
-                               window.location.href = "/user-login"
-                           }} dark
+                           onClick={() => getUser().then(currUser => currUser
+                               ? logoutUser().then(url => window.location.href = url)
+                               : window.location.href = "/user-login")} dark
                 />
-            </a>
         </div>
     </div>
 }

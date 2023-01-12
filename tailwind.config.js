@@ -4,7 +4,7 @@ module.exports = {
     extend:
     {
       fontFamily: {
-        'anvirnext': ['Avenir Next'],
+        'anvirnext': ['Avenir LT Bold'],
         'anvirbold': ['Avenir Next Bold']
       },
       fontSize: {

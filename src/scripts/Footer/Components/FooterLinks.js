@@ -7,17 +7,18 @@ import {useAccount} from "../../../api/utils";
 const FooterLinks = ({opened, setOpened}) => {
     const [termsModalOpen, setTermsModalOpen] = useState(false);
     const [user, loading, userError] = useAccount('me');
-    console.log(user)
 
     const handleAcceptConditions = () => {
-        acceptTermsAndConditions().then(data => {
-            if (data) {
-                setOpened(false);
-                if (window.location.href.includes('login')) {
-                    window.location.href = '/assessments';
+        if (opened) {
+            acceptTermsAndConditions().then(data => {
+                if (data) {
+                    setOpened(false);
+                    if (window.location.href.includes('login')) {
+                        window.location.href = '/assessments';
+                    }
                 }
-            }
-        });
+            });
+        }
         setTermsModalOpen(false);
     }
 

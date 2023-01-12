@@ -6,11 +6,10 @@ import Footer from "./scripts/Footer/Footer";
 import {getAcceptedTermsAndConditions} from "./api/user";
 
 const App = () => {
-    const [isConditionsAccepted, setIsConditionsAccepted] = useState(false);
+    const [isConditionsAccepted, setIsConditionsAccepted] = useState(true);
+
     useEffect(() => {
-        if (!isConditionsAccepted) {
-            getAcceptedTermsAndConditions().then(data => setIsConditionsAccepted(data));
-        }
+        getAcceptedTermsAndConditions().then(data => setIsConditionsAccepted(data));
     }, [window.location.href])
 
     return (<div className={''}>
