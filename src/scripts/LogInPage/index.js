@@ -6,10 +6,12 @@ import {getAcceptedTermsAndConditions, loginUser} from "../../api/user";
 import {Tabs} from "../../constants/tabs";
 import {useAccount} from "../../api/utils";
 import Snackbar from "../KMQComponents/SnackBar";
+import Loading from "../Helpers/Loading";
 
 const LogInPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [user, loading, userError] = useAccount('me');
+    const [loadingTerms, setLoadingTerms] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -40,17 +42,22 @@ const LogInPage = () => {
 
     useEffect(() => {
         if (user) {
+            setLoadingTerms(true);
             if (user.role === 'Participant') {
                 getAcceptedTermsAndConditions().then(accepted =>
                     accepted
                         ? window.location.href = Object.values(Tabs[user.role])[0]
-                        : null
+                        : setLoadingTerms(false)
                 );
             } else {
                 window.location.href = Object.values(Tabs[user.role])[0];
             }
         }
     }, [window.location.href, loading])
+
+    if (loading || loadingTerms) {
+        return <Loading/>
+    }
 
     return <div className={'w-full table'}>
         <Snackbar text={"Wrong credentials!"} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />

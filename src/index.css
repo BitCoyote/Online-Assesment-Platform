@@ -4,13 +4,19 @@
 
 @font-face {
     font-family: 'Avenir LT';
-    src: url('../src/AvenirNextLTPro-Regular.ttf');
+    src: url('../src/fonts/AvenirNextLTPro-Regular.ttf');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir LT Medium';
+    src: url('../src/fonts/AvenirNextLTPro-Medium.ttf');
     font-display: swap;
 }
 
 @font-face {
     font-family: 'Avenir LT Bold';
-    src: url('../src/AvenirNextLTPro-Medium.ttf');
+    src: url('../src/fonts/AvenirNextLTPro-Demi.ttf');
     font-display: swap;
 }
 
