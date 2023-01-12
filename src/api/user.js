@@ -26,7 +26,7 @@ export const logoutUser = () => {
 }
 
 const logoutUserCall = async () => {
-    try {
+    //try {
         const {data} = await axios.get('/wp-json/knowmeq-api/logout', {
             headers: {
                 'Accept': 'application/json',
@@ -35,22 +35,22 @@ const logoutUserCall = async () => {
         });
 
         console.log('data', data)
+        //alert(1);
         return data.replace('amp;', '');
-    } catch {
-        alert('Wrong credentials!')
-    }
+    //} catch {
+    //    alert('Wrong credentials!')
+   // }
 }
 
 export const getUser = async () => {
     try {
-        const { data } = await axios.get('/wp-json/wp/v2/users/me', {
+        const { data } = await axios.get('/wp-json/knowmeq-api/users/me', {
             headers: {
                 'Accept': 'application/json',
                 'X-WP-Nonce': wpApiNonce,
             }
         });
 
-        console.log('data', data)
         return data;
     } catch {
         console.log('error in getting current user')
