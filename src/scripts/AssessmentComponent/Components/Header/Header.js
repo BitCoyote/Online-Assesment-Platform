@@ -1,9 +1,12 @@
 import AlertMessage from "./Components/AlertMessage";
 import ProgressBar from "./Components/ProgressBar";
 
-const AssessmentComponentHeader = ({currQuestion, currQuestionNumber, questionsLength}) => {
+const AssessmentComponentHeader = ({currQuestion, currQuestionNumber, questionsLength, showMessage, setShowMessage}) => {
     return <div className={''}>
-        <AlertMessage/>
+        <AlertMessage
+            showMessage={showMessage}
+            setShowMessage={setShowMessage}
+        />
         <ProgressBar
             currQuestion={currQuestionNumber}
             questionsLength={questionsLength}

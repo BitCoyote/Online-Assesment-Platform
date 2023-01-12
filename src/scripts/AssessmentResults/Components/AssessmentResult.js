@@ -21,8 +21,8 @@ const AssessmentResult = ({ data }) => {
                             <thead>
                                 <tr className="border-b border-opacity-20 border-gray-700 cursor-pointer">
                                     <th className={"pb-2.5 text-left overflow-visible " + responsiveClassName}><TableCellWithToolTip content="QUESTIONS" /></th>
-                                    <th className="pb-2.5 text-center overflow-visible "><TableCellWithToolTip content="CATEGORY" /></th>
-                                    <th className="pb-2.5 text-center overflow-visible w-[14%]"><TableCellWithToolTip content="CURRENT STATE" /></th>
+                                    <th className="pb-2.5 text-center overflow-visible w-[11%] "><TableCellWithToolTip content="CATEGORY" /></th>
+                                    <th className="pb-2.5 text-center overflow-visible w-[13%]"><TableCellWithToolTip content="CURRENT STATE" /></th>
                                     <th className="pb-2.5 text-center overflow-visible w-[14%]"><TableCellWithToolTip content="DESIRED STATE" /></th>
                                     <th className="pb-2.5 text-center overflow-visible w-[8%]"><TableCellWithToolTip content="VALUE" /></th>
                                     <th className="pb-2.5 text-center overflow-visible w-[8%]"><TableCellWithToolTip content="GAP" /></th>

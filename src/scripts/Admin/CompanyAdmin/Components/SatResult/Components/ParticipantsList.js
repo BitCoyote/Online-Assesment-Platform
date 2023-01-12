@@ -14,7 +14,7 @@ const ParticipantList = ({test_id, onClick, company_id}) => {
                     <thead>
                     <tr>
                         <th className="w-1/4 min-w-[200px] pb-2.5 text-left pl-5">PARTICIPANTS</th>
-                        <th className="w-1/4 pb-2.5 text-left">JOB TITLE</th>
+                        <th className="w-1/4 pb-2.5 text-center">JOB TITLE</th>
                         <th className="w-1/4 pb-2.5"></th>
                         <th className="w-1/4 pb-2.5 text-left">ASSESSMENT STATUS</th>
                     </tr>
@@ -33,7 +33,7 @@ const ParticipantList = ({test_id, onClick, company_id}) => {
                                     </div>
                                     <span>&nbsp;&nbsp;{e.display_name}</span>
                                 </td>
-                                <td className="text-left py-5">
+                                <td className="text-center py-5">
                                     Title of Participant
                                 </td>
                                 <td></td>

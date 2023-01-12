@@ -11,7 +11,7 @@ const SnackBar = ({text, isOpen, onClose}) => {
             aria-hidden="true"
         >
             <div class="modal-dialog relative w-full h-full pointer-events-none">
-                <div class="modal-content min-w-[100px] inline-block border-2 border-[#ED4E1C] absolute top-2/4 left-2/4 flex flex-col pointer-events-auto bg-white bg-clip-padding outline-none text-current">
+                <div class="modal-content min-w-[100px] inline-block border-2 border-[#ED4E1C] absolute top-2/4 left-2/4 translate-x-[-50%] translate-y-[-50%] flex flex-col pointer-events-auto bg-white bg-clip-padding outline-none text-current">
                     <div class="modal-body relative p-[20px] text-[20px] font-medium">
                         {text}
                         <button

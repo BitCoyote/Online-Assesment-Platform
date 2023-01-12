@@ -12,7 +12,7 @@ const AnswerContainer = ({currAnswer, chooseOnClick, canChoose, afterChoose, opt
         {
             Array.from({length: options.to - options.from + 1},(a, b)=> options.from + b)
                 .map(item =>
-                <span className={'inline-block w-12 p-3.5 ml-7.5 mr-16 text-center '
+                <span className={'inline-block w-12 p-3.5 pt-0 ml-7.5 mr-16 text-center '
                     + (canChoose(item) ? 'cursor-pointer' : 'cursor-not-allowed opacity-40')}
                     onClick={() => handleAnswer(item)}
                 >

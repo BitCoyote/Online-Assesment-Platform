@@ -13,7 +13,7 @@ const FooterMenu = () => {
                     ? <div className={'inline-block w-1/2'}>
                         <div className={'inline-block w-1/3 min-w-[150px] align-top'}>
                             <div className={'font-bold text-xl font-anvirnext'}>
-                                <span className={'cursor-pointer'} onClick={() => setCurrTab(MainPageTabs[0])}>
+                                <span className={'cursor-pointer hover:underline'} onClick={() => setCurrTab(MainPageTabs[0])}>
                                     {MainPageTabs[0]}
                                 </span>
                             </div>
@@ -23,7 +23,7 @@ const FooterMenu = () => {
                                 MainPageTabs.slice(1).map((item, index) =>
                                     <div className={'text-xl mb-5 '
                                         + (index === 0 ? 'font-bold' : '')}>
-                                        <span className={'cursor-pointer'} onClick={() => setCurrTab(item)}>
+                                        <span className={'cursor-pointer hover:underline'} onClick={() => setCurrTab(item)}>
                                             {item}
                                         </span>
                                     </div>

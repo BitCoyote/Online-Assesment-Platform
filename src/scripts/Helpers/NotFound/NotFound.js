@@ -20,7 +20,7 @@ const NotFound = () => {
     <div className={'table-cell w-[55vw] relative'}>
         <div className={'w-full absolute top-1/2 t mx-[120px] translate-y-[-50%]'}>
             <div className={'font-medium text-[30px] mb-[10px]'}>404</div>
-            <div className={'text-[40px] font-bold mb-[10px]'}>Page Not Found</div>
+            <div className={'text-4.5xl font-bold font-anvirnext mb-2.5'}>Page Not Found</div>
             <div className='text-[16px] mb-[30px]'>
                 <p>We can’t seem to find the page you are looking for.</p>  
                 <p>Try going back to the main page.</p>
