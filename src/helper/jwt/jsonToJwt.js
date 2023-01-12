@@ -10,9 +10,8 @@ export const jsonToJwt = (json) => {
 
     let header = replaceJwtSpecialSymb(window.btoa(JSON.stringify(jsonHeader)));
     let payload = replaceJwtSpecialSymb(window.btoa(JSON.stringify(json)));
-    const JWT_SECRET = 'knowmeq1';
-
-    let signature = replaceJwtSpecialSymb(hexToBase64(hmacSHA256(header + '.' + payload, JWT_SECRET).toString()));
+    
+    let signature = replaceJwtSpecialSymb(hexToBase64(hmacSHA256(header + '.' + payload, process.env.REACT_APP_JWT_SECRET).toString()));
 
     return header + '.' + payload + '.' + signature;
 }

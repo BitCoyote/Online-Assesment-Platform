@@ -1,39 +1,24 @@
 import axios from 'axios';
 import {useAxios} from '../utils';
-import {
-    submitAssessmentResultUrl,
-    getAllAssessmentsUrl,
-    getSatQuestionsUrl,
-    getAssessmentResultUrl,
-    submitToDraftUrl,
-    getFromDraftUrl,
-    getAssessmentStatusUrl,
-    retakeTestUrl,
-    getCompanyList,
-    getCompanyResult,
-    getTopScore, getAssessmentIntroUrl,
-} from "../../constants/api/assessments";
-import {API_URL, authToken} from "../../constants/api/api";
 import {jsonToJwt} from "../../helper/jwt/jsonToJwt";
+import { dJangoBaseUrl, wordPressBaseUrl } from '../utils';
 
 export const getAssessment = async ({test_id, user_id, company_id}) => {
-    //const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoxLCJjb21wYW55X2lkIjoiOGRkMGRlZjktOTdhNC00NTE4LWFmNjItNWVhNjI5ZjRiZDMwIiwidXNlcl9pZCI6NjcwfQ.SOrF2dAuvfVTif6cfKSrxEqNoF7Pm_xkKwEDdS8U1Es';
     const jwtToken = jsonToJwt({
         "test_id": test_id,
         "company_id": company_id,
         "user_id": user_id
     });
-    const config = {method}
     try {
-        const {data} = await axios.get(API_URL + getSatQuestionsUrl, {
+        const {data} = await axios.get(dJangoBaseUrl(process.env.REACT_APP_GET_SAT_QUESTIONS), {
             headers: {
                 'Accept': 'application/json',
-                'Authorization': authToken,
+                'Authorization': process.env.REACT_APP_AUTH_TOKEN,
                 'KMQJWT': jwtToken,
             },
         });
 
-        console.log('data', data)
+        // console.log('data', data)
 
         return data;
     } catch (err) {
@@ -42,7 +27,7 @@ export const getAssessment = async ({test_id, user_id, company_id}) => {
 }
 
 export const submitAssessment = async ({answers, test_id, user_id, company_id}) => {
-    //const base_url = 'http://15.222.168.158/';
+
     let jwtToken = jsonToJwt({
         "test_id": test_id,
         "user_id": user_id,
@@ -50,10 +35,10 @@ export const submitAssessment = async ({answers, test_id, user_id, company_id}) 
         answers: answers,
     });
 
-    const {data} = await axios.post(API_URL + submitAssessmentResultUrl, {}, {
+    const {data} = await axios.post(dJangoBaseUrl(process.env.REACT_APP_SUBMIT_ASSESSMENT), {}, {
         headers: {
             'Accept': 'application/json',
-            'Authorization': authToken,
+            'Authorization': process.env.REACT_APP_AUTH_TOKEN,
             'KMQJWT': jwtToken,
         }
     });
@@ -64,21 +49,20 @@ export const submitAssessment = async ({answers, test_id, user_id, company_id}) 
 }
 
 export const getAllAssessments = async ({user_id, company_id}) => {
-    //const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0X2lkIjoxLCJjb21wYW55X2lkIjoiOGRkMGRlZjktOTdhNC00NTE4LWFmNjItNWVhNjI5ZjRiZDMwIiwidXNlcl9pZCI6NjcwfQ.SOrF2dAuvfVTif6cfKSrxEqNoF7Pm_xkKwEDdS8U1Es';
     let jwtToken = jsonToJwt({
         "user_id": user_id,
         "company_id": company_id,
     });
     try {
-        const {data} = await axios.get(API_URL + getAllAssessmentsUrl, {
+        const {data} = await axios.get(dJangoBaseUrl(process.env.REACT_APP_GET_ALL_ASSESSMENTS), {
             headers: {
                 'Accept': 'application/json',
-                'Authorization': authToken,
+                'Authorization': process.env.REACT_APP_AUTH_TOKEN,
                 'KMQJWT': jwtToken,
             },
         });
 
-        console.log('data', data)
+        //console.log('data', data)
 
         return data;
     } catch (err) {
@@ -88,7 +72,7 @@ export const getAllAssessments = async ({user_id, company_id}) => {
 
 export const useGetAssessmentByTestId = ({test_id, user_id, company_id}) => {
     const request = {
-        url: getSatQuestionsUrl,
+        url: process.env.REACT_APP_GET_SAT_QUESTIONS,
         method: 'GET',
         headers: {
             KMQJWT: jsonToJwt({
@@ -103,7 +87,7 @@ export const useGetAssessmentByTestId = ({test_id, user_id, company_id}) => {
 
 export const useGetAllAssessments = ({user_id, company_id}) => {
     const request = {
-        url: getAllAssessmentsUrl,
+        url: process.env.REACT_APP_GET_ALL_ASSESSMENTS,
         method: 'GET',
         headers: {
             KMQJWT: jsonToJwt({
@@ -117,7 +101,7 @@ export const useGetAllAssessments = ({user_id, company_id}) => {
 
 export const useGetResult = ({test_id, user_id, company_id}) => {
     const request = {
-        url: getAssessmentResultUrl,
+        url: process.env.REACT_APP_GET_ASSESSMENT_RESULT,
         method: 'GET',
         headers: {
             KMQJWT: jsonToJwt({
@@ -138,7 +122,7 @@ export const submitAnswersToDraft = async ({answers, test_id, user_id, test_titl
         answer_ids: JSON.stringify(answers),
         completed: completed ? "1" : "0"
     };
-    const {data} = await axios.post(submitToDraftUrl, params);
+    const {data} = await axios.post(wordPressBaseUrl(process.env.REACT_APP_FINISH_LATER), params);
 
     return data;
 }
@@ -148,14 +132,14 @@ export const getDraftAnswers = async ({test_id, user_id}) => {
         user_id: user_id,
         quiz_id: test_id,
     };
-    const {data} = await axios.get(getFromDraftUrl, {
+    const {data} = await axios.get(wordPressBaseUrl(process.env.REACT_APP_GET_DRAFT), {
         params
     });
     return data;
 }
 
 export const getAssessmentStatus = async ({user_id}) => {
-    const {data} = await axios.get(getAssessmentStatusUrl, {
+    const {data} = await axios.get(wordPressBaseUrl(process.env.REACT_APP_GET_ASSESSMENT_STATUS), {
             params: {
                 user_id: user_id,
             }
@@ -170,14 +154,14 @@ export const submitRetakeAssessment = async ({user_id, test_id, test_title}) => 
         quiz_id: test_id,
         quiz_title: test_title,
     };
-    const {data} = await axios.post(retakeTestUrl, params);
+    const {data} = await axios.post(wordPressBaseUrl(process.env.REACT_APP_RETAKE_ASSESSMENT), params);
     return data;
 }
 
 // Get Company List for NGen Admin
 export const useGetCompanyList = () => {
     return useAxios({
-        url: getCompanyList,
+        url: process.env.REACT_APP_GET_COMPANY_LIST,
         method: "GET",
         target: "WP",
         headers: {
@@ -189,7 +173,7 @@ export const useGetCompanyList = () => {
 // Get Company result for company admin
 export const useGetCompanyResult = ({test_id, company_id}) => {
     const request = {
-        url: getCompanyResult,
+        url: process.env.REACT_APP_GET_COMPANY_RESULT,
         method: 'GET',
         headers: {
             KMQJWT: jsonToJwt({
@@ -204,7 +188,7 @@ export const useGetCompanyResult = ({test_id, company_id}) => {
 // Get Top Scores for Company admin
 export const useGetCompanyTopScore = ({company_id}) => {
     const request = {
-        url: getTopScore,
+        url: process.env.REACT_APP_GET_TOP_SCORE,
         method: 'GET',
         headers: {
             KMQJWT: jsonToJwt({
@@ -221,10 +205,10 @@ export const getAssessmentIntro = async ({test_id}) => {
     });
 
     try {
-        const {data} = await axios.get(API_URL + getAssessmentIntroUrl, {
+        const {data} = await axios.get(dJangoBaseUrl(process.env.REACT_APP_GET_ASSESSMENT_DESCRIPTION), {
             headers: {
                 'Accept': 'application/json',
-                'Authorization': authToken,
+                'Authorization': process.env.REACT_APP_AUTH_TOKEN,
                 'KMQJWT': jwtToken,
             },
         });

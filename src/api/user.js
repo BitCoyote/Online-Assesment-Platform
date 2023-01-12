@@ -1,12 +1,13 @@
 import axios from "axios";
 import error from "../scripts/Helpers/Error";
+import { wordPressBaseUrl } from "./utils";
 
 export const loginUser = async ({username, password}) => {
     try {
         if (!username.includes('@')) {
             throw error;
         }
-        const {data} = await axios.post('/wp-json/knowmeq-api/login', {
+        const {data} = await axios.post(wordPressBaseUrl(process.env.REACT_APP_LOGIN), {
             username: username,
             password: password,
         }, {
@@ -28,7 +29,7 @@ export const logoutUser = () => {
 
 const logoutUserCall = async () => {
     try {
-        const {data} = await axios.get('/wp-json/knowmeq-api/logout', {
+        const {data} = await axios.get(wordPressBaseUrl(process.env.REACT_APP_LOGOUT), {
             headers: {
                 'Accept': 'application/json',
                 'X-WP-Nonce': wpApiNonce,
@@ -42,25 +43,9 @@ const logoutUserCall = async () => {
     }
 }
 
-export const getUser = async () => {
-    try {
-        const { data } = await axios.get('/wp-json/wp/v2/users/me', {
-            headers: {
-                'Accept': 'application/json',
-                'X-WP-Nonce': wpApiNonce,
-            }
-        });
-
-        console.log('data', data)
-        return data;
-    } catch {
-        console.log('error in getting current user')
-    }
-}
-
 export const acceptTermsAndConditions = async () => {
     try {
-        const {data} = await axios.post('/wp-json/knowmeq-api/accept-terms-and-conditions', {
+        const {data} = await axios.post(wordPressBaseUrl(process.env.REACT_APP_TERMS_AND_CONDITION), {
         }, {
             headers: {
                 'Accept': 'application/json',
@@ -76,7 +61,7 @@ export const acceptTermsAndConditions = async () => {
 
 export const getAcceptedTermsAndConditions = async () => {
     try {
-        const {data} = await axios.get('/wp-json/knowmeq-api/accept-terms-and-conditions', {
+        const {data} = await axios.get(wordPressBaseUrl(process.env.REACT_APP_TERMS_AND_CONDITION), {
             headers: {
                 'Accept': 'application/json',
                 'X-WP-Nonce': wpApiNonce,

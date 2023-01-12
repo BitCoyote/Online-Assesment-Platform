@@ -380,26 +380,26 @@ if ( !empty( $companies ) ) {
 }
 
 //add action to rewrite rules to include candidate/candidate_id list, ([0-9]+) is regex for numbers assuming candidate id is a number
-add_action('init', 'kmq_rewrite_rule');
-function kmq_rewrite_rule () {
-  // We are redirecting all endpoints into the /index.php...
-  add_rewrite_rule( 'user-login', 'index.php?type=user-login', 'top' );
-  add_rewrite_rule( 'main-page', 'index.php?type=main-page', 'top' );
-  add_rewrite_rule( 'assessment/?', 'index.php?type=assessment', 'top' );
-  add_rewrite_rule( 'my-results', 'index.php?type=individual-results-list', 'top' );
-  add_rewrite_rule( 'get-results', 'index.php?type=individual-results', 'top' );
-  add_rewrite_rule( 'admin-page/company-results/?', 'index.php?type=CompanyAdmin&term=company-result', 'top' );
-  add_rewrite_rule( 'admin-page/companies-list/?', 'index.php?type=NGenAdmin', 'top' );
-  flush_rewrite_rules();
-}
-add_filter( 'query_vars', function( $query_vars ) {
-  $query_vars[] = 'type';
-  return $query_vars;
-} );
-add_action( 'template_include', function( $template ) {
-  $theme_dir_path = dirname(__FILE__);
-  return $theme_dir_path . DIRECTORY_SEPARATOR . 'index.php';
-} );
+// add_action('init', 'kmq_rewrite_rule');
+// function kmq_rewrite_rule () {
+//   // We are redirecting all endpoints into the /index.php...
+//   add_rewrite_rule( 'user-login', 'index.php?type=user-login', 'top' );
+//   add_rewrite_rule( 'main-page', 'index.php?type=main-page', 'top' );
+//   add_rewrite_rule( 'assessment/?', 'index.php?type=assessment', 'top' );
+//   add_rewrite_rule( 'my-results', 'index.php?type=individual-results-list', 'top' );
+//   add_rewrite_rule( 'get-results', 'index.php?type=individual-results', 'top' );
+//   add_rewrite_rule( 'admin-page/company-results/?', 'index.php?type=CompanyAdmin&term=company-result', 'top' );
+//   add_rewrite_rule( 'admin-page/companies-list/?', 'index.php?type=NGenAdmin', 'top' );
+//   flush_rewrite_rules();
+// }
+// add_filter( 'query_vars', function( $query_vars ) {
+//   $query_vars[] = 'type';
+//   return $query_vars;
+// } );
+// add_action( 'template_include', function( $template ) {
+//   $theme_dir_path = dirname(__FILE__);
+//   return $theme_dir_path . DIRECTORY_SEPARATOR . 'index.php';
+// } );
 
 /* Rest API initialization. */
 add_action( 'rest_api_init', 'kmq_register_api_hooks', 10, 1 );

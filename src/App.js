@@ -7,7 +7,6 @@ import {getAcceptedTermsAndConditions} from "./api/user";
 
 const App = () => {
     const [isConditionsAccepted, setIsConditionsAccepted] = useState(false);
-
     useEffect(() => {
         if (!isConditionsAccepted) {
             getAcceptedTermsAndConditions().then(data => setIsConditionsAccepted(data));
