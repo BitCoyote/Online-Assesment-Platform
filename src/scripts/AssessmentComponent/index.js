@@ -134,7 +134,7 @@ function AssessmentComponent() {
     return (
         <div>
         <Snackbar text={"Please answer all questions to continue."} isOpen={isOpenModal} onClose={() => setIsOpenModal(false)} />
-        <div className={'px-40'}>
+        <div className={'px-28'}>
             {(accountLoading || loading) && (<Loading/>)}
             {(authError) && (<Error msg={"Please sign in"}/>)}
             {(error) && (<Error msg={error.message}/>)}
