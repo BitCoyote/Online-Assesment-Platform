@@ -16,7 +16,7 @@ const AssessmentComponentQuestion = ({currAnswers, setCurrAnswers, question}) =>
             options={{from: question.current_and_desired_lowest_answer, to: question.current_and_desired_highest_answer}}
             currAnswer={currAnswers.current}
             canChoose={() => true}
-            afterChoose={(item) => (item > currAnswers.desired && currAnswers.desired)
+            afterChoose={(item) => (item > currAnswers.desired)
                 ? setCurrAnswers({...currAnswers, desired: null, current: item})
                 : () => {}}
         />
