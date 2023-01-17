@@ -20,14 +20,15 @@ ChartJS.register(
   );
 
 const CompanyResultChart = ({data}) => {
+  const maxValueOnGraph = data[0].average_score;
     const options = {
         responsive: true,
         scales: {
             y: {
                 suggestedMin: 0,
-                suggestedMax: 20,
+                suggestedMax: Math.min(parseInt(maxValueOnGraph)+2.0,20),
                 ticks: {
-                    stepSize: 5
+                    stepSize: 2
                   }
             },
             x: {
