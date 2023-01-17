@@ -11,7 +11,7 @@ import Loading from "../Helpers/Loading";
 const LogInPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [user, loading, userError] = useAccount('me');
-    const [loadingTerms, setLoadingTerms] = useState(false);
+    //const [loadingTerms, setLoadingTerms] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -19,7 +19,7 @@ const LogInPage = () => {
         loginUser({username: username, password: password})
             .then((response) => {
                 if (response) {
-                    if (response.roles[0] === 'Participant') {
+                    /*if (response.roles[0] === 'Participant') {
                         getAcceptedTermsAndConditions().then(accepted =>
                             accepted
                                 ? window.location.href = Object.values(Tabs[response.roles[0]])[0]
@@ -27,7 +27,8 @@ const LogInPage = () => {
                         );
                     } else {
                         window.location.href = Object.values(Tabs[response.roles[0]])[0]
-                    }
+                    }*/
+                    window.location.href = Object.values(Tabs[response.roles[0]])[0]
                 } else {
                     setIsModalOpen(true);
                 }
@@ -42,7 +43,7 @@ const LogInPage = () => {
 
     useEffect(() => {
         if (user) {
-            setLoadingTerms(true);
+            /*setLoadingTerms(true);
             if (user.role === 'Participant') {
                 getAcceptedTermsAndConditions().then(accepted =>
                     accepted
@@ -51,11 +52,12 @@ const LogInPage = () => {
                 );
             } else {
                 window.location.href = Object.values(Tabs[user.role])[0];
-            }
+            }*/
+            window.location.href = Object.values(Tabs[user.role])[0];
         }
     }, [window.location.href, loading])
 
-    if (loading || loadingTerms) {
+    if (loading /*|| loadingTerms*/) {
         return <Loading/>
     }
 

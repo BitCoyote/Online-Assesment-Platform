@@ -1,15 +1,15 @@
 import {useState} from "react";
 import ModalKMQ from "../../KMQComponents/ModalKMQ";
 import {ButtonKMQ} from "../../KMQComponents/ButtonKMQ";
-import {acceptTermsAndConditions} from "../../../api/user";
-import {useAccount} from "../../../api/utils";
+//import {acceptTermsAndConditions} from "../../../api/user";
+//import {useAccount} from "../../../api/utils";
 
-const FooterLinks = ({opened, setOpened}) => {
+const FooterLinks = ({/*opened, setOpened*/}) => {
     const [termsModalOpen, setTermsModalOpen] = useState(false);
-    const [user, loading, userError] = useAccount('me');
+    //const [user, loading, userError] = useAccount('me');
 
     const handleAcceptConditions = () => {
-        if (opened) {
+        /*if (opened) {
             acceptTermsAndConditions().then(data => {
                 if (data) {
                     setOpened(false);
@@ -18,16 +18,19 @@ const FooterLinks = ({opened, setOpened}) => {
                     }
                 }
             });
-        }
+        }*/
         setTermsModalOpen(false);
     }
 
     return <div>
-        <span className={'cursor-pointer underline inline-block'} onClick={() => setTermsModalOpen(true)}>
+        {/*<span className={'cursor-pointer underline inline-block'} onClick={() => setTermsModalOpen(true)}>
             Terms and Conditions
+        </span>*/}
+        <span className={'cursor-pointer underline inline-block'}>
+            Privacy Policy
         </span>
 
-        <ModalKMQ open={termsModalOpen || (opened && user?.role === 'Participant')}>
+        <ModalKMQ open={termsModalOpen /*|| (opened && user?.role === 'Participant')*/}>
             <div>
                 <div className={'text-center mb-7.5 text-3xl'}>
                     Terms and Conditions

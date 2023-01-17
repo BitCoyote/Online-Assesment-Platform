@@ -3,14 +3,14 @@ import React, {useEffect, useState} from "react";
 import {router} from "./router";
 import HeaderKMQ from "./scripts/Header/HeaderKMQ";
 import Footer from "./scripts/Footer/Footer";
-import {getAcceptedTermsAndConditions} from "./api/user";
+//import {getAcceptedTermsAndConditions} from "./api/user";
 
 const App = () => {
-    const [isConditionsAccepted, setIsConditionsAccepted] = useState(true);
+    /*const [isConditionsAccepted, setIsConditionsAccepted] = useState(true);
 
     useEffect(() => {
         getAcceptedTermsAndConditions().then(data => setIsConditionsAccepted(data));
-    }, [window.location.href])
+    }, [window.location.href])*/
 
     return (<div className={''}>
         <HeaderKMQ/>
@@ -18,8 +18,8 @@ const App = () => {
             <RouterProvider router={router}/>
         </div>
         <Footer
-            opened={!isConditionsAccepted}
-            setOpened={setIsConditionsAccepted}
+            /*opened={!isConditionsAccepted}
+            setOpened={setIsConditionsAccepted}*/
         />
     </div>)
 }
