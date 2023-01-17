@@ -55,8 +55,21 @@ function kmq_get_participants ($request) {
   $company_id = $request->get_param('company');
   global $wpdb;
   $table_name = 'get_all_participants';
-  
-  if ($test_id == 'all') {
+
+  if ($test_id == '0') {
+    if(!kmq_is_NGen_admin() && !kmq_is_company_admin()) {
+      return new WP_Error( 'user_not_allowed',
+            'Sorry, you are not allowed to access the REST API.',
+            array( 'status' => 403 )
+      );
+    }
+    $sql = "select get_all_participants.*, `t`.quiz_id, `t`.quiz_finished
+    from get_all_participants left join (select * from wp_kmq_finish_later) `t` on get_all_participants.ID = `t`.user_id
+    where get_all_participants.company_id = '$company_id';";
+    $results = $wpdb->get_results($sql);
+    return $results;
+  }
+   else if ($test_id == 'all') {
     if(!kmq_is_NGen_admin()) {
       return new WP_Error( 'user_not_allowed',
             'Sorry, you are not allowed to access the REST API.',

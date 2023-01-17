@@ -11,6 +11,8 @@ const MainPageComponent = () => {
     const [data, loading, error] = useGetAllAssessments({user_id: user?.id, company_id: user?.company_id});
     const [assessmentStatus, setAssessmentStatus] = useState([]);
 
+    console.log(data)
+
     const getCardProps = (assessment, index) => {
         return {
             assessment: assessment,

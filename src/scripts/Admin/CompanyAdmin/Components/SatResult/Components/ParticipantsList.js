@@ -3,7 +3,7 @@ import {useGetParticipants} from '../../../../../../api/utils';
 import {getOmissionName} from '../../../../../../helper/string/getOmissionName';
 
 const ParticipantList = ({test_id, onClick, company_id}) => {
-    const [data] = useGetParticipants({test_id, company_id});
+    const [data] = useGetParticipants({test_id, company_id, dataIsReady: company_id});
     return (
         <div className="">
             <div className={'text-3xl mb-7.5'}>

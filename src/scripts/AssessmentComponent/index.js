@@ -27,7 +27,9 @@ function AssessmentComponent() {
         company_id: user?.company_id
     });
     const isAllAnswered = () => {
-        return currAnswers.current && currAnswers.desired && currAnswers.value;
+        return Number.isInteger(currAnswers.current)
+            && Number.isInteger(currAnswers.desired)
+            && Number.isInteger(currAnswers.value);
     }
 
     const handlePrevQuestion = () => {

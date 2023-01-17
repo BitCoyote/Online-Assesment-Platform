@@ -55,14 +55,14 @@ export const useAccount = (user_id) => useAxios({
     },
 }, true);
 
-export const useGetParticipants = ({test_id, company_id}) => useAxios({
+export const useGetParticipants = ({test_id, company_id, dataIsReady}) => useAxios({
     url: getParticipants + '/' + test_id + '?company=' + company_id,
     method: "GET",
     target: "WP",
     headers: {
         'X-WP-Nonce': wpApiNonce,
     },
-}, true);
+}, dataIsReady);
 
 export const useGetCompanyInfo = async (company_id) => {
     const {data} = await axios.get(`/wp-json/knowmeq-api/get-company-name`
