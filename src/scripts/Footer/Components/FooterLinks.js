@@ -27,7 +27,9 @@ const FooterLinks = ({/*opened, setOpened*/}) => {
             Terms and Conditions
         </span>*/}
         <span className={'cursor-pointer underline inline-block'}>
-            Privacy Policy
+            <a href={'https://ngen.ca/privacy-policy'} target="_blank" rel="noopener noreferrer">
+                Privacy Policy
+            </a>
         </span>
 
         <ModalKMQ open={termsModalOpen /*|| (opened && user?.role === 'Participant')*/}>
