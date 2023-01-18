@@ -87,8 +87,9 @@ function kmq_get_participants ($request) {
             array( 'status' => 403 )
       );
     }
-    $sql = "select get_all_participants.*, `t`.quiz_id, `t`.quiz_finished 
+    $sql = "select get_all_participants.*, `t`.quiz_id, `t`.quiz_finished, `user_meta`.meta_value as 'job_title'
     from get_all_participants left join (select * from wp_kmq_finish_later where wp_kmq_finish_later.quiz_id = $test_id) `t` on get_all_participants.ID = `t`.user_id 
+    left join (select * from wp_usermeta) `user_meta` on get_all_participants.ID = `user_meta`.user_id and `user_meta`.meta_key = 'job_title'
     where get_all_participants.company_id = '$company_id';";
     $results = $wpdb->get_results($sql);
     return $results;

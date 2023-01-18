@@ -4,6 +4,7 @@ import {getOmissionName} from '../../../../../../helper/string/getOmissionName';
 
 const ParticipantList = ({test_id, onClick, company_id}) => {
     const [data] = useGetParticipants({test_id, company_id, dataIsReady: company_id});
+    console.log(data)
     return (
         <div className="">
             <div className={'text-3xl mb-7.5'}>
@@ -34,7 +35,7 @@ const ParticipantList = ({test_id, onClick, company_id}) => {
                                     <span>&nbsp;&nbsp;{e.display_name}</span>
                                 </td>
                                 <td className="text-center py-5">
-                                    Title of Participant
+                                    {e.job_title}
                                 </td>
                                 <td></td>
                                 <td className="text-left py-5">

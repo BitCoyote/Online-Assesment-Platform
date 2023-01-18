@@ -50,11 +50,13 @@ function kmq_init_table(){
     `wp_users`.`user_activation_key` AS `user_activation_key`,
     `wp_users`.`user_status` AS `user_status`,
     `wp_users`.`display_name` AS `display_name`,
-    `wp_usermeta`.`meta_value` AS `company_id` 
+    `wp_usermeta`.`meta_value` AS `job_title`,
+    `wp_usermeta`.`meta_value` AS `company_id`
   from ((`wp_users` join `wp_usermeta`) join (select `wp_usermeta`.`user_id` AS `user_id`,`wp_usermeta`.`meta_value` AS `meta_value` from `wp_usermeta` where ((`wp_usermeta`.`meta_key` = 'wp_capabilities') 
    and (substring_index(substring_index(`wp_usermeta`.`meta_value`,'\"',2),'\"',-(1)) = 'Participant'))) `t`) 
    where ((`wp_users`.`ID` = `wp_usermeta`.`user_id`) 
    and (`wp_usermeta`.`user_id` = `t`.`user_id`) 
+   and (`wp_usermeta`.`meta_key` = 'job_title')
    and (`wp_usermeta`.`meta_key` = 'company'));";
 
   require_once ABSPATH . 'wp-admin/includes/upgrade.php';
@@ -119,10 +121,14 @@ add_action( "user_new_form", "kmq_add_company_to_user_profile" );
 function kmq_add_company_to_user_profile($user) {
   $temporary_data = get_company_list();
   
-  if(is_object($user))
+  if(is_object($user)) {
       $my_company = esc_attr( get_the_author_meta( 'company', $user->ID ) );
-  else
+      $my_job = esc_attr( get_the_author_meta( 'job_title', $user->ID ) );
+  }
+  else {
       $my_company = '';
+      $my_job = '';
+  }
   ?>
   <table class="form-table">
       <tr class="form-field form-required">
@@ -141,6 +147,14 @@ function kmq_add_company_to_user_profile($user) {
           <span class="wpcf7-not-valid-tip" aria-hidden="true"></span>
           </td>
       </tr>
+      <tr class="form-field form-required">
+          <th><label for="job_title"><?php _e("Job Title",'KnowMeQ'); ?> <span class="description"><?php _e('(required)'); ?></span></label></th>
+          <td>
+          <input id='job_title' name='job_title' type="text" value="<?php echo $my_job ?>">
+          </input>
+          <span class="wpcf7-not-valid-tip" aria-hidden="true"></span>
+          </td>
+      </tr>
   </table>
 <?php
 }
@@ -154,6 +168,7 @@ function kmq_save_company_info($user_id){
 
   # save my custom field
   update_user_meta($user_id, 'company', $_POST['company']);
+  update_user_meta($user_id, 'job_title', $_POST['job_title']);
 }
 
 // Make company dropdown menu as required field.
@@ -269,15 +284,17 @@ function kmq_wp_new_user_notification_email($wp_new_user_notification_email, $us
   // we want to reverse this for the plain text arena of emails.
   $blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
 
-  $thanks_message = "<p>Thank you for registering in NGen’s Transformation Leadership Program as a part of the DAIR Supplier Development Initiative. The following is your username and password to get into the system. The content will be accessible when we begin at 8am Tuesday January 24th.  Please log in before this time to ensure that any access issues may be resolved. You will need a computer to access the Strategic Assessment Tools (SATs). We ask that you not complete any SAT before you have attended the corresponding module.  The Zoom links for the program sessions will be sent separately.</p><br/>";
+  $thanks_message = '<br/><p><strong>Thank you for registering!</strong></p>';
   $url_message = '<a href="http://20.220.211.23/login-user" target="_blank" rel="noopener noreferrer">20.220.211.23/login-user</a>';
+  $text = '<p>Thank you for registering in NGen’s Transformation Leadership Program as a part of the DAIR Supplier Development Initiative. The following is your username and password to get into the system. The content will be accessible when we begin at 8am Tuesday January 24th. Please log in before this time to ensure that any access issues may be resolved. You will need a computer to access the Strategic Assessment Tools (SATs). We ask that you not complete any SAT before you have attended the corresponding module. The Zoom links for the program sessions will be sent separately.</p><br/>';
+  $button = '<p><a href="http://20.220.211.23/user-login" target="_blank"><button style="cursor: pointer; border-radius: 1.875rem; border-width: 2px; border-style: solid; border-color: rgb(237 78 29); background-color: rgb(237 78 29); margin-bottom: 30px; margin-top: 20px; padding-bottom: .375rem; padding-top: .375rem; padding-left: 3.75rem; padding-right: 3.75rem; font-family: Avenir LT Bold; font-size: 1.125rem; line-height: 1.75rem; font-weight: 700; color: rgb(255 255 255)">Login To Your Account</button></a></p>';
   $email_message = "<p>Email: {$user_email}</p>";
-  $password_message = "<p>Password: {$new_password}</p><br/>";
-  $contact_issues = "</p>For technical issues please email <strong>ngensupport@knowmeq.com</strong></p>";
+  $password_message = "<p>Password: {$new_password}</p>";
+  $contact_issues = "<p>For technical issues please email <strong>ngensupport@knowmeq.com</strong></p>";
   $contact = "<p>For all other questions about the Transformation Leadership Program please email <strong>tlp@ngen.ca</strong></p><br/>";
-  $contact_img = "<img src='http://20.220.211.23/wp-content/themes/kmq-ngen-wp-theme/build/images/logo.a6823ed7.png'/>";
+  $contact_img = "";
 
-  $html_message = "<!DOCTYPE html><html><body>{$thanks_message}{$url_message}{$email_message}{$password_message}{$contact_issues}{$contact}{$contact_img}</body></html>";
+  $html_message = "<div>{$contact_img}{$thanks_message}{$text}{$email_message}{$password_message}{$button}{$contact_issues}{$contact}</div>";
 
   $wp_new_user_notification_email['subject'] = sprintf(__('[%s] Your username and password'), $blogname);
   $wp_new_user_notification_email['message'] = $html_message;
