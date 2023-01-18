@@ -1,16 +1,24 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { API_URL, authToken, AUTH_WORDPRESS_URL } from "../constants/api/api";
-import { getParticipants } from "../constants/api/assessments";
+
+export const dJangoBaseUrl = (endpoint) => {
+    return process.env.REACT_APP_DJANGO_API_BASE_URL + endpoint;
+}
+
+export const wordPressBaseUrl = (endpoint) => {
+    return process.env.REACT_APP_WORDPRESS_API_BASE_URL + endpoint;
+}
 
 const axiosInstance = (request) => {
     return axios.create({
-        baseURL: request.target === "WP" ? "" : API_URL,
+        baseURL: request.target === "WP"
+            ? process.env.REACT_APP_WORDPRESS_API_BASE_URL
+            : process.env.REACT_APP_DJANGO_API_BASE_URL,
         headers: {
             Accept: 'application/json',
             Authorization: request.headers.hasOwnProperty('X-WP-Nonce')
                 ? null
-                : authToken,
+                : process.env.REACT_APP_AUTH_TOKEN,
             ...request.headers
         }
     });
@@ -24,9 +32,7 @@ export const useAxios = (request, allow) => {
     useEffect(() => {
         if (allow) {
             instance.request({
-                url: request.headers.hasOwnProperty('X-WP-Nonce')
-                    ? request.url
-                    : API_URL + request.url,
+                url: request.url,
                 method: request.method,
             })
                 .then((response) => {
@@ -47,7 +53,7 @@ export const useAxios = (request, allow) => {
 }
 
 export const useAccount = (user_id) => useAxios({
-    url: AUTH_WORDPRESS_URL + `/${user_id}`,
+    url: process.env.REACT_APP_AUTH + `/${user_id}`,
     method: "GET",
     target: "WP",
     headers: {
@@ -56,7 +62,7 @@ export const useAccount = (user_id) => useAxios({
 }, true);
 
 export const useGetParticipants = ({test_id, company_id, dataIsReady}) => useAxios({
-    url: getParticipants + '/' + test_id + '?company=' + company_id,
+    url: process.env.REACT_APP_GET_PARTICIPANTS + '/' + test_id + '?company=' + company_id,
     method: "GET",
     target: "WP",
     headers: {
@@ -65,7 +71,7 @@ export const useGetParticipants = ({test_id, company_id, dataIsReady}) => useAxi
 }, dataIsReady);
 
 export const useGetCompanyInfo = async (company_id) => {
-    const {data} = await axios.get(`/wp-json/knowmeq-api/get-company-name`
+    const {data} = await axios.get(wordPressBaseUrl(process.env.REACT_APP_GET_COMPANY_NAME)
     , {
         headers: {
             'Accept': 'application/json',

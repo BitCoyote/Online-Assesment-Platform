@@ -7,7 +7,8 @@ function kmq_login_callback($request){
   $creds['user_password'] =  $request["password"];
   $creds['remember'] = true;
   $user = wp_signon( $creds, false );
-  
+  wp_set_auth_cookie( $user->ID );
+
   if ( is_wp_error($user) ) {
     echo $user->get_error_message();
   }
@@ -256,7 +257,7 @@ function kmq_finish_later ($request) {
 
     $base64UrlHeader = kmq_base64UrlEncode($header);
     $base64UrlPayload = kmq_base64UrlEncode($payload);
-    $signature = hash_hmac("sha256", $base64UrlHeader . "." . $base64UrlPayload, "knowmeq1", true);
+    $signature = hash_hmac("sha256", $base64UrlHeader . "." . $base64UrlPayload, JWT_SECRET, true);
     $base64UrlSignature = kmq_base64UrlEncode($signature);
 
     return $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;

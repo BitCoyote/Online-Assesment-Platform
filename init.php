@@ -180,6 +180,26 @@ function crf_user_profile_update_errors( $errors, $update, $user ) {
 	}
 }
 
+// add_action('init', 'remove_default_redirect');
+// add_filter('auth_redirect_scheme', 'stop_redirect', 9999);
+
+// function stop_redirect($scheme)
+// {
+//     if ( $user_id = wp_validate_auth_cookie( '',  $scheme) ) {
+//         return $scheme;
+//     }
+
+//     // global $wp_query;
+//     // $wp_query->set_404();
+//     // get_template_part( 404 );
+//     // exit();
+// }
+
+// function remove_default_redirect()
+// {
+//     remove_action('template_redirect', 'wp_redirect_admin_locations', 1000);
+// }
+
 //disable wpadmin page for non admin users
 add_action( 'admin_init', 'kmq_allow_admin_area_to_admins_only');
 function kmq_allow_admin_area_to_admins_only() {
@@ -192,6 +212,7 @@ function kmq_allow_admin_area_to_admins_only() {
       $user = wp_get_current_user();
 
       if( empty( $user ) || !in_array( "administrator", (array) $user->roles ) ) {
+        echo "<script> alert('" . $_SERVER['REQUEST_URI'] . "') </script>";
            //Redirect to main page if no user or if the user has no "administrator" role assigned
            wp_redirect( get_site_url( ) );
            exit();
@@ -241,7 +262,6 @@ add_action('init','kmq_disable_login_page');
 function kmq_disable_login_page() {
     $new_login_page_url = home_url( '/user-login/' ); // new login page
     global $pagenow;
-    //echo "<script> console.log('" . $_SERVER['REQUEST_URI'] . "') </script>";
     if( $pagenow == "wp-login.php" && $_SERVER['REQUEST_METHOD'] == 'GET' && !str_contains($_SERVER['REQUEST_URI'], 'action=logout')) {
         wp_redirect($new_login_page_url);
         exit;
@@ -343,7 +363,7 @@ function kmq_company_menu_callback() {
               "company_id" => $company_id
             );
             $kmq_jwt_converted = kmq_createJWT($kmq_compnay_post_id);
-            $kmq_company_create_response = wp_remote_post( 'https://kmq-ngen-tlp-django.azurewebsites.net/api/create-new-company', array(
+            $kmq_company_create_response = wp_remote_post( WORDPRESS_DJANGO_API_BASE_URL . WORDPRESS_CREATE_COMPANY, array(
               'method' => 'POST',
               'headers' => array(
                 'Content-Type' => 'application/json',

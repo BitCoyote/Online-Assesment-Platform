@@ -10,6 +10,6 @@ export const Tabs = {
         'Companies': '/admin-page/companies-list',
     },
     'administrator': {
-        'Companies': '/admin-page/companies-list',
+        'dashboard': '/wp-admin/',
     }
 }

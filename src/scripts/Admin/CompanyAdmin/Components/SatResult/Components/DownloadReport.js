@@ -50,7 +50,7 @@ const DownloadReport = ({data, topScores ,test_id}) => {
                                             <span>{row.question_category}</span>
                                         </td>
                                         <td className="px-3 py-2 text-center">
-                                            <span>{parseInt(row.average_score * 100) / 100}</span>
+                                            <span>{(parseInt(row.average_score * 100) / 100).toFixed(2)}</span>
                                         </td>
                                     </tr>
                                 ))
@@ -85,7 +85,7 @@ const DownloadReport = ({data, topScores ,test_id}) => {
                                     <span>{result.question_category}</span>
                                 </td>
                                 <td className="text-[16px] p-3 text-center">
-                                    <span>{result.average_score}</span>
+                                    <span>{result.average_score.toFixed(2)}</span>
                                 </td>
                             </tr>
                         ))}
