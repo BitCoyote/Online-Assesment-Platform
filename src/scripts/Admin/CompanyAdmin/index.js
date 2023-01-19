@@ -9,12 +9,13 @@ import {useParams} from "react-router-dom";
 import {useGetCompanyInfo} from "../../../api/utils";
 import MainComponentUI from "../../MainComponentUI";
 import AssessmentCard from "../../MainPageComponent/Components/SATList/Components/AssessmentCard";
-import DownloadCompanyPdf from "./Components/SatResult/Components/DownloadCompanyPdf";
+import DownloadCompanyPdf from "./Components/SatResult/Components/DownloadCompanyPdf/DownloadCompanyPdf";
 
 
 const CompanyAdminDashBoard = () => {
     const [user, accountLoading, authError] = useAccount('me');
     const [companyName, setCompanyName] = useState('');
+    const [pdfLoading, setPdfLoading] = useState(false);
     const {company_id} = useParams();
     const company_id_temp = company_id ? company_id : user?.company_id;
     const [data, loading, error] = useGetAllAssessments({user_id: user?.id, company_id: company_id_temp});
@@ -26,6 +27,7 @@ const CompanyAdminDashBoard = () => {
     const [topScores] = useGetCompanyTopScore({ company_id: company_id ? company_id : user?.company_id });
 
     const createCompanyPDF = async () => {
+        setPdfLoading(true);
         const pdf = new jsPDF("portrait", "pt", "a4", true);
         // Get company information and generation date (From the Server.)
         const company_info = await useGetCompanyInfo(company_id ? company_id : user?.company_id);
@@ -117,6 +119,7 @@ const CompanyAdminDashBoard = () => {
         pdf.addImage(img5, "PNG", 25, 30, pdfWidth, pdfHeight5, '', 'FAST');
 
 
+        setPdfLoading(false);
         pdf.save(`${company_info['name']}_${company_info['timestamp']}.pdf`);
     }
 
@@ -141,7 +144,7 @@ const CompanyAdminDashBoard = () => {
 
     return (
         <div>
-            {(accountLoading || loading) && (<Loading/>)}
+            {(accountLoading || loading || pdfLoading) && (<Loading/>)}
             {(authError) && (window.location.href = "/user-login")}
             {(error) && (<Error msg={error.message}/>)}
             <MainComponentUI
@@ -160,7 +163,19 @@ const CompanyAdminDashBoard = () => {
                 backText={company_id ? 'Back to Companies' : null}
                 onBack={() => window.location.href = '/admin-page/companies-list'}
             />
-            <DownloadCompanyPdf topScores={topScores} />
+            <DownloadCompanyPdf
+                topScores={topScores
+                    ? topScores.top_results_all_assessments.map(elem => {
+                        return {...elem,
+                            number_test_takers: usersData ? usersData.filter(item => parseInt(item.quiz_id) === elem.test_id && item.quiz_finished === '1').length : 0,
+                            number_of_participants: usersInCompanyNumber
+                        }
+                    })
+                    : []
+                }
+                companyUsers={usersData}
+                usersNumber={usersInCompanyNumber}
+            />
 
         </div>
     )

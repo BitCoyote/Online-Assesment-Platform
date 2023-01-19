@@ -37,7 +37,8 @@ function AssessmentComponent() {
         setCurrQuestion(currQuestion - 1);
 
     }
-    const handleNextQuestion = () => {
+    const handleNextQuestion = (e) => {
+        e.preventDefault();
         if (!isAllAnswered()) {
             setIsOpenModal(true);
             return;
@@ -58,7 +59,8 @@ function AssessmentComponent() {
         }
     }
 
-    const handleFinishLater = () => {
+    const handleFinishLater = (e) => {
+        e.preventDefault();
         submitAnswersToDraft({
             answers: allAnswers,
             test_id: test_id.split('-')[1],
