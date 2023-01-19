@@ -23,7 +23,7 @@ const DownloadCompanyPdfBody = ({row, key, companyUsers, usersNumber}) => {
                     </div>
                 </div>
             </div>
-            {row.number_test_takers !== 0 ?
+            {row.company_results.length > 0 ?
                 <div className="mt-[20px]">
                     <div className={'text-2xl mb-2 font-bold'}>
                         Top 4 Scores
