@@ -43,7 +43,6 @@ export const submitAssessment = async ({answers, test_id, user_id, company_id}) 
         }
     });
 
-    console.log('data', data)
 
     return data;
 }

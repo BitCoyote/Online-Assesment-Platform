@@ -166,13 +166,22 @@ function kmq_finish_later ($request) {
     $check = $wpdb->query($sql_one);
     $res = 0;
     if($check == 1) {
-      $wpdb->query( $wpdb->prepare("UPDATE $table_name 
-                  SET answers_obj = '".$answer_ids."', quiz_finished = '%s' 
-              WHERE user_id = %s AND quiz_id = %s", $completed, $user_id, $quiz_id));
+      if ($completed) {
+          $wpdb->query( $wpdb->prepare("UPDATE $table_name
+                      SET quiz_finished = '%s'
+                  WHERE user_id = %s AND quiz_id = %s", $completed, $user_id, $quiz_id));
+      } else {
+          $wpdb->query( $wpdb->prepare("UPDATE $table_name
+                      SET answers_obj = '".$answer_ids."', quiz_finished = '%s'
+                  WHERE user_id = %s AND quiz_id = %s", $completed, $user_id, $quiz_id));
+      }
+
     }
     if($check == 0) {
       $wpdb->query("INSERT INTO `$table_name`($fields) VALUES ($format)");
     }
+
+    return $completed;
   }
   
   function kmq_get_draft ($request) {

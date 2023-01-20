@@ -19,6 +19,7 @@ function AssessmentComponent() {
     const [showIntro, setShowIntro] = useState(true);
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [showMessage, setShowMessage] = useState(true);
+    const [isSubmitLoading, setIsSubmitLoading] = useState(false);
     const {test_id} = useParams();
     const [user, accountLoading, authError] = useAccount('me');
     const [currAssessment, loading, error] = useGetAssessmentByTestId({
@@ -110,6 +111,7 @@ function AssessmentComponent() {
 
     useEffect(() => {
         if (isSubmitted && user) {
+            setIsSubmitLoading(true);
             submitAssessment({
                 answers: answersToJson(),
                 test_id: test_id.split('-')[1],
@@ -121,9 +123,11 @@ function AssessmentComponent() {
                     test_id: test_id.split('-')[1],
                     user_id: user.id,
                     completed: true,
-                })
+                }) .then(() => {
+                    setIsSubmitLoading(false);
+                    window.location.href = '/my-results/' + test_id;
+                });
             })
-                .then(() => window.location.href = '/my-results/' + test_id);
         }
     }, [isSubmitted, user])
 
@@ -139,7 +143,7 @@ function AssessmentComponent() {
         <div>
         <Snackbar text={"Please answer all questions to continue."} isOpen={isOpenModal} onClose={() => setIsOpenModal(false)} />
         <div className={'px-28'}>
-            {(accountLoading || loading) && (<Loading/>)}
+            {(accountLoading || loading || isSubmitLoading) && (<Loading/>)}
             {(authError) && (<Error msg={"Please sign in"}/>)}
             {(error) && (<Error msg={error.message}/>)}
             {
