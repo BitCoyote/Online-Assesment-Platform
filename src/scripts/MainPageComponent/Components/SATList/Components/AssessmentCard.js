@@ -11,7 +11,7 @@ const AssessmentCard = ({assessment, savedItem, onlyResults, adminView, usersDat
 
     return <div
         className={'align-top inline-block w-[30%] mr-7.5 mb-7.5 p-5 ' +
-            'border border-solid border-[#8B8C8B] h-48 relative shadow-[0_2px_2px_rgba(179,179,179,0.33)] ' +
+            'border border-solid border-[#8B8C8B] h-56 relative shadow-[0_2px_2px_rgba(179,179,179,0.33)] ' +
             ((onlyResults || !isFinished)
                 ? 'cursor-pointer hover:border-2 hover:border-[#ED4E1C] hover:shadow-[0_2px_2px_rgba(194,59,17,0.1)]'
                 : '')}
@@ -31,10 +31,10 @@ const AssessmentCard = ({assessment, savedItem, onlyResults, adminView, usersDat
         />
 
         <div className={'text-xl mb-2'}>
-            {assessment.test_title.split('(')[assessment.test_title.split('(').length - 1].slice(0, -1)}
+            {assessment.small_title}
         </div>
         <div className={'text-base'}>
-            {assessment.test_title.split('(').slice(0, -1).join(' ')}
+            {assessment.brief_description}
         </div>
     </div>
 }
