@@ -102,7 +102,7 @@ function kmq_get_print_info($request) {
   global $wpdb;
   $table_name = $wpdb->prefix . 'kmq_companies';
   $company_id = $request['company_id'];
-  $sql = "SELECT `name` FROM $table_name WHERE company_id = '$company_id' OR id = '$company_id'";
+  $sql = "SELECT `name` FROM $table_name WHERE company_id = '$company_id'";
   $results = $wpdb->get_results($sql);
   $result = $results[0];
   $data = array(
