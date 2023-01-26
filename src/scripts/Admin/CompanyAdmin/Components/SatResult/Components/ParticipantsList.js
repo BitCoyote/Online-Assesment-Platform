@@ -40,7 +40,7 @@ const ParticipantList = ({test_id, onClick, company_id}) => {
                                 <td></td>
                                 <td className="text-left py-5">
                                     {
-                                        (e.quiz_finished) && (
+                                        (e.quiz_finished == 1) && (
                                             <span className={'h-full inlijne-block '}>
                                                 <span className={'pr-2.5 inline-block align-middle'}>Completed</span>
                                                 <svg className='inline-block mt-[-2px] align-middle' width="22" height="23" viewBox="0 0 22 23"
@@ -54,7 +54,7 @@ const ParticipantList = ({test_id, onClick, company_id}) => {
                                                 </span>
                                         )
                                     }
-                                    {(!e.quiz_finished) && (
+                                    {(!e.quiz_finished || e.quiz_finished == 0) && (
                                         <span>
                                                 Not Completed&nbsp;&nbsp;
                                             <svg className='inline-block mt-[-2px] align-middle' width="22" height="23" viewBox="0 0 22 23"
